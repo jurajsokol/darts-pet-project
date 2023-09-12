@@ -1,0 +1,323 @@
+﻿<UserControl x:Class="Darts.Controls.DartsTarget"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Darts.Controls">
+    <UserControl.Resources>
+        <Style TargetType="Button"
+               x:Key="TargetCenterButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Ellipse Width="{TemplateBinding Height}"
+                                 Height="{TemplateBinding Height}"
+                                 Fill="{TemplateBinding Background}"
+                                 Stroke="Black"
+                                 StrokeThickness="1"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="TargetLightBackground"
+                         Color="#ebe2d3" />
+        <SolidColorBrush x:Key="TargetDarkBackground"
+                         Color="Black" />
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="FontSize"
+                    Value="25" />
+            <Setter Property="TextAlignment"
+                    Value="Center" />
+        </Style>
+        <Style TargetType="UserControl"
+               x:Key="RedButton">
+            <Setter Property="Background"
+                    Value="Black" />
+            <Setter Property="BorderBrush"
+                    Value="Red" />
+        </Style>
+        <Style TargetType="UserControl"
+               x:Key="GreenButton">
+            <Setter Property="Background"
+                    Value="Orange" />
+            <Setter Property="BorderBrush"
+                    Value="Green" />
+        </Style>
+    </UserControl.Resources>
+    <Canvas Width="500"
+            Height="500"
+            Background="White">
+
+        <Button Background="Black"
+                Height="500"
+                Style="{StaticResource TargetCenterButton}"/>
+
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource RedButton}" />
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource GreenButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="18"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource RedButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="36"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource GreenButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="54"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource RedButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="72"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource GreenButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="90" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource RedButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="108"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource GreenButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="126"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource RedButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="144" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource GreenButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="162"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource RedButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="180"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource GreenButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="-18"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource RedButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="-36"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource GreenButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="-54"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource RedButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="-72"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource GreenButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="-90" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource RedButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="-108"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource GreenButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="-126"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource RedButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="-144" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <local:DartsTargetBackgroundButton Canvas.Left="250"
+                                           Canvas.Top="250"
+                                           Style="{StaticResource GreenButton}">
+            <local:DartsTargetBackgroundButton.LayoutTransform>
+                <RotateTransform Angle="-162"
+                                 CenterX="250"
+                                 CenterY="250" />
+            </local:DartsTargetBackgroundButton.LayoutTransform>
+        </local:DartsTargetBackgroundButton>
+        <Button Background="Green"
+                Height="50"
+                Style="{StaticResource TargetCenterButton}"
+                Name="BullsEyeButton"
+                Click="BullsEyeButton_Click"
+                Canvas.Left="225"
+                Canvas.Top="225"/>
+
+        <Button Background="Red"
+                Height="20"
+                Style="{StaticResource TargetCenterButton}"
+                Name="DoubleBullsEyeButton"
+                Canvas.Left="240"
+                Canvas.Top="240"/>
+
+        <TextBlock Text="20"
+                   Canvas.Left="237"
+                   Canvas.Top="10"/>
+
+        <TextBlock Text="1"
+                   Canvas.Left="310"
+                   Canvas.Top="18" />
+
+        <TextBlock Text="18"
+                   Canvas.Left="370"
+                   Canvas.Top="50" />
+
+        <TextBlock Text="4"
+                   Canvas.Left="425"
+                   Canvas.Top="100"/>
+
+        <TextBlock Text="13"
+                   Canvas.Left="450"
+                   Canvas.Top="165" />
+
+        <TextBlock Text="6"
+                   Canvas.Left="468"
+                   Canvas.Top="232" />
+
+        <TextBlock Text="10"
+                   Canvas.Left="450"
+                   Canvas.Top="299" />
+
+        <TextBlock Text="15"
+                   Canvas.Left="422"
+                   Canvas.Top="362" />
+
+        <TextBlock Text="2"
+                   Canvas.Left="374"
+                   Canvas.Top="416" />
+
+        <TextBlock Text="17"
+                   Canvas.Left="310"
+                   Canvas.Bottom="20" />
+
+        <TextBlock Text="3"
+                   Canvas.Left="245"
+                   Canvas.Bottom="10" />
+
+        <TextBlock Text="5"
+                   Canvas.Right="310"
+                   Canvas.Top="18" />
+
+        <TextBlock Text="12"
+                   Canvas.Right="370"
+                   Canvas.Top="50" />
+
+        <TextBlock Text="9"
+                   Canvas.Right="425"
+                   Canvas.Top="100" />
+
+        <TextBlock Text="14"
+                   Canvas.Right="450"
+                   Canvas.Top="165" />
+
+        <TextBlock Text="11"
+                   Canvas.Right="462"
+                   Canvas.Top="232" />
+
+        <TextBlock Text="8"
+                   Canvas.Right="455"
+                   Canvas.Top="299" />
+
+        <TextBlock Text="16"
+                   Canvas.Right="422"
+                   Canvas.Top="362" />
+
+        <TextBlock Text="7"
+                   Canvas.Right="374"
+                   Canvas.Top="416" />
+
+        <TextBlock Text="19"
+                   Canvas.Right="310"
+                   Canvas.Bottom="20" />
+    </Canvas>
+</UserControl>

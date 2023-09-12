@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Darts.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Darts.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

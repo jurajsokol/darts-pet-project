@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Darts.WinUI.Controls.ControlStyles"
+                    xmlns:controls="using:Darts.WinUI.Controls">
+    <Style TargetType="controls:GroupControlWithHeader">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:GroupControlWithHeader">
+                    <StackPanel Orientation="Vertical"
+                                Margin="10">
+                        <TextBlock Text="{TemplateBinding HeaderText}"
+                                   Style="{ThemeResource BodyStrongTextBlockStyle}"/>
+                        <Border CornerRadius="5"
+                                Margin="0, 5"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+                            <ContentPresenter/>
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
