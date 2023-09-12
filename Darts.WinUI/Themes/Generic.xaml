@@ -54,62 +54,6 @@
         </Style.Setters>
     </Style>
 
-    <Style TargetType="controls:DartButtonControl"
-           x:Key="DartBackgroundDoubleButtonStyle">
-        <Style.Setters>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="controls:DartButtonControl">
-                        <Path Stroke="Black"
-                              StrokeThickness="1"
-                              Name="DoubleDartPath">
-
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="ButtonVisualState">
-                                    <VisualState x:Name="LightButtonStyle">
-                                        <VisualState.Setters>
-                                            <Setter Target="DoubleDartPath.Fill"
-                                                    Value="#3b933a" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="DarkButtonStyle">
-                                        <VisualState.Setters>
-                                            <Setter Target="DoubleDartPath.Fill"
-                                                    Value="#e93222" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-
-                            <Path.Data>
-                                <PathGeometry>
-                                    <PathGeometry.Figures>
-                                        <PathFigure StartPoint="28,-180">
-                                            <PathFigure.Segments>
-                                                <LineSegment Point="31,-200" />
-                                                <ArcSegment Size="200,200"
-                                                            RotationAngle="0"
-                                                            IsLargeArc="False"
-                                                            SweepDirection="Counterclockwise"
-                                                            Point="-31,-200" />
-                                                <LineSegment Point="-28,-180" />
-                                                <ArcSegment Size="170,170"
-                                                            RotationAngle="0"
-                                                            IsLargeArc="False"
-                                                            SweepDirection="Clockwise"
-                                                            Point="28,-180" />
-                                            </PathFigure.Segments>
-                                        </PathFigure>
-                                    </PathGeometry.Figures>
-                                </PathGeometry>
-                            </Path.Data>
-                        </Path>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style.Setters>
-    </Style>
-
     <Style TargetType="controls:DartBackgroundButtonControl"
            xmlns:local2="using:Darts.WinUI.Views.Controls">
         <Setter Property="Template">
@@ -119,8 +63,66 @@
 
                         <controls:DartButtonControl Style="{StaticResource DartBackgroundButtonStyle}"
                                                     IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}" />
-                        <controls:DartButtonControl Style="{StaticResource DartBackgroundDoubleButtonStyle}"
-                                                    IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}" />
+                        <controls:DartButtonControl IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}">
+                            <controls:DartButtonControl.Style>
+                                <Style TargetType="controls:DartButtonControl">
+                                    <Style.Setters>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="controls:DartButtonControl">
+                                                    <Path Stroke="Black"
+                                                          Width="50"
+                                                          Height="50"
+                                                          StrokeThickness="1"
+                                                          Name="DoubleDartPath">
+
+                                                        <VisualStateManager.VisualStateGroups>
+                                                            <VisualStateGroup x:Name="ButtonVisualState">
+                                                                <VisualState x:Name="LightButtonStyle">
+                                                                    <VisualState.Setters>
+                                                                        <Setter Target="DoubleDartPath.Fill"
+                                                                                Value="#3b933a" />
+                                                                    </VisualState.Setters>
+                                                                </VisualState>
+                                                                <VisualState x:Name="DarkButtonStyle">
+                                                                    <VisualState.Setters>
+                                                                        <Setter Target="DoubleDartPath.Fill"
+                                                                                Value="#e93222" />
+                                                                    </VisualState.Setters>
+                                                                </VisualState>
+                                                            </VisualStateGroup>
+                                                        </VisualStateManager.VisualStateGroups>
+
+                                                        <Path.Data>
+                                                            <PathGeometry>
+                                                                <PathGeometry.Figures>
+                                                                    <PathFigure StartPoint="28,-180">
+                                                                        <PathFigure.Segments>
+                                                                            <LineSegment Point="31,-200" />
+                                                                            <ArcSegment Size="200,200"
+                                                                                        RotationAngle="0"
+                                                                                        IsLargeArc="False"
+                                                                                        SweepDirection="Counterclockwise"
+                                                                                        Point="-31,-200" />
+                                                                            <LineSegment Point="-28,-180" />
+                                                                            <ArcSegment Size="170,170"
+                                                                                        RotationAngle="0"
+                                                                                        IsLargeArc="False"
+                                                                                        SweepDirection="Clockwise"
+                                                                                        Point="28,-180" />
+                                                                        </PathFigure.Segments>
+                                                                    </PathFigure>
+                                                                </PathGeometry.Figures>
+                                                            </PathGeometry>
+                                                        </Path.Data>
+                                                    </Path>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style.Setters>
+                                </Style>
+                            </controls:DartButtonControl.Style>
+                        </controls:DartButtonControl>
                         <controls:DartButtonControl IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}">
                             <controls:DartButtonControl.Style>
                                 <Style TargetType="controls:DartButtonControl">
@@ -130,6 +132,8 @@
                                                 <ControlTemplate TargetType="controls:DartButtonControl">
                                                     <Path Stroke="Black"
                                                           StrokeThickness="1"
+                                                          Width="50"
+                                                          Height="50"
                                                           Name="TripleDartPath">
 
                                                         <VisualStateManager.VisualStateGroups>
