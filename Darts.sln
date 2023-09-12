@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darts.WPF", "Darts\Darts.WPF.csproj", "{55B30970-36F0-4E38-8369-EFE6619D8A27}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darts.WinUI", "Darts.WinUI\Darts.WinUI.csproj", "{31B4AE0F-E877-4F15-84E5-9050C38173CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darts.WinUI", "Darts.WinUI\Darts.WinUI.csproj", "{31B4AE0F-E877-4F15-84E5-9050C38173CA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darts.Games", "Darts.Games\Darts.Games.csproj", "{002CD95E-0F68-4543-8E38-741197DE3F49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darts.MAUI", "Darts.MAUI\Darts.MAUI.csproj", "{B686EC7E-EBF7-40DE-BD90-D3B219A95939}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darts.MAUI", "Darts.MAUI\Darts.MAUI.csproj", "{B686EC7E-EBF7-40DE-BD90-D3B219A95939}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,22 +21,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Debug|x64.Build.0 = Debug|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Debug|x86.Build.0 = Debug|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Release|ARM64.Build.0 = Release|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Release|x64.ActiveCfg = Release|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Release|x64.Build.0 = Release|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Release|x86.ActiveCfg = Release|Any CPU
-		{55B30970-36F0-4E38-8369-EFE6619D8A27}.Release|x86.Build.0 = Release|Any CPU
 		{31B4AE0F-E877-4F15-84E5-9050C38173CA}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{31B4AE0F-E877-4F15-84E5-9050C38173CA}.Debug|Any CPU.Build.0 = Debug|x64
 		{31B4AE0F-E877-4F15-84E5-9050C38173CA}.Debug|Any CPU.Deploy.0 = Debug|x64
