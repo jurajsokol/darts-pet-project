@@ -54,6 +54,7 @@ namespace Darts.WinUI
             var pageNavigation = new PageNavigation.PageNavigation(rootFrame);
 
             services.AddSingleton<CreateGameViewModel>(_ => new CreateGameViewModel(new PLayerDialogWindow(), pageNavigation));
+            services.AddSingleton<DartsGameViewModel>(_ => new DartsGameViewModel());
             return services.BuildServiceProvider();
         }
 

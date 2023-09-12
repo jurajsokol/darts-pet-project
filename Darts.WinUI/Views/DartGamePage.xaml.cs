@@ -1,3 +1,5 @@
+using Darts.WinUI.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -11,6 +13,8 @@ namespace Darts.WinUI.Views
     /// </summary>
     public sealed partial class DartGamePage : Page
     {
+        public DartsGameViewModel ViewModel { get; } = App.Current.Services.GetService<DartsGameViewModel>();
+
         public DartGamePage()
         {
             this.InitializeComponent();

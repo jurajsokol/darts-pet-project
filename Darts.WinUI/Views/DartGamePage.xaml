@@ -20,6 +20,7 @@
         </CommandBar>
         <controls:DartTargetControl Width="500"
                                     Height="500"
-                                    Background="Red"/>
+                                    Background="Red"
+                                    ClickCommand="{x:Bind ViewModel.DartClickCommand}"/>
     </Grid>
 </Page>

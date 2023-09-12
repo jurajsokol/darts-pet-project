@@ -62,8 +62,10 @@
                     <Canvas>
 
                         <controls:DartButtonControl Style="{StaticResource DartBackgroundButtonStyle}"
-                                                    IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}" />
-                        <controls:DartButtonControl IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}">
+                                                    IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}"
+                                                    Name="BackgroundButtonElement"/>
+                        <controls:DartButtonControl IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}"
+                                                    Name="DartDoubleButtonElement">
                             <controls:DartButtonControl.Style>
                                 <Style TargetType="controls:DartButtonControl">
                                     <Style.Setters>
@@ -123,7 +125,8 @@
                                 </Style>
                             </controls:DartButtonControl.Style>
                         </controls:DartButtonControl>
-                        <controls:DartButtonControl IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}">
+                        <controls:DartButtonControl IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}"
+                                                    Name="DartTrippleButtonElement">
                             <controls:DartButtonControl.Style>
                                 <Style TargetType="controls:DartButtonControl">
                                     <Style.Setters>
@@ -193,7 +196,7 @@
                                        Foreground="White"
                                        FontSize="35"
                                        Name="ButtonNumberText"
-                                       HorizontalAlignment="Center" />
+                                       HorizontalAlignment="Center"/>
                         </Grid>
                     </Canvas>
                 </ControlTemplate>
@@ -207,15 +210,28 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:DartTargetControl">
                     <Grid Name="BackgroundButtonsCanvas">
-                        <Ellipse Height="500"
-                                 Width="500"
-                                 Fill="Black"
-                                 HorizontalAlignment="Center"
-                                 VerticalAlignment="Center" />
+                        <Button Name="DartMissButton">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Ellipse Height="500"
+                                                         Width="500"
+                                                         Fill="Black"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center" />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
 
                         <Button HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Canvas.ZIndex="2">
+                                Canvas.ZIndex="2"
+                                Name="SingleBullsEye">
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Setter Property="Template">
@@ -237,7 +253,8 @@
 
                         <Button HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Canvas.ZIndex="3">
+                                Canvas.ZIndex="3"
+                                Name="DoubleBullsEye">
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Setter Property="Template">
