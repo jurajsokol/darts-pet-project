@@ -1,13 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Darts.Games.DataFile;
-using Darts.WinUI.DataStorage;
+using Darts.Games.Games;
 using Darts.WinUI.DialogWindow;
 using Darts.WinUI.Models;
 using Darts.WinUI.PageNavigation;
 using FluentResults;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +26,15 @@ namespace Darts.WinUI.ViewModels
             Players.CollectionChanged += (o, args) => StartGameCommand.NotifyCanExecuteChanged();
         }
 
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(StartGameCommand))]
+        private GameTypeModel selectedGameType;
+
         public ObservableCollection<Player> Players { get; }
+        public ObservableCollection<GameTypeModel> GameTypes { get; } = new ObservableCollection<GameTypeModel>(
+            Enum.GetValues(typeof(GameTypes))
+            .Cast<GameTypes>()
+            .Select(x => new GameTypeModel(x)));
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(EditUserCommand))]
@@ -80,6 +86,7 @@ namespace Darts.WinUI.ViewModels
         [RelayCommand(CanExecute = nameof(CanStartGame))]
         private void StartGame()
         {
+
             pageNavigation.SetPage(PageEnums.DartGamePage);
         }
 

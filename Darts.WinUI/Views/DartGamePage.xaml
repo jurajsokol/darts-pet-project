@@ -11,16 +11,31 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <CommandBar IsOpen="False"
                     HorizontalAlignment="Center"
                     DefaultLabelPosition="Right">
+            <AppBarButton Icon="Play"
+                          Foreground="Green"
+                          Label="Next player" />
             <AppBarButton Icon="Cancel"
+                          Foreground="Red"
                           Label="Cancel game"
                           Click="CancelGameButton_Click"/>
         </CommandBar>
-        <controls:DartTargetControl Width="500"
-                                    Height="500"
-                                    Background="Red"
-                                    ClickCommand="{x:Bind ViewModel.DartClickCommand}"/>
+        <ItemsControl>
+            
+        </ItemsControl>
+        <Viewbox Grid.Row="2">
+            
+            <controls:DartTargetControl Width="500"
+                                        Height="500"
+                                        Margin="5"
+                                        ClickCommand="{x:Bind ViewModel.DartClickCommand}"/>
+        </Viewbox>
     </Grid>
 </Page>

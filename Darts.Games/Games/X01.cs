@@ -10,7 +10,7 @@ namespace Darts.Games.Games
 
         public Player ActualPLayer => actualPlayer;
 
-        public X01(IList<Player> players, uint initialScore)
+        public X01(IReadOnlyList<Player> players, uint initialScore)
         {
             playersCollection = new SourceCache<Player, int>(player => player.PlayerOrder);
             playersCollection.Edit(cache =>

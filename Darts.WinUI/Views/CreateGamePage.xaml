@@ -41,17 +41,19 @@
                           Label="Remove player" />
         </CommandBar>
         <controls:GroupControlWithHeader HeaderText="Game types">
-            <ItemsControl>
-                <x:String>501</x:String>
-                <x:String>401</x:String>
-                <x:String>301</x:String>
-                <x:String>Cut throat</x:String>
+            <ListView ItemsSource="{x:Bind ViewModel.GameTypes}"
+                      SelectedItem="{x:Bind ViewModel.SelectedGameType}">
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="x:String">
-                        <Button Style="{StaticResource ButtonRevealCustomStyle}">
-                            <TextBlock Text="{x:Bind}"
-                                       HorizontalAlignment="Center" />
-                        </Button>
+                    <DataTemplate x:DataType="models:GameTypeModel">
+                        <Border Width="100"
+                                Height="100">
+
+                            <TextBlock Text="{x:Bind GameTypeName}"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
@@ -60,8 +62,9 @@
                         <StackPanel Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-            </ItemsControl>
+            </ListView>
         </controls:GroupControlWithHeader>
+        
         <controls:GroupControlWithHeader HeaderText="Players">
             <ListView ItemsSource="{x:Bind ViewModel.Players, Mode=OneWay}"
                       SelectedItem="{x:Bind ViewModel.SelectedPlayer, Mode=OneWay}"
