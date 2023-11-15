@@ -86,7 +86,6 @@ namespace Darts.WinUI.ViewModels
         [RelayCommand(CanExecute = nameof(CanStartGame))]
         private void StartGame()
         {
-
             pageNavigation.SetPage(PageEnums.DartGamePage);
         }
 
