@@ -1,16 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Create game"
              x:Class="Darts.MAUI.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout Spacing="25"
-                             Padding="30,0"
-                             VerticalOptions="Center">
-            
-           
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add player"
+                     Command="{Binding NewCommand}"
+                     IconImageSource="{FontImage Glyph='+', Color=Green, Size=20}"/>
+        <ToolbarItem Text="Remove player"
+                     Command="{Binding NewCommand}"
+                     IconImageSource="{FontImage Glyph='x', Color=Green, Size=20}" />
+        <ToolbarItem Text="Edit player"
+                     Command="{Binding NewCommand}"
+                     IconImageSource="{FontImage Glyph='/', Color=Green, Size=10}"
+                     Order="Secondary"/>
+    </ContentPage.ToolbarItems>
+    <VerticalStackLayout>
+        
+        <Label Margin="10">Game types</Label>
+        <HorizontalStackLayout>
+            <HorizontalStackLayout.Resources>
+                <Style TargetType="Border">
+                    <Style.Setters>
+                        <Setter Property="Background"
+                                Value="DimGray" />
+                        <Setter Property="HeightRequest"
+                                Value="100" />
+                        <Setter Property="WidthRequest"
+                                Value="100" />
+                        <Setter Property="Margin"
+                                Value="10" />
+                    </Style.Setters>
+                </Style>
+                <Style TargetType="Label">
+                    <Style.Setters>
+                        <Setter Property="HorizontalOptions"
+                                Value="Center" />
+                        <Setter Property="VerticalOptions"
+                                Value="Center" />
+                        <Setter Property="FontSize"
+                                Value="30" />
+                        <Setter Property="FontAttributes"
+                                Value="Bold" />
+                    </Style.Setters>
+                </Style>
+            </HorizontalStackLayout.Resources>
 
-        </VerticalStackLayout>
-    </ScrollView>
+            <Border>
+                <Label>501</Label>
+            </Border>
 
+            <Border>
+                <Label>401</Label>
+            </Border>
+
+            <Border >
+                <Label>301</Label>
+            </Border>
+        </HorizontalStackLayout>
+
+        <Label Margin="10">PLayers</Label>
+        <ListView>
+        </ListView>
+    </VerticalStackLayout>
 </ContentPage>

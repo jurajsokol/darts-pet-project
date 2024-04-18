@@ -15,7 +15,6 @@ namespace Darts.WinUI.ViewModels
     public partial class CreateGameViewModel : ObservableObject
     {
         private IDialogWindow<string, string> playerDialogWindow;
-        private string localFolderPath;
         private IPageNavigation pageNavigation;
 
         public CreateGameViewModel(IDialogWindow<string, string> playerDialogWindow, IPageNavigation pageNavigation)
