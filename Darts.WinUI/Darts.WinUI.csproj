@@ -51,6 +51,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Darts.DAL\Darts.DAL.csproj" />
     <ProjectReference Include="..\Darts.Games\Darts.Games.csproj" />
   </ItemGroup>
   <ItemGroup>

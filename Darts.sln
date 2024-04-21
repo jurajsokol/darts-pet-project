@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darts.WinUI", "Darts.WinUI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darts.Games", "Darts.Games\Darts.Games.csproj", "{002CD95E-0F68-4543-8E38-741197DE3F49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darts.DAL", "Darts.DAL\Darts.DAL.csproj", "{CA6D9BF4-5BCA-4DBF-921A-ACD45534C9EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darts.DAL", "Darts.DAL\Darts.DAL.csproj", "{CA6D9BF4-5BCA-4DBF-921A-ACD45534C9EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Darts.DAL;
 using Darts.Games.Games;
 using Darts.WinUI.DialogWindow;
 using Darts.WinUI.Models;
 using Darts.WinUI.PageNavigation;
 using FluentResults;
 using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,11 +18,17 @@ namespace Darts.WinUI.ViewModels
     {
         private IDialogWindow<string, string> playerDialogWindow;
         private IPageNavigation pageNavigation;
+        private readonly IUnitOfWork db;
 
-        public CreateGameViewModel(IDialogWindow<string, string> playerDialogWindow, IPageNavigation pageNavigation)
+        public CreateGameViewModel(IDialogWindow<string, string> playerDialogWindow, IPageNavigation pageNavigation, IUnitOfWork db)
         {
             this.pageNavigation = pageNavigation;
-            Players = new();
+            this.db = db;
+
+            var players = db.Players.GetAll();
+            players.Wait();
+
+            Players = new(players.Result.Select(x => new Player() { Name = x.Name, OrderNumber = x.ID }));
             this.playerDialogWindow = playerDialogWindow;
             Players.CollectionChanged += (o, args) => StartGameCommand.NotifyCanExecuteChanged();
         }
@@ -47,6 +55,8 @@ namespace Darts.WinUI.ViewModels
 
             if (name.IsSuccess)
             {
+                await db.Players.Add(new DAL.Entities.Player() { Name = name.Value });
+                await db.CompleteAsync();
                 Players.Add(new Player() { Name = name.Value, OrderNumber = Players.Count() + 1 });
 
             }
