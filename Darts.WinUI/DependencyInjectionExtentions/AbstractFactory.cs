@@ -16,7 +16,7 @@ namespace Darts.WinUI.DependencyInjectionExtentions
             public T Create() => factory();
         }
 
-        public class AbstractFactory<TIn, TOut> : IAbstractFactory<TIn, TOut>
+        public class AbstractFactory<TIn, TOut> : IAbstractFactory<TIn, TOut> where TIn : new()
         {
             private readonly Func<TIn, TOut> factory;
 
@@ -26,6 +26,8 @@ namespace Darts.WinUI.DependencyInjectionExtentions
             }
 
             public TOut Create(TIn args) => factory(args);
+
+            public TOut Create() => factory(new TIn());
         }
     }
 }

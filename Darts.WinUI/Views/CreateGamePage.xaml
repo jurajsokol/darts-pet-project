@@ -67,15 +67,15 @@
         
         <controls:GroupControlWithHeader HeaderText="Players">
             <ListView ItemsSource="{x:Bind ViewModel.Players, Mode=OneWay}"
-                      SelectedItem="{x:Bind ViewModel.SelectedPlayer, Mode=OneWay}"
+                      SelectedItem="{x:Bind ViewModel.SelectedPlayer, Mode=TwoWay}"
                       CanDragItems="True"
+                      SelectionMode="Multiple"
                       CanReorderItems="True"
                       AllowDrop="True"
                       DragItemsCompleted="ListView_DragItemsCompleted">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Player">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{x:Bind OrderNumber, Mode=OneWay}" />
                             <TextBlock Text="{x:Bind Name, Mode=TwoWay}" />
                         </StackPanel>
                     </DataTemplate>

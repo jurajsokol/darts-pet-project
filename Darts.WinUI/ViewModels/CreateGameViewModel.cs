@@ -2,24 +2,25 @@
 using CommunityToolkit.Mvvm.Input;
 using Darts.DAL;
 using Darts.Games.Games;
-using Darts.WinUI.DialogWindow;
 using Darts.WinUI.Models;
 using Darts.WinUI.PageNavigation;
+using Darts.WinUI.Views.DialogWindow;
 using FluentResults;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Darts.WinUI.DependencyInjectionExtentions;
 
 namespace Darts.WinUI.ViewModels
 {
     public partial class CreateGameViewModel : ObservableObject
     {
-        private IDialogWindow<string, string> playerDialogWindow;
+        private IAbstractFactory<Player, IDialogWindow<Player>> playerDialogWindow;
         private IPageNavigation pageNavigation;
         private readonly IUnitOfWork db;
 
-        public CreateGameViewModel(IDialogWindow<string, string> playerDialogWindow, IPageNavigation pageNavigation, IUnitOfWork db)
+        public CreateGameViewModel(IAbstractFactory<Player, IDialogWindow<Player>> playerDialogWindow, IPageNavigation pageNavigation, IUnitOfWork db)
         {
             this.pageNavigation = pageNavigation;
             this.db = db;
@@ -50,25 +51,22 @@ namespace Darts.WinUI.ViewModels
         [RelayCommand]
         private async Task AddUser()
         {
-            Result<string> name = await playerDialogWindow.ShowWindow(string.Empty);
-
-            if (name.IsSuccess)
+            var dialog = playerDialogWindow.Create();
+            if (await dialog.ShowDialog())
             {
-                await db.Players.Add(new DAL.Entities.Player() { Name = name.Value });
+                await db.Players.Add(new DAL.Entities.Player() { Name = dialog.ViewModel.Name });
                 await db.CompleteAsync();
-                Players.Add(new Player() { Name = name.Value, OrderNumber = Players.Count() + 1 });
-
+                Players.Add(new Player() { Name = dialog.ViewModel.Name, OrderNumber = Players.Count() + 1 });
             }
         }
 
         [RelayCommand(CanExecute = nameof(CanEditUser))]
         private async Task EditUser()
         {
-            Result<string> name = await playerDialogWindow.ShowWindow(SelectedPlayer.Name);
-
-            if (name.IsSuccess)
-            {
-                SelectedPlayer.Name = name.Value;
+            var dialog = playerDialogWindow.Create();
+            if (await dialog.ShowDialog())
+            { 
+                SelectedPlayer.Name = dialog.ViewModel.Name;
             }
         }
 

@@ -24,6 +24,7 @@ namespace Darts.WinUI.DependencyInjectionExtentions
         }
 
         public static void AddFactory<TIn, TOut>(this IServiceCollection services, Func<TIn, TOut> function)
+            where TIn: new ()
         {
             services.AddSingleton<Func<TIn, TOut>>(x => function);
             services.AddSingleton<IAbstractFactory<TIn, TOut>, AbstractFactory<TIn, TOut>>();

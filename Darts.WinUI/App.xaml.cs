@@ -1,8 +1,10 @@
 ﻿using Darts.DAL;
-using Darts.WinUI.DialogWindow;
+using Darts.WinUI.DependencyInjectionExtentions;
+using Darts.WinUI.Models;
 using Darts.WinUI.PageNavigation;
 using Darts.WinUI.ViewModels;
 using Darts.WinUI.Views;
+using Darts.WinUI.Views.DialogWindow;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -60,7 +62,7 @@ namespace Darts.WinUI
             services.AddDatabase(dbPath);
 
             services.AddSingleton<IPageNavigation>(_ => new PageNavigation.PageNavigation(rootFrame));
-            services.AddSingleton<IDialogWindow<string, string>, PLayerDialogWindow>();
+            services.AddFactory<Player, IDialogWindow<Player>>(model => new AddPlayerPage(model));
             services.AddSingleton<CreateGameViewModel>();
             services.AddSingleton<DartsGameViewModel>();
 
