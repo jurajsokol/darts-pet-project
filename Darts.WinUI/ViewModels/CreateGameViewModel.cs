@@ -7,7 +7,6 @@ using Darts.WinUI.Models;
 using Darts.WinUI.PageNavigation;
 using FluentResults;
 using System;
-using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;

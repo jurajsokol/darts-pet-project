@@ -57,9 +57,7 @@ namespace Darts.WinUI
 
             string dbPath = Path.Join(ApplicationData.Current.LocalFolder.Path, "darts.db");
 
-            // datatabse
-            services.AddDbContext<DartsDBContext>(options => options.UseSqlite(($"Data Source={dbPath}")));
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddDatabase(dbPath);
 
             services.AddSingleton<IPageNavigation>(_ => new PageNavigation.PageNavigation(rootFrame));
             services.AddSingleton<IDialogWindow<string, string>, PLayerDialogWindow>();
