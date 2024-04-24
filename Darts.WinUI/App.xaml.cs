@@ -64,7 +64,7 @@ namespace Darts.WinUI
             services.AddSingleton<IPageNavigation>(_ => new PageNavigation.PageNavigation(rootFrame));
             services.AddFactory<Player, IDialogWindow<Player>>(model => new AddPlayerPage(model));
             services.AddSingleton<CreateGameViewModel>();
-            services.AddSingleton<DartsGameViewModel>();
+            services.AddTransient<DartsGameViewModel>();
 
             return services.BuildServiceProvider();
         }
@@ -89,8 +89,8 @@ namespace Darts.WinUI
             rootFrame.NavigationFailed += OnNavigationFailed;
             // Navigate to the first page, configuring the new page
             // by passing required information as a navigation parameter
-            rootFrame.Navigate(typeof(CreateGamePage), args.Arguments);
-
+            //rootFrame.Navigate(typeof(CreateGamePage), args.Arguments);
+            rootFrame.Content = new CreateGamePage();
             // Place the frame in the current Window
             m_window.Content = rootFrame;
             // Ensure the MainWindow is active

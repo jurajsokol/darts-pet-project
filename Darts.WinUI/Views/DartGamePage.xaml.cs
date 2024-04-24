@@ -1,3 +1,4 @@
+using Darts.WinUI.PageNavigation;
 using Darts.WinUI.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -22,7 +23,8 @@ namespace Darts.WinUI.Views
 
         private void CancelGameButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CreateGamePage));
+            App.Current.Services.GetService<IPageNavigation>().SetPage<CreateGameViewModel>();
+            //Frame.Navigate<CreateGamePage>();
         }
     }
 }

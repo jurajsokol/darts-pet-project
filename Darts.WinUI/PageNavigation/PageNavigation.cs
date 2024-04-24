@@ -1,4 +1,5 @@
-﻿using Darts.WinUI.Views;
+﻿using Darts.WinUI.ViewModels;
+using Darts.WinUI.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
 
@@ -6,7 +7,7 @@ namespace Darts.WinUI.PageNavigation
 {
     public interface IPageNavigation
     {
-        void SetPage(PageEnums page);
+        void SetPage<T>();
     }
 
     public class PageNavigation : IPageNavigation
@@ -18,16 +19,16 @@ namespace Darts.WinUI.PageNavigation
             Frame = frame;
         }
 
-        public void SetPage(PageEnums page)
+        public void SetPage<T>()
         {
-            Type pageType = page switch
+            Type pageType = typeof(T) switch
             { 
-                PageEnums.DartGamePage => typeof(DartGamePage),
-                PageEnums.CreateGamePage => typeof(CreateGamePage),
+                Type t when t == typeof(DartsGameViewModel) => typeof(DartGamePage),
+                Type t when t == typeof(CreateGameViewModel) => typeof(CreateGamePage),
 
                 _ => throw new NotImplementedException(),
             };
-            Frame.Navigate(typeof(DartGamePage));
+            Frame.Navigate(pageType);
         }
     }
 }
