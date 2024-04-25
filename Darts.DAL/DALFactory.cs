@@ -5,10 +5,11 @@ namespace Darts.DAL
 {
     public static class DALFactory
     {
-        public static void AddDatabase(this ServiceCollection services, string dbPath)
+        public static IServiceCollection AddDatabase(this IServiceCollection services, string dbPath)
         {
             services.AddDbContext<DartsDBContext>(options => options.UseSqlite(($"Data Source={dbPath}")));
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            return services;
         }
     }
 }

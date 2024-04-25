@@ -25,7 +25,7 @@ namespace Darts.WinUI
     public partial class App : Application
     {
         private Window m_window;
-        private Frame rootFrame = new Frame();
+        public Frame RootFrame { get; } = new Frame();
         public Window MainWindow => m_window;
 
         /// <summary>
@@ -59,12 +59,12 @@ namespace Darts.WinUI
 
             string dbPath = Path.Join(ApplicationData.Current.LocalFolder.Path, "darts.db");
 
-            services.AddDatabase(dbPath);
-
-            services.AddSingleton<IPageNavigation>(_ => new PageNavigation.PageNavigation(rootFrame));
-            services.AddFactory<Player, IDialogWindow<Player>>(model => new AddPlayerPage(model));
-            services.AddSingleton<CreateGameViewModel>();
-            services.AddTransient<DartsGameViewModel>();
+            services.AddDatabase(dbPath)
+                .AddSingleton<IPageNavigation>(_ => new PageNavigation.PageNavigation(RootFrame))
+                .AddFactory<Player, IDialogWindow<Player>>(model => new AddPlayerPage(model))
+                .AddSingleton<CreateGameViewModel>()
+                .AddTransient<DartsGameViewModel>()
+                .AddTransient<EditPlayersViewModel>();
 
             return services.BuildServiceProvider();
         }
@@ -85,14 +85,12 @@ namespace Darts.WinUI
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();
-            
-            rootFrame.NavigationFailed += OnNavigationFailed;
+            RootFrame.NavigationFailed += OnNavigationFailed;
             // Navigate to the first page, configuring the new page
             // by passing required information as a navigation parameter
-            //rootFrame.Navigate(typeof(CreateGamePage), args.Arguments);
-            rootFrame.Content = new CreateGamePage();
+            RootFrame.Navigate(typeof(CreateGamePage), args.Arguments);
             // Place the frame in the current Window
-            m_window.Content = rootFrame;
+            m_window.Content = RootFrame;
             // Ensure the MainWindow is active
 
             m_window.Activate();

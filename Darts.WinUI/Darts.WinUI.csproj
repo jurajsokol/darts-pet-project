@@ -19,6 +19,7 @@
     <None Remove="Views\AddPlayerPage.xaml" />
     <None Remove="Views\CreateGamePage.xaml" />
     <None Remove="Views\DartGamePage.xaml" />
+    <None Remove="Views\EditPlayersPage.xaml" />
     <None Remove="Views\WindowTitleBar.xaml" />
   </ItemGroup>
 
@@ -93,4 +94,10 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="Views\EditPlayersPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Remove="Views\EditPlayersPage.xaml" />
+  </ItemGroup>
 </Project>

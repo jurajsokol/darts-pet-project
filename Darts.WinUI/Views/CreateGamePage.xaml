@@ -34,11 +34,8 @@
                           Command="{x:Bind ViewModel.AddUserCommand}"
                           Label="Add player" />
             <AppBarButton Icon="Edit"
-                          Command="{x:Bind ViewModel.EditUserCommand}"
-                          Label="Edit player" />
-            <AppBarButton Icon="Delete"
-                          Command="{x:Bind ViewModel.RemoveUserCommand}"
-                          Label="Remove player" />
+                          Command="{x:Bind ViewModel.EditPlayerCommand}"
+                          Label="Edit players" />
         </CommandBar>
         <controls:GroupControlWithHeader HeaderText="Game types">
             <ListView ItemsSource="{x:Bind ViewModel.GameTypes}"
@@ -67,7 +64,6 @@
         
         <controls:GroupControlWithHeader HeaderText="Players">
             <ListView ItemsSource="{x:Bind ViewModel.Players, Mode=OneWay}"
-                      SelectedItem="{x:Bind ViewModel.SelectedPlayer, Mode=TwoWay}"
                       CanDragItems="True"
                       SelectionMode="Multiple"
                       CanReorderItems="True"

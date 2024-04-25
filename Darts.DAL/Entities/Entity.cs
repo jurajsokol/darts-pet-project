@@ -2,8 +2,9 @@
 
 namespace Darts.DAL.Entities
 {
-    public class Player : Entity
+    public abstract class Entity
     {
-        public string Name { get; set; } = string.Empty;
+        [Key]
+        public int ID { get; set; }
     }
 }

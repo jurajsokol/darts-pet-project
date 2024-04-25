@@ -1,12 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Darts.DAL;
-using Darts.Games.Games;
 using Darts.WinUI.DependencyInjectionExtentions;
 using Darts.WinUI.Models;
-using Darts.WinUI.PageNavigation;
 using Darts.WinUI.Views.DialogWindow;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -14,45 +11,31 @@ using System.Threading.Tasks;
 
 namespace Darts.WinUI.ViewModels
 {
-    public partial class CreateGameViewModel : ObservableObject
+    public partial class EditPlayersViewModel : ObservableObject
     {
-        private IPageNavigation pageNavigation;
         private readonly IAbstractFactory<Player, IDialogWindow<Player>> playerDialogWindow;
         private readonly IUnitOfWork db;
 
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(StartGameCommand))]
-        private GameTypeModel selectedGameType;
-
         public ObservableCollection<Player> Players { get; } = new();
 
-        public ObservableCollection<GameTypeModel> GameTypes { get; } = new ObservableCollection<GameTypeModel>(
-            Enum.GetValues(typeof(GameTypes))
-            .Cast<GameTypes>()
-            .Select(x => new GameTypeModel(x)));
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(EditUserCommand))]
+        [NotifyCanExecuteChangedFor(nameof(RemoveUserCommand))]
+        private Player selectedPlayer;
 
-        public CreateGameViewModel(IPageNavigation pageNavigation, IAbstractFactory<Player, IDialogWindow<Player>> playerDialogWindow, IUnitOfWork db)
+        public EditPlayersViewModel(IAbstractFactory<Player, IDialogWindow<Player>> playerDialogWindow, IUnitOfWork db) 
         {
-            this.pageNavigation = pageNavigation;
             this.playerDialogWindow = playerDialogWindow;
             this.db = db;
-            Players.CollectionChanged += (o, args) => StartGameCommand.NotifyCanExecuteChanged();
         }
 
         public async Task LoadPlayers()
         {
-            Players.Clear();
             IEnumerable<Player> players = (await db.Players.GetAll()).Select(x => x.ToModel());
             foreach (Player player in players)
             {
                 Players.Add(player);
             }
-        }
-
-        [RelayCommand]
-        private void EditPlayer()
-        {
-            pageNavigation.SetPage<EditPlayersViewModel>();
         }
 
         [RelayCommand]
@@ -67,23 +50,30 @@ namespace Darts.WinUI.ViewModels
             }
         }
 
-        public void ReorderPlayers()
+        [RelayCommand(CanExecute = nameof(CanEditUser))]
+        private async Task EditUser()
         {
-            foreach (var player in Players.Select((player, n) => new { player, n }))
+            var dialog = playerDialogWindow.Create();
+            dialog.ViewModel.Name = SelectedPlayer.Name;
+            if (await dialog.ShowDialog())
             {
-                player.player.OrderNumber = player.n +1;
+                (await db.Players.GetById(SelectedPlayer.ID)).Name = dialog.ViewModel.Name;
+                await db.CompleteAsync();
+                SelectedPlayer.Name = dialog.ViewModel.Name;
             }
         }
 
-        [RelayCommand(CanExecute = nameof(CanStartGame))]
-        private void StartGame()
+        [RelayCommand(CanExecute = nameof(CanEditUser))]
+        private async Task RemoveUser()
         {
-            pageNavigation.SetPage<DartsGameViewModel>();
+            db.Players.Delete(SelectedPlayer.ID);
+            await db.CompleteAsync();
+            Players.Remove(SelectedPlayer);
         }
 
-        private bool CanStartGame()
+        private bool CanEditUser()
         {
-            return Players.Any();
+            return SelectedPlayer is not null;
         }
     }
 }

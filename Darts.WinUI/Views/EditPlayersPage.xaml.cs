@@ -11,19 +11,22 @@ namespace Darts.WinUI.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class CreateGamePage : Page
+    public sealed partial class EditPlayersPage : Page
     {
-        public CreateGameViewModel ViewModel { get; } = App.Current.Services.GetService<CreateGameViewModel>();
+        public EditPlayersViewModel ViewModel { get; }
 
-        public CreateGamePage()
+        public Frame RootFrame => App.Current.RootFrame; 
+
+        public EditPlayersPage()
         {
-            this.InitializeComponent();
+            ViewModel = App.Current.Services.GetService<EditPlayersViewModel>();
             Loaded += async (_, _) => await ViewModel.LoadPlayers();
+            this.InitializeComponent();
         }
 
-        private void ListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        private void BackButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            ViewModel.ReorderPlayers();
+            Frame.GoBack();
         }
     }
 }

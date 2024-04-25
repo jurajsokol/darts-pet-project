@@ -1,13 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Darts.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace Darts.DAL.Repositories
 {
-    public class PlayersRepository<T> : IRepository<T> where T : class
+    public class PlayersRepository<T> : IRepository<T> where T : Entity, new()
     {
         private readonly DbContext context;
         private readonly DbSet<T> dbSet;
@@ -18,14 +15,21 @@ namespace Darts.DAL.Repositories
             dbSet = context.Set<T>();
         }
 
-        public async Task Add(T entity)
+        public async Task<T> Add(T entity)
         {
-            dbSet.AddAsync(entity);
+            var result =  await dbSet.AddAsync(entity);
+            return result.Entity;
         }
 
         public void Delete(T entity)
         {
             dbSet.Remove(entity);
+        }
+
+        public async Task Delete(int id)
+        {
+            T data = await dbSet.FindAsync(id);
+            dbSet.Remove(data);
         }
 
         public async Task<IEnumerable<T>> GetAll()

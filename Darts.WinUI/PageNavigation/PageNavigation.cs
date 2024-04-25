@@ -25,6 +25,7 @@ namespace Darts.WinUI.PageNavigation
             { 
                 Type t when t == typeof(DartsGameViewModel) => typeof(DartGamePage),
                 Type t when t == typeof(CreateGameViewModel) => typeof(CreateGamePage),
+                Type t when t == typeof(EditPlayersViewModel) => typeof(EditPlayersPage),
 
                 _ => throw new NotImplementedException(),
             };
