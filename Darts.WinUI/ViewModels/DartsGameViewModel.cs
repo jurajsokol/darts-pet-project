@@ -19,9 +19,11 @@ namespace Darts.WinUI.ViewModels
     {
         private CompositeDisposable disposables = new();
         private IDartGame game;
+        private bool canSetNextPlayer = false;
 
         [ObservableProperty]
         private string actualThrowScore;
+
 
         private ObservableCollectionExtended<Darts.Games.Models.Player> players = new();
         public ObservableCollection<Darts.Games.Models.Player> Players => players;
@@ -38,11 +40,20 @@ namespace Darts.WinUI.ViewModels
                 .Subscribe()
                 .DisposeBy(disposables);
 
-            game.PLayerRoundScore
+            game.PlayerRoundScore
                 .Sort(SortExpressionComparer<PlayerMove>.Ascending(p => p.OrderNum))
                 .ObserveOn(guiScheduler)
                 .Bind(playerRound)
                 .Subscribe()
+                .DisposeBy(disposables);
+
+            game.CanSetNextPlayer
+                .ObserveOn(guiScheduler)
+                .Subscribe(value =>
+                {
+                    canSetNextPlayer = value;
+                    NextPlayerCommand.NotifyCanExecuteChanged();
+                })
                 .DisposeBy(disposables);
         }
 
@@ -51,6 +62,14 @@ namespace Darts.WinUI.ViewModels
         {
             game.PlayerMove(args.number.ToGameType(), args.type.ToGameType());
         }
+
+        [RelayCommand(CanExecute = nameof(CanSetNextPlayer))]
+        private void NextPlayer()
+        { 
+            
+        }
+
+        private bool CanSetNextPlayer() => canSetNextPlayer;
 
         public void Dispose()
         {

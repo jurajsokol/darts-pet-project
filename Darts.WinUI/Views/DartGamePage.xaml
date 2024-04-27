@@ -23,7 +23,8 @@
                     DefaultLabelPosition="Right">
             <AppBarButton Icon="Play"
                           Foreground="Green"
-                          Label="Next player" />
+                          Label="Next player"
+                          Command="{x:Bind ViewModel.NextPlayerCommand}"/>
             <AppBarButton Icon="Cancel"
                           Foreground="Red"
                           Label="Cancel game"

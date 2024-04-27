@@ -1,7 +1,5 @@
 ﻿using Darts.Games.Models;
 using DynamicData;
-using DynamicData.Binding;
-using System;
 using System.Reactive.Linq;
 
 namespace Darts.Games.Games
@@ -17,7 +15,9 @@ namespace Darts.Games.Games
 
         public Player ActualPLayer => actualPlayer;
         public IObservable<IChangeSet<Player, int>> Players { get; }
-        public IObservable<IChangeSet<PlayerMove, int>> PLayerRoundScore { get; }
+        public IObservable<IChangeSet<PlayerMove, int>> PlayerRoundScore { get; }
+        public IObservable<bool> CanSetNextPlayer { get; }
+
 
         public X01(IList<Player> players, uint initialScore)
         {
@@ -35,7 +35,8 @@ namespace Darts.Games.Games
                 cache.AddOrUpdate(Enumerable
                     .Range(0, 3)
                     .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x))));
-            PLayerRoundScore = playerRoundScore.Connect();
+            PlayerRoundScore = playerRoundScore.Connect();
+            CanSetNextPlayer = PlayerRoundScore.ToCollection().Select(x => x.All(i => i.TargetButton != TargetButtonNum.None));
         }
 
         public void PlayerMove(TargetButtonNum number, TargetButtonType type)
