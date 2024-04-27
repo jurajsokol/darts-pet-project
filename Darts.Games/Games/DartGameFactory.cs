@@ -1,14 +1,10 @@
 ﻿using Darts.Games.Models;
-using System.Collections.ObjectModel;
 
 namespace Darts.Games.Games
 {
-    public class DartGameFactory : IDartGameFactoryGetter, IDartGameFactorySetter
+    public class DartGameFactory : IDartGameFactory
     {
-        private GameTypes gameType;
-        private IReadOnlyList<Player> players;
-
-        public IDartGame GetGame()
+        public IDartGame GetGame(GameTypes gameType, IList<Player> players)
         {
             return gameType switch
             {
@@ -19,12 +15,6 @@ namespace Darts.Games.Games
 
                 _ => throw new NotImplementedException($"Game type {gameType} is not implemented yet"),
             };
-        }
-
-        public void SetGameAndPlayers(GameTypes gameType, IList<Player> players)
-        {
-            this.gameType = gameType;
-            this.players = new ReadOnlyCollection<Player>(players);
         }
     }
 }

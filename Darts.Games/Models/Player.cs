@@ -1,9 +1,4 @@
 ﻿namespace Darts.Games.Models
 {
-    public class Player
-    {
-        public string PlayerName { get; init; }
-        public uint Score { get; set; }
-        public int PlayerOrder { get; init; }
-    }
+    public record Player (string PlayerName, uint Score, int PlayerOrder);
 }

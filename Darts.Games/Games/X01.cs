@@ -1,40 +1,57 @@
 ﻿using Darts.Games.Models;
 using DynamicData;
+using DynamicData.Binding;
+using System;
+using System.Reactive.Linq;
 
 namespace Darts.Games.Games
 {
     internal class X01 : IDartGame
     {
+        private const int MAX_THROWS_PER_ROUND = 3;
+
         private SourceCache<Player, int> playersCollection;
+        private SourceCache<PlayerMove, int> playerRoundScore;
         private Player actualPlayer;
+        private int moveCount = 0;
 
         public Player ActualPLayer => actualPlayer;
+        public IObservable<IChangeSet<Player, int>> Players { get; }
+        public IObservable<IChangeSet<PlayerMove, int>> PLayerRoundScore { get; }
 
-        public X01(IReadOnlyList<Player> players, uint initialScore)
+        public X01(IList<Player> players, uint initialScore)
         {
             playersCollection = new SourceCache<Player, int>(player => player.PlayerOrder);
+            Players = playersCollection.Connect();
             playersCollection.Edit(cache =>
-            { 
-                foreach (var player in players)
-                {
-                    player.Score = initialScore;
-                }
-
-                cache.AddOrUpdate(players);
+            {
+                cache.AddOrUpdate(players.Select(p => p with { Score = initialScore }));
             });
+
+            actualPlayer = players.FirstOrDefault()!;
+
+            playerRoundScore = new SourceCache<PlayerMove, int>(move => move.OrderNum);
+            playerRoundScore.Edit(cache =>
+                cache.AddOrUpdate(Enumerable
+                    .Range(0, 3)
+                    .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x))));
+            PLayerRoundScore = playerRoundScore.Connect();
         }
 
-        public void PlayerMove(PlayerRoundScore score)
+        public void PlayerMove(TargetButtonNum number, TargetButtonType type)
         {
-            int scoreNumber = score.GetRoundScore();
-            if (actualPlayer.Score > scoreNumber)
+            if (moveCount >= MAX_THROWS_PER_ROUND)
             {
-                actualPlayer.Score -= (uint)scoreNumber;
+                return;
             }
-            else if (actualPlayer.Score == scoreNumber)
+
+            playerRoundScore.Edit(cache =>
             {
-                // winner
-            }
+                Models.PlayerMove move = cache.Items.First(x => x.OrderNum == moveCount);
+                cache.AddOrUpdate(move with { TargetButton = number, TargetButtonType = type });
+            });
+            
+            moveCount++;
         }
     }
 }

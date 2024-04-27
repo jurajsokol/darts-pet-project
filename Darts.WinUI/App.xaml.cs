@@ -1,4 +1,5 @@
 ﻿using Darts.DAL;
+using Darts.Games.Games;
 using Darts.WinUI.DependencyInjectionExtentions;
 using Darts.WinUI.Models;
 using Darts.WinUI.PageNavigation;
@@ -12,6 +13,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.IO;
+using System.Reactive.Concurrency;
 using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -55,14 +57,19 @@ namespace Darts.WinUI
         /// </summary>
         private IServiceProvider ConfigureServices()
         {
+            CurrentThreadScheduler guiScheduler = Scheduler.CurrentThread;
+
             var services = new ServiceCollection();
 
             string dbPath = Path.Join(ApplicationData.Current.LocalFolder.Path, "darts.db");
 
             services.AddDatabase(dbPath)
+                .AddSingleton<CurrentThreadScheduler>(_ => guiScheduler)
                 .AddSingleton<IPageNavigation>(_ => new PageNavigation.PageNavigation(RootFrame))
                 .AddFactory<Player, IDialogWindow<Player>>(model => new AddPlayerPage(model))
                 .AddSingleton<CreateGameViewModel>()
+                .AddSingleton<INewDartGameArgs, CreateGameViewModel>(services => services.GetService<CreateGameViewModel>())
+                .AddSingleton<IDartGameFactory, DartGameFactory>()
                 .AddTransient<DartsGameViewModel>()
                 .AddTransient<EditPlayersViewModel>();
 

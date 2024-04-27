@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Darts.WinUI.ViewModels
 {
-    public partial class CreateGameViewModel : ObservableObject
+    public partial class CreateGameViewModel : ObservableObject, INewDartGameArgs
     {
         private IPageNavigation pageNavigation;
         private readonly IAbstractFactory<Player, IDialogWindow<Player>> playerDialogWindow;
@@ -25,6 +25,11 @@ namespace Darts.WinUI.ViewModels
         private GameTypeModel selectedGameType;
 
         public ObservableCollection<Player> Players { get; } = new();
+
+        public IList<Player> SelectedPlayers { get; set; } = Array.Empty<Player>();
+
+        public IList<Player> GamePlayers => SelectedPlayers;
+        public GameTypes GameType => SelectedGameType.GameType;
 
         public ObservableCollection<GameTypeModel> GameTypes { get; } = new ObservableCollection<GameTypeModel>(
             Enum.GetValues(typeof(GameTypes))

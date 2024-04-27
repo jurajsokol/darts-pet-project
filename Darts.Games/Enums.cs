@@ -2,6 +2,7 @@
 {
     public enum TargetButtonType
     {
+        None = -1,
         Single = 1,
         Double = 2,
         Triple = 3,
@@ -9,6 +10,7 @@
 
     public enum TargetButtonNum
     {
+        None = -1,
         Miss = 0,
         One = 1,
         Two = 2, 
@@ -21,7 +23,7 @@
         Nine = 9,
         Ten = 10,
         Eleven = 11,
-        Twelwe = 12,
+        Twelve = 12,
         Thirteen = 13,
         Fourteen = 14,
         Fifteen = 15,

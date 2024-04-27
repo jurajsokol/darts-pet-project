@@ -39,7 +39,7 @@
         </CommandBar>
         <controls:GroupControlWithHeader HeaderText="Game types">
             <ListView ItemsSource="{x:Bind ViewModel.GameTypes}"
-                      SelectedItem="{x:Bind ViewModel.SelectedGameType}">
+                      SelectedItem="{x:Bind ViewModel.SelectedGameType, Mode=TwoWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="models:GameTypeModel">
                         <Border Width="100"
@@ -64,6 +64,9 @@
         
         <controls:GroupControlWithHeader HeaderText="Players">
             <ListView ItemsSource="{x:Bind ViewModel.Players, Mode=OneWay}"
+                      SelectionChanged="ListView_SelectionChanged"
+                      Name="PlayersListView"
+                      SelectedItem="{x:Bind ViewModel.SelectedPlayers, Mode=TwoWay}"
                       CanDragItems="True"
                       SelectionMode="Multiple"
                       CanReorderItems="True"
