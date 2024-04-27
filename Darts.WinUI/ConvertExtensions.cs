@@ -26,7 +26,7 @@ namespace Darts.WinUI
 
         public static Darts.Games.Models.Player ToDartPlayer(this Models.Player data)
         {
-            return new Games.Models.Player(data.Name, 0, data.ID);
+            return new Games.Models.Player(data.Name, 0, data.ID, false);
         }
 
         public static Models.Player ToModel(this Games.Models.Player data)

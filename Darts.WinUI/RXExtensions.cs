@@ -5,9 +5,10 @@ namespace Darts.WinUI
 {
     public static class RXExtensions
     {
-        public static void DisposeBy(this IDisposable disposable, CompositeDisposable disposablesCollection)
+        public static T DisposeWith<T>(this T disposable, CompositeDisposable disposablesCollection) where T : IDisposable
         { 
             disposablesCollection.Add(disposable);
+            return disposable;
         }
     }
 }

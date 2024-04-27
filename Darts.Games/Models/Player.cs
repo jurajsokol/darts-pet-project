@@ -1,4 +1,4 @@
 ﻿namespace Darts.Games.Models
 {
-    public record Player (string PlayerName, uint Score, int PlayerOrder);
+    public record Player (string PlayerName, int Score, int PlayerOrder, bool IsPlayerActive);
 }

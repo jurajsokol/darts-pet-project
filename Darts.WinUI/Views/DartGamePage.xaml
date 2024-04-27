@@ -8,9 +8,13 @@
     xmlns:controls="using:Darts.WinUI.Controls"
     xmlns:models="using:Darts.WinUI.Models"
     xmlns:gameModels="using:Darts.Games.Models" 
-    xmlns:customControls="using:Darts.WinUI.Views.Controls"
+    xmlns:customControls="using:Darts.WinUI.Views.Controls" 
+    xmlns:converters="using:Darts.WinUI.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -45,11 +49,14 @@
                             <StackPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
-                
+
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="gameModels:Player">
                             <StackPanel Orientation="Vertical"
-                                        Margin="10">
+                                        Background="{x:Bind IsPlayerActive, Converter={StaticResource BoolToColorConverter}}"
+                                        CornerRadius="5"
+                                        Margin="5"
+                                        Padding="5">
                                 <TextBlock Text="{x:Bind PlayerName, Mode=OneTime}" 
                                            Margin="5"
                                            FontSize="20"
@@ -61,7 +68,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                
+
                 </ItemsControl>
             </controls:GroupControlWithHeader>
 

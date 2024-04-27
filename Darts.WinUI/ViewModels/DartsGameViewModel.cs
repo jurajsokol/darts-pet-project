@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace Darts.WinUI.ViewModels
 {
@@ -33,19 +34,21 @@ namespace Darts.WinUI.ViewModels
 
         public DartsGameViewModel(INewDartGameArgs newGameArgs, IDartGameFactory gameFactory, CurrentThreadScheduler guiScheduler)
         {
-            game = gameFactory.GetGame(newGameArgs.GameType, newGameArgs.GamePlayers.Select(x => x.ToDartPlayer()).ToArray());
+            game = gameFactory.GetGame(newGameArgs.GameType, newGameArgs.GamePlayers.Select(x => x.ToDartPlayer()).ToArray())
+                .DisposeWith(disposables);
             game.Players
+                .Sort(SortExpressionComparer<Games.Models.Player>.Ascending(p => p.PlayerOrder))
                 .ObserveOn(guiScheduler)
                 .Bind(players)
                 .Subscribe()
-                .DisposeBy(disposables);
+                .DisposeWith(disposables);
 
             game.PlayerRoundScore
                 .Sort(SortExpressionComparer<PlayerMove>.Ascending(p => p.OrderNum))
                 .ObserveOn(guiScheduler)
                 .Bind(playerRound)
                 .Subscribe()
-                .DisposeBy(disposables);
+                .DisposeWith(disposables);
 
             game.CanSetNextPlayer
                 .ObserveOn(guiScheduler)
@@ -54,7 +57,7 @@ namespace Darts.WinUI.ViewModels
                     canSetNextPlayer = value;
                     NextPlayerCommand.NotifyCanExecuteChanged();
                 })
-                .DisposeBy(disposables);
+                .DisposeWith(disposables);
         }
 
         [RelayCommand]
@@ -65,8 +68,8 @@ namespace Darts.WinUI.ViewModels
 
         [RelayCommand(CanExecute = nameof(CanSetNextPlayer))]
         private void NextPlayer()
-        { 
-            
+        {
+            game.NextPlayer();
         }
 
         private bool CanSetNextPlayer() => canSetNextPlayer;
