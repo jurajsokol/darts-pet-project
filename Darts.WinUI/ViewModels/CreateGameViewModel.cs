@@ -26,7 +26,9 @@ namespace Darts.WinUI.ViewModels
 
         public ObservableCollection<Player> Players { get; } = new();
 
-        public IList<Player> SelectedPlayers { get; set; } = Array.Empty<Player>();
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(StartGameCommand))]
+        private IList<Player> selectedPlayers = Array.Empty<Player>();
 
         public IList<Player> GamePlayers => SelectedPlayers;
         public GameTypes GameType => SelectedGameType.GameType;
@@ -88,7 +90,7 @@ namespace Darts.WinUI.ViewModels
 
         private bool CanStartGame()
         {
-            return Players.Any();
+            return (SelectedPlayers?.Any() ?? false) && (SelectedGameType is not null);
         }
     }
 }
