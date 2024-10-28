@@ -10,7 +10,6 @@ using System.Collections.ObjectModel;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Darts.MVVM;
 
 namespace Darts.MVVM.ViewModels;
 
@@ -32,8 +31,7 @@ public partial class DartsGameViewModel : ObservableObject, IDisposable
 
     public DartsGameViewModel(INewDartGameArgs newGameArgs, IDartGameFactory gameFactory, CurrentThreadScheduler guiScheduler)
     {
-        game = gameFactory.GetGame(newGameArgs.GameType, newGameArgs.GamePlayers.Select((x, i) => x.ToDartPlayer(i)).ToArray())
-            .DisposeWith(disposables);
+        game = gameFactory.GetGame(newGameArgs.GameType, newGameArgs.GamePlayers.Select((x, i) => x.ToDartPlayer(i)).ToArray());
         game.Players
             .Sort(SortExpressionComparer<Games.Models.Player>.Ascending(p => p.PlayerOrder))
             .ObserveOn(guiScheduler)

@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace Darts.MVVM.ViewModels;
 
-public partial class CreateGameViewModel : ObservableObject, INewDartGameArgs
+public partial class CreateGameViewModel : ObservableObject
 {
     private IPageNavigation pageNavigation;
     private readonly IAbstractFactory<Player, IDialogWindow<Player>> playerDialogWindow;
@@ -23,9 +23,8 @@ public partial class CreateGameViewModel : ObservableObject, INewDartGameArgs
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartGameCommand))]
-    private IList<DAL.Entities.Player> selectedPlayers = Array.Empty<DAL.Entities.Player>();
+    private IList<Player> selectedPlayers = Array.Empty<Player>();
 
-    public IList<DAL.Entities.Player> GamePlayers => SelectedPlayers;
     public GameTypes GameType => SelectedGameType.GameType;
 
     public ObservableCollection<GameTypeModel> GameTypes { get; } = new ObservableCollection<GameTypeModel>(

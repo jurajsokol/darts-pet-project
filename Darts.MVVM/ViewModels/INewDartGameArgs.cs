@@ -1,5 +1,5 @@
-﻿using Darts.DAL.Entities;
-using Darts.Games.Games;
+﻿using Darts.Games.Games;
+using Darts.MVVM.Models;
 
 namespace Darts.MVVM.ViewModels;
 
