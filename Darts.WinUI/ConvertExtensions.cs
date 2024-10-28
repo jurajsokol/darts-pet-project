@@ -24,16 +24,15 @@ namespace Darts.WinUI
             };
         }
 
-        public static Darts.Games.Models.Player ToDartPlayer(this Models.Player data)
+        public static Darts.Games.Models.Player ToDartPlayer(this Models.Player data, int count)
         {
-            return new Games.Models.Player(data.Name, 0, data.ID, false);
+            return new Games.Models.Player(data.Name, 0, count, false);
         }
 
         public static Models.Player ToModel(this Games.Models.Player data)
         {
             return new Models.Player()
-            { 
-                ID = data.PlayerOrder,
+            {
                 Name = data.PlayerName,
             };
         }

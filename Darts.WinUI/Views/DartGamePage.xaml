@@ -13,7 +13,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
-        <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
+        <converters:BoolToAccentColorConverter x:Key="BoolToColorConverter"/>
     </Page.Resources>
 
     <Grid>

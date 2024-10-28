@@ -34,7 +34,7 @@ namespace Darts.WinUI.ViewModels
 
         public DartsGameViewModel(INewDartGameArgs newGameArgs, IDartGameFactory gameFactory, CurrentThreadScheduler guiScheduler)
         {
-            game = gameFactory.GetGame(newGameArgs.GameType, newGameArgs.GamePlayers.Select(x => x.ToDartPlayer()).ToArray())
+            game = gameFactory.GetGame(newGameArgs.GameType, newGameArgs.GamePlayers.Select((x, i) => x.ToDartPlayer(i)).ToArray())
                 .DisposeWith(disposables);
             game.Players
                 .Sort(SortExpressionComparer<Games.Models.Player>.Ascending(p => p.PlayerOrder))

@@ -1,6 +1,7 @@
 ﻿using Darts.Games.Models;
 using DynamicData;
 using System.Reactive.Linq;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Darts.Games.Games
 {
@@ -44,12 +45,19 @@ namespace Darts.Games.Games
                 return;
             }
 
-            playerRoundScore.Edit(cache =>
-            {
-                Models.PlayerMove move = cache.Items.First(x => x.OrderNum == moveCount);
-                cache.AddOrUpdate(move with { TargetButton = number, TargetButtonType = type });
-            });
-            
+            Models.PlayerMove move = playerRoundScore.Items
+                .First(x => x.OrderNum == moveCount) with { TargetButton = number, TargetButtonType = type };
+
+            playerRoundScore.AddOrUpdate(move);
+            actualPlayer = actualPlayer with { Score = actualPlayer.Score - move.GetScore };
+            playersCollection.AddOrUpdate(actualPlayer);
+
+            // winner
+            if (actualPlayer.HasWon)
+            { 
+                
+            }
+
             moveCount++;
         }
 
@@ -58,7 +66,7 @@ namespace Darts.Games.Games
             int actualPLayerScore = playerRoundScore.Items.Select(x => x.GetScore).Sum();
             playersCollection.Edit(cache =>
             {
-                cache.AddOrUpdate(actualPlayer with { Score = actualPlayer.Score - actualPLayerScore, IsPlayerActive = false });
+                cache.AddOrUpdate(actualPlayer with { IsPlayerActive = false });
                 actualPlayer = (playersCollection.Items.FirstOrDefault(x => x.PlayerOrder == actualPlayer.PlayerOrder + 1) ?? playersCollection.Items.First()) with { IsPlayerActive = true };
                 cache.AddOrUpdate(actualPlayer);
             });
