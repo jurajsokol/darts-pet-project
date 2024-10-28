@@ -1,4 +1,4 @@
-﻿namespace Darts.WinUI.DependencyInjectionExtentions
+﻿namespace Darts.MVVM.DependencyInjectionExtentions
 {
     public interface IAbstractFactory<T>
     {

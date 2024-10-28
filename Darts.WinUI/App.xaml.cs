@@ -1,11 +1,11 @@
 ﻿using Darts.DAL;
 using Darts.Games.Games;
-using Darts.WinUI.DependencyInjectionExtentions;
-using Darts.WinUI.Models;
-using Darts.WinUI.PageNavigation;
-using Darts.WinUI.ViewModels;
-using Darts.WinUI.Views;
-using Darts.WinUI.Views.DialogWindow;
+using Darts.MVVM.DependencyInjectionExtentions;
+using Darts.MVVM.Models;
+using Darts.MVVM.PageNavigation;
+using Darts.MVVM.ViewModels;
+using Darts.MVVM.Views;
+using Darts.MVVM.Views.DialogWindow;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -19,7 +19,7 @@ using Windows.Storage;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Darts.WinUI
+namespace Darts.MVVM
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

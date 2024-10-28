@@ -1,4 +1,4 @@
-﻿namespace Darts.WinUI.Enums
+﻿namespace Darts.MVVM.Enums
 {
     public enum DartsNumberType
     {

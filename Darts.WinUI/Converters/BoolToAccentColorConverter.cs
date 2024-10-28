@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml.Media;
 using System;
 using Windows.UI;
 
-namespace Darts.WinUI.Converters
+namespace Darts.MVVM.Converters
 {
     public class BoolToAccentColorConverter : IValueConverter
     {

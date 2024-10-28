@@ -1,4 +1,4 @@
-using Darts.WinUI.Enums;
+using Darts.MVVM.Enums;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -8,7 +8,7 @@ using Windows.Devices.Geolocation;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Darts.WinUI.Views.Controls
+namespace Darts.MVVM.Views.Controls
 {
     [TemplatePart(Name = "BackgroundButtonElement", Type = typeof(Button))]
     [TemplatePart(Name = "DartDoubleButtonElement", Type = typeof(Button))]

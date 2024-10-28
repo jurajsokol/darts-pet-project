@@ -1,5 +1,4 @@
 ﻿using Darts.MVVM.Enums;
-using System;
 
 namespace Darts.MVVM
 {

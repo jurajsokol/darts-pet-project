@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Reactive.Disposables;
 
-namespace Darts.WinUI
+namespace Darts.MVVM
 {
     public static class RXExtensions
     {
-        public static T DisposeWith<T>(this T disposable, CompositeDisposable disposablesCollection) where T : IDisposable
+        public static IDisposable DisposeWith(this IDisposable disposable, CompositeDisposable disposablesCollection)
         { 
             disposablesCollection.Add(disposable);
             return disposable;

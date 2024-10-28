@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace Darts.WinUI.Controls
+namespace Darts.MVVM.Controls
 {
     public class GroupControlWithHeader : ContentControl
     {

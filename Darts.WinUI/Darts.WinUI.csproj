@@ -34,10 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="FluentResults" Version="3.15.2" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.4" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233" />
     <Manifest Include="$(ApplicationManifest)" />
@@ -54,6 +54,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Darts.DAL\Darts.DAL.csproj" />
     <ProjectReference Include="..\Darts.Games\Darts.Games.csproj" />
+    <ProjectReference Include="..\Darts.MVVM\Darts.MVVM.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\DartGamePage.xaml">

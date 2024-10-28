@@ -1,7 +1,7 @@
-﻿using Darts.WinUI.Enums;
+﻿using Darts.MVVM.Enums;
 using System;
 
-namespace Darts.WinUI.Views.Controls
+namespace Darts.MVVM.Views.Controls
 {
     public delegate void DartButtonClickEventHandler(object sender, DartButtonClickEventArgs e);
 
