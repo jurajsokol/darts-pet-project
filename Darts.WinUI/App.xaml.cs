@@ -5,7 +5,6 @@ using Darts.MVVM.Models;
 using Darts.MVVM.PageNavigation;
 using Darts.MVVM.ViewModels;
 using Darts.MVVM.Views;
-using Darts.MVVM.Views.DialogWindow;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -65,10 +64,9 @@ namespace Darts.MVVM
 
             services.AddDatabase(dbPath)
                 .AddSingleton<CurrentThreadScheduler>(_ => guiScheduler)
-                .AddSingleton<IPageNavigation>(_ => new PageNavigation.PageNavigation(RootFrame))
+                .AddSingleton<IPageNavigation, WinUI.PageNavigation>(_ => new Darts.WinUI.PageNavigation(RootFrame))
                 .AddFactory<Player, IDialogWindow<Player>>(model => new AddPlayerPage(model))
                 .AddSingleton<CreateGameViewModel>()
-                .AddSingleton<INewDartGameArgs, CreateGameViewModel>(services => services.GetService<CreateGameViewModel>())
                 .AddSingleton<IDartGameFactory, DartGameFactory>()
                 .AddTransient<DartsGameViewModel>()
                 .AddTransient<EditPlayersViewModel>();

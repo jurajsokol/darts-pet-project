@@ -1,11 +1,9 @@
 using Darts.MVVM.Models;
-using Darts.MVVM.Views.DialogWindow;
-using FluentResults;
 using Microsoft.UI.Xaml.Controls;
-using System.Xml.Linq;
 using System;
 using Microsoft.UI.Xaml;
 using System.Threading.Tasks;
+using Darts.MVVM.DependencyInjectionExtentions;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
