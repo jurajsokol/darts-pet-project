@@ -1,5 +1,5 @@
 using Avalonia.Controls;
-using Darts.MVVM.ViewModels;
+using Darts.Avalonia.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Darts.Avalonia.Views;

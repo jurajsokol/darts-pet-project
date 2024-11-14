@@ -6,7 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reactive.Concurrency;
 using System;
 using Darts.DAL;
-using Darts.MVVM;
+using Darts.Games.Games;
+using Darts.Avalonia.ViewModels;
 
 namespace Darts.Avalonia;
 
@@ -44,7 +45,9 @@ public partial class App : Application
         CurrentThreadScheduler guiScheduler = Scheduler.CurrentThread;
 
         var services = new ServiceCollection();
-        services.AddViewModels("./darts.db");
+
+        services.AddDatabase("./darts.db")
+            .AddTransient<CreateGameViewModel>();
 
         return services.BuildServiceProvider();
     }

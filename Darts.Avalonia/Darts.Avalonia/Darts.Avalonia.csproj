@@ -17,10 +17,15 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.0" />
+    <PackageReference Include="ReactiveUI.SourceGenerators" Version="2.0.17">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Semi.Avalonia" Version="11.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Darts.MVVM\Darts.MVVM.csproj" />
+    <ProjectReference Include="..\..\Darts.DAL\Darts.DAL.csproj" />
+    <ProjectReference Include="..\..\Darts.Games\Darts.Games.csproj" />
   </ItemGroup>
 </Project>
