@@ -4,14 +4,12 @@ using Darts.DAL;
 using Darts.Games.Games;
 using Darts.MVVM.DependencyInjectionExtentions;
 using Darts.MVVM.Models;
-using Darts.MVVM.PageNavigation;
 using System.Collections.ObjectModel;
 
 namespace Darts.MVVM.ViewModels;
 
 public partial class CreateGameViewModel : ObservableObject
 {
-    private IPageNavigation pageNavigation;
     private readonly IAbstractFactory<Player, IDialogWindow<Player>> playerDialogWindow;
     private readonly IUnitOfWork db;
 
@@ -25,6 +23,9 @@ public partial class CreateGameViewModel : ObservableObject
     [NotifyCanExecuteChangedFor(nameof(StartGameCommand))]
     private IList<Player> selectedPlayers = Array.Empty<Player>();
 
+    [ObservableProperty]
+    private bool isVisible = false;
+
     public GameTypes GameType => SelectedGameType.GameType;
 
     public ObservableCollection<GameTypeModel> GameTypes { get; } = new ObservableCollection<GameTypeModel>(
@@ -32,12 +33,16 @@ public partial class CreateGameViewModel : ObservableObject
         .Cast<GameTypes>()
         .Select(x => new GameTypeModel(x)));
 
-    public CreateGameViewModel(IPageNavigation pageNavigation, IAbstractFactory<Player, IDialogWindow<Player>> playerDialogWindow, IUnitOfWork db)
+    public CreateGameViewModel(IUnitOfWork db)
     {
-        this.pageNavigation = pageNavigation;
-        this.playerDialogWindow = playerDialogWindow;
         this.db = db;
         Players.CollectionChanged += (o, args) => StartGameCommand.NotifyCanExecuteChanged();
+    }
+
+    [RelayCommand]
+    private void SetVisisbility()
+    {
+        IsVisible = !IsVisible;
     }
 
     public async Task LoadPlayers()
@@ -53,7 +58,6 @@ public partial class CreateGameViewModel : ObservableObject
     [RelayCommand]
     private void EditPlayer()
     {
-        pageNavigation.SetPage<EditPlayersViewModel>();
     }
 
     [RelayCommand]
@@ -79,7 +83,6 @@ public partial class CreateGameViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanStartGame))]
     private void StartGame()
     {
-        pageNavigation.SetPage<DartsGameViewModel>();
     }
 
     private bool CanStartGame()

@@ -1,10 +1,36 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:controls="using:Darts.Avalonia.Controls"
              x:Class="Darts.Avalonia.App"
-             RequestedThemeVariant="Default">
+             RequestedThemeVariant="Default"
+			 xmlns:semi="https://irihi.tech/semi">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
   
     <Application.Styles>
-        <FluentTheme />
+		<semi:SemiTheme/>
     </Application.Styles>
+
+	<Application.Resources>
+		<ControlTheme x:Key="BasicGroupControl" TargetType="controls:GroupControl">
+			<Setter Property="Padding" Value="8"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<StackPanel Orientation="Vertical"
+								Margin="10">
+						<TextBlock Text="{TemplateBinding HeaderText}"
+								   FontWeight="Bold"
+								   FontSize="15"/>
+						<Border Margin="0, 5"
+								Padding="0"
+								Theme="{StaticResource CardBorder}"
+								Classes="Shadow">
+							<ContentPresenter Content="{TemplateBinding Content}"/>
+						</Border>
+					</StackPanel>
+				</ControlTemplate>
+			</Setter>
+		</ControlTheme>
+		
+	</Application.Resources>
+	
 </Application>

@@ -7,7 +7,7 @@ public partial class Player : ObservableObject
     public int ID { get; init; }
 
     [ObservableProperty]
-    private string name;
+    private string name = string.Empty;
 
     [ObservableProperty]
     private int orderNumber;

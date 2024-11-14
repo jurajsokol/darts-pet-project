@@ -1,12 +1,23 @@
 using Avalonia.Controls;
+using Darts.MVVM.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Darts.Avalonia.Views
+namespace Darts.Avalonia.Views;
+
+public partial class MainView : UserControl
 {
-    public partial class MainView : UserControl
+    public CreateGameViewModel ViewModel { get; }
+
+    public MainView()
     {
-        public MainView()
+        InitializeComponent();
+
+        ViewModel = App.Services!.GetRequiredService<CreateGameViewModel>();
+        DataContext = ViewModel;
+
+        Loaded += async (_, _) => 
         {
-            InitializeComponent();
-        }
+            await ViewModel.LoadPlayers();
+        };
     }
 }
