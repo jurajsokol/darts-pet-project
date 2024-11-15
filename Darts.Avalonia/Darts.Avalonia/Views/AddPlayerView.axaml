@@ -15,7 +15,6 @@
 		<StackPanel Orientation="Horizontal"
 					HorizontalAlignment="Right">
 			<Button Content="Cancel"
-					Command="{Binding HostScreen.Router.NavigateBack}"
 					IsCancel="True"
 					Theme="{StaticResource BorderlessButton}"
 					Classes="Danger"/>

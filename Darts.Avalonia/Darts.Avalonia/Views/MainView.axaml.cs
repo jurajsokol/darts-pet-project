@@ -1,20 +1,14 @@
-using Avalonia.ReactiveUI;
-using Darts.Avalonia.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
+using Avalonia.Controls;
+using Darts.Avalonia.ViewRouting;
 
 namespace Darts.Avalonia.Views;
 
-public partial class MainView : ReactiveUserControl<RoutingViewModel>
+public partial class MainView : UserControl
 {
-    public RoutingViewModel ViewModel { get; }
-
-    public MainView()
+    public MainView(PageNavigation pageNavigation)
     {
-        ViewModel = App.Services!.GetRequiredService<RoutingViewModel>();
-        DataContext = ViewModel;
-
         InitializeComponent();
-
-        ViewModel.GoNext.Execute();
+        RouterViewHost.Router = pageNavigation.RoutingState;
+        pageNavigation.GoNextCommand.Execute();
     }
 }

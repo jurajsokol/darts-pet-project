@@ -8,10 +8,11 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Darts.DAL;
+using Darts.Avalonia.ViewRouting;
 
 namespace Darts.Avalonia.ViewModels;
 
-public partial class CreateGameViewModel : ReactiveObject, IRoutableViewModel
+public partial class CreateGameViewModel : ReactiveObject
 {
     private readonly IUnitOfWork db;
 
@@ -24,10 +25,7 @@ public partial class CreateGameViewModel : ReactiveObject, IRoutableViewModel
         .Select(x => new GameTypeModel(x)));
 
     public ObservableCollection<Player> Players { get; } = new();
-
-    public string? UrlPathSegment { get; } = Guid.NewGuid().ToString();
-
-    public IScreen HostScreen { get; }
+    public IPageNavigation PageNavigation { get; }
 
     [Reactive]
     private IList<Player> selectedPlayers = Array.Empty<Player>();
@@ -35,10 +33,10 @@ public partial class CreateGameViewModel : ReactiveObject, IRoutableViewModel
     [Reactive]
     private bool isVisible = false;
 
-    public CreateGameViewModel(IUnitOfWork db, IScreen hostScreen)
+    public CreateGameViewModel(IUnitOfWork db, IPageNavigation pageNavigation)
     {
         this.db = db;
-        HostScreen = hostScreen;
+        PageNavigation = pageNavigation;
     }
 
     public async Task LoadPlayers()
@@ -60,6 +58,6 @@ public partial class CreateGameViewModel : ReactiveObject, IRoutableViewModel
     [ReactiveCommand]
     private void AddPlayer()
     {
-        HostScreen.Router.Navigate.Execute(new AddPlayerViewModel());
+        PageNavigation.GoNext<AddPlayerViewModel>();
     }
 }

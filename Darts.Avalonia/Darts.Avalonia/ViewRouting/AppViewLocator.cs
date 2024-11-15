@@ -1,6 +1,7 @@
 ﻿using Darts.Avalonia.ViewModels;
 using ReactiveUI;
 using System;
+using System.Linq;
 
 namespace Darts.Avalonia.ViewRouting;
 
@@ -8,11 +9,13 @@ public class AppViewLocator : IViewLocator
 {
     public IViewFor? ResolveView<T>(T? viewModel, string? contract = null)
     {
-        return viewModel switch
+        Type? genericType = viewModel?.GetType().GetGenericArguments().FirstOrDefault();
+
+        return genericType switch
         {
-            CreateGameViewModel context => new CreateGameView(context),
-            AddPlayerViewModel context => new AddPlayerView(),
-            _ => throw new NotImplementedException($"Cannot locate view for {typeof(T).Name}")
+            Type t when t == typeof(CreateGameViewModel) => new CreateGameView(),
+            Type t when t == typeof(AddPlayerViewModel) => new AddPlayerView(),
+            _ => null
         };
     }
 }

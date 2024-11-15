@@ -24,13 +24,15 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        MainView mainView = new MainView(Services.GetRequiredService<ViewRouting.PageNavigation>());
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow();
+            desktop.MainWindow = new MainWindow() { Content = mainView };
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
-            singleViewPlatform.MainView = new MainView();
+            singleViewPlatform.MainView = mainView;
         }
 
         base.OnFrameworkInitializationCompleted();
@@ -48,8 +50,7 @@ public partial class App : Application
         var services = new ServiceCollection();
 
         services.AddDatabase("./darts.db")
-            .AddSingleton<RoutingViewModel>()
-            .AddSingleton<IScreen, RoutingViewModel>(serviceCollection => serviceCollection.GetRequiredService<RoutingViewModel>())
+            .AddPageNavigation()
             .AddSingleton<CreateGameViewModel>();
 
         return services.BuildServiceProvider();

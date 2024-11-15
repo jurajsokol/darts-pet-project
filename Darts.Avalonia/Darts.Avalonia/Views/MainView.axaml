@@ -6,9 +6,9 @@
 			 xmlns:vm="using:Darts.Avalonia.ViewModels"
 			 xmlns:app="clr-namespace:Darts.Avalonia.ViewRouting;assembly=Darts.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Darts.Avalonia.Views.MainView"
-			 x:DataType="vm:RoutingViewModel">
-	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
+             x:Class="Darts.Avalonia.Views.MainView">
+	<rxui:RoutedViewHost Grid.Row="0"
+						 x:Name="RouterViewHost">
 		<rxui:RoutedViewHost.DefaultContent>
 			<TextBlock Text="Default content"
 					   HorizontalAlignment="Center"
