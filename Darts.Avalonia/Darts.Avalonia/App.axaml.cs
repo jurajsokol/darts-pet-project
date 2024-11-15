@@ -8,6 +8,7 @@ using System;
 using Darts.DAL;
 using Darts.Games.Games;
 using Darts.Avalonia.ViewModels;
+using ReactiveUI;
 
 namespace Darts.Avalonia;
 
@@ -47,7 +48,9 @@ public partial class App : Application
         var services = new ServiceCollection();
 
         services.AddDatabase("./darts.db")
-            .AddTransient<CreateGameViewModel>();
+            .AddSingleton<RoutingViewModel>()
+            .AddSingleton<IScreen, RoutingViewModel>(serviceCollection => serviceCollection.GetRequiredService<RoutingViewModel>())
+            .AddSingleton<CreateGameViewModel>();
 
         return services.BuildServiceProvider();
     }

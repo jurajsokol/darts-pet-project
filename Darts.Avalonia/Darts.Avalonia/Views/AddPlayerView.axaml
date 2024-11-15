@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:Darts.Avalonia.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Darts.Avalonia.AddPlayerView"
+			 x:DataType="vm:AddPlayerViewModel">
+	<StackPanel Width="400"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center">
+		<TextBlock Text="Player name"
+					Margin="0, 10"/>
+		<TextBox/>
+		<StackPanel Orientation="Horizontal"
+					HorizontalAlignment="Right">
+			<Button Content="Cancel"
+					Command="{Binding HostScreen.Router.NavigateBack}"
+					IsCancel="True"
+					Theme="{StaticResource BorderlessButton}"
+					Classes="Danger"/>
+			<Button Content="Ok"
+					IsDefault="True"/>
+		</StackPanel>
+	</StackPanel>
+</UserControl>

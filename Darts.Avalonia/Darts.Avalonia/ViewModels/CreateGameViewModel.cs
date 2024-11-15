@@ -11,7 +11,7 @@ using Darts.DAL;
 
 namespace Darts.Avalonia.ViewModels;
 
-public partial class CreateGameViewModel : ReactiveObject
+public partial class CreateGameViewModel : ReactiveObject, IRoutableViewModel
 {
     private readonly IUnitOfWork db;
 
@@ -25,15 +25,20 @@ public partial class CreateGameViewModel : ReactiveObject
 
     public ObservableCollection<Player> Players { get; } = new();
 
+    public string? UrlPathSegment { get; } = Guid.NewGuid().ToString();
+
+    public IScreen HostScreen { get; }
+
     [Reactive]
     private IList<Player> selectedPlayers = Array.Empty<Player>();
 
     [Reactive]
     private bool isVisible = false;
 
-    public CreateGameViewModel(IUnitOfWork db)
+    public CreateGameViewModel(IUnitOfWork db, IScreen hostScreen)
     {
         this.db = db;
+        HostScreen = hostScreen;
     }
 
     public async Task LoadPlayers()
@@ -50,5 +55,11 @@ public partial class CreateGameViewModel : ReactiveObject
     private void SetVisibility()
     {
         IsVisible = !IsVisible;
+    }
+
+    [ReactiveCommand]
+    private void AddPlayer()
+    {
+        HostScreen.Router.Navigate.Execute(new AddPlayerViewModel());
     }
 }
