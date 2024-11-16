@@ -1,49 +1,66 @@
-﻿using Darts.Avalonia.ViewModels;
+﻿using Avalonia.Controls;
+using Darts.Avalonia.ViewModels;
+using Darts.Avalonia.Views;
+using Darts.Avalonia.Views.Dialog;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive;
 
 namespace Darts.Avalonia.ViewRouting;
 
 public class PageNavigation : IPageNavigation
 {
-    private readonly RoutingStateWrapper routingStateWrapper;
+    private readonly TransitioningContentControl contentControl;
     private readonly IServiceProvider services;
+    private Stack<Control> navigationStack = new Stack<Control>();
 
-    public RoutingState RoutingState { get; }
-    public ReactiveCommand<Unit, IRoutableViewModel> GoNextCommand { get; }
-    public ReactiveCommand<Unit, IRoutableViewModel> GoBackCommand => RoutingState.NavigateBack;
+    public ReactiveCommand<Type, Unit> GoNextCommand { get; }
 
-    public PageNavigation(RoutingStateWrapper routingStateWrapper, RoutingState routingState, IServiceProvider services)
+    public ReactiveCommand<Unit, Unit> GoBackCommand { get; }
+
+    public PageNavigation(TransitioningContentControl contentControl, IServiceProvider services)
     {
-        this.routingStateWrapper = routingStateWrapper;
-        RoutingState = routingState;
+        this.contentControl = contentControl;
         this.services = services;
-        GoNextCommand = ReactiveCommand.CreateFromObservable(
-            () =>  RoutingState.Navigate.Execute(GetWrapper(services.GetRequiredService<CreateGameViewModel>()))
-        );
+
+        GoBackCommand = ReactiveCommand.Create(() => GoBack());
+    }
+
+    public void SetFirstView<T>() where T : ReactiveObject
+    {
+        contentControl.Content = ResolveView<CreateGameViewModel>();
     }
 
     public void GoNext<T>() where T : ReactiveObject
     {
-        RoutableViewModelWrapper<T> viewModel = typeof(T) switch
+        Control? actualControl = contentControl.Content as Control;
+        if (actualControl is not null)
+        { 
+            navigationStack.Push(actualControl);
+        }
+
+        contentControl.Content = ResolveView<T>();
+    }
+
+    private Control ResolveView<T>() where T : ReactiveObject
+    {
+        return typeof(T) switch
         {
-            Type t when t == typeof(AddPlayerViewModel) => GetWrapper(services.GetRequiredService<T>()),
-            Type t when t == typeof(CreateGameViewModel) => GetWrapper(services.GetRequiredService<T>()),
+            Type t when t == typeof(AddPlayerViewModel) => services.GetRequiredService<AddPlayerView>(),
+            Type t when t == typeof(CreateGameViewModel) => services.GetRequiredService<CreateGameView>(),
 
             _ => throw new NotImplementedException(),
         };
-
-        RoutingState.Navigate.Execute(viewModel);
     }
 
     public void GoBack()
     {
-        RoutingState.NavigateBack.Execute();
+        if (navigationStack.Any())
+        {
+            contentControl.Content = navigationStack.Pop();
+        }
     }
-
-    private RoutableViewModelWrapper<T> GetWrapper<T>(T viewModel) 
-        where T : ReactiveObject
-        => new RoutableViewModelWrapper<T>(routingStateWrapper, viewModel);
 }

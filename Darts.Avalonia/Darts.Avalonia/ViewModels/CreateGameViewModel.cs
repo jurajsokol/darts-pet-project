@@ -9,13 +9,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Darts.DAL;
 using Darts.Avalonia.ViewRouting;
+using Darts.Avalonia.Views.Dialog;
 
 namespace Darts.Avalonia.ViewModels;
 
 public partial class CreateGameViewModel : ReactiveObject
 {
     private readonly IUnitOfWork db;
-
+    private readonly IDialogManager dialogManager;
     [Reactive]
     private GameTypeModel selectedGameType;
 
@@ -33,10 +34,11 @@ public partial class CreateGameViewModel : ReactiveObject
     [Reactive]
     private bool isVisible = false;
 
-    public CreateGameViewModel(IUnitOfWork db, IPageNavigation pageNavigation)
+    public CreateGameViewModel(IUnitOfWork db, IPageNavigation pageNavigation, IDialogManager dialogManager)
     {
         this.db = db;
         PageNavigation = pageNavigation;
+        this.dialogManager = dialogManager;
     }
 
     public async Task LoadPlayers()
@@ -56,8 +58,8 @@ public partial class CreateGameViewModel : ReactiveObject
     }
 
     [ReactiveCommand]
-    private void AddPlayer()
+    private Task AddPlayer()
     {
-        PageNavigation.GoNext<AddPlayerViewModel>();
+        return dialogManager.ShowDialog<AddPlayerViewModel>();
     }
 }

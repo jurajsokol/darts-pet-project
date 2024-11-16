@@ -4,20 +4,12 @@
 			 xmlns:rxui="http://reactiveui.net"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="using:Darts.Avalonia.ViewModels"
+			 xmlns:local="using:Darts.Avalonia.Views"
 			 xmlns:app="clr-namespace:Darts.Avalonia.ViewRouting;assembly=Darts.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Darts.Avalonia.Views.MainView">
-	<rxui:RoutedViewHost Grid.Row="0"
-						 x:Name="RouterViewHost">
-		<rxui:RoutedViewHost.DefaultContent>
-			<TextBlock Text="Default content"
-					   HorizontalAlignment="Center"
-					   VerticalAlignment="Center" />
-		</rxui:RoutedViewHost.DefaultContent>
-		<rxui:RoutedViewHost.ViewLocator>
-			<!-- See AppViewLocator.cs section below -->
-			<app:AppViewLocator />
-		</rxui:RoutedViewHost.ViewLocator>
-	</rxui:RoutedViewHost>
-	
+			 x:Class="Darts.Avalonia.Views.MainView">
+
+	<Panel x:Name="MainPanel">
+		<TransitioningContentControl Name="NavigationPanel"/>
+	</Panel>
 </UserControl>

@@ -1,4 +1,5 @@
 ﻿using Darts.Avalonia.ViewRouting;
+using Darts.Avalonia.Views;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 
@@ -8,9 +9,8 @@ namespace Darts.Avalonia
     {
         public static IServiceCollection AddPageNavigation(this IServiceCollection services)
         {
-            return services.AddSingleton<RoutingState>()
-                .AddSingleton<RoutingStateWrapper>()
-                .AddSingleton<PageNavigation>()
+            return services
+                .AddSingleton<PageNavigation>(s => new PageNavigation(s.GetRequiredService<MainView>().NavigationPanel, s))
                 .AddSingleton<IPageNavigation, PageNavigation>(s => s.GetRequiredService<PageNavigation>());
         }
     }

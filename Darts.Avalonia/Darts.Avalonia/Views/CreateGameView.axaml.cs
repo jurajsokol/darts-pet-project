@@ -1,32 +1,17 @@
 using Avalonia.Controls;
-using Avalonia.ReactiveUI;
 using Darts.Avalonia.ViewModels;
-using Darts.Avalonia.ViewRouting;
-using ReactiveUI;
+using Darts.Avalonia.Views.Dialog;
 
-namespace Darts.Avalonia;
+namespace Darts.Avalonia.Views;
 
-public partial class CreateGameView : ReactiveUserControl<CreateGameViewModel>, IViewFor<CreateGameViewModel>
+public partial class CreateGameView : UserControl
 {
-    private CreateGameViewModel? viewModel;
-    public CreateGameViewModel? ViewModel
-    { 
-        get => viewModel;
-        set
-        {
-            viewModel = value;
-            DataContext = value;
-        }
-    }
+    public CreateGameViewModel ViewModel { get; }
 
-    object? IViewFor.ViewModel
+    public CreateGameView(CreateGameViewModel viewModel)
     {
-        get => ViewModel;
-        set => ViewModel = (value as RoutableViewModelWrapper<CreateGameViewModel>).ViewModel;
-    }
-
-    public CreateGameView()
-    {
+        ViewModel = viewModel;
+        DataContext = ViewModel;
         InitializeComponent();
         Loaded += async (_, _) => await ViewModel.LoadPlayers();
     }

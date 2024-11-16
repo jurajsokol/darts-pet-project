@@ -5,10 +5,8 @@ namespace Darts.Avalonia.Views;
 
 public partial class MainView : UserControl
 {
-    public MainView(PageNavigation pageNavigation)
+    public MainView()
     {
         InitializeComponent();
-        RouterViewHost.Router = pageNavigation.RoutingState;
-        pageNavigation.GoNextCommand.Execute();
     }
 }
