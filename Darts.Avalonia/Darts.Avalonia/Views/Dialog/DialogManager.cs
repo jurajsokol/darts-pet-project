@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using System;
@@ -17,14 +18,14 @@ public class DialogManager : IDialogManager
         this.serviceCollection = serviceCollection;
     }
 
-    public async Task<T> ShowDialog<T>() where T : ReactiveObject
+    public async Task<(DialogResult, T)> ShowDialog<T>() where T : ObservableObject
     {
-        IDialog<T> dialog = serviceCollection.GetRequiredService<IDialog<T>>();
+        DialogBase<T> dialog = serviceCollection.GetRequiredService<DialogBase<T>>();
 
-        panel.Children.Add(dialog as Control);
-        await (dialog as AddPlayerView).Show();
-        panel.Children.Remove(dialog as Control);
-        return dialog.ViewModel;
+        panel.Children.Add(dialog);
+        DialogResult result = await dialog.Show();
+        panel.Children.Remove(dialog);
+        return (result, dialog.ViewModel);
     }
 
 }

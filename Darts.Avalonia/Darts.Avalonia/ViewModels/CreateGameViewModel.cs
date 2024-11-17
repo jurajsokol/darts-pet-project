@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Darts.DAL;
 using Darts.Avalonia.ViewRouting;
 using Darts.Avalonia.Views.Dialog;
+using System.Reactive.Linq;
 
 namespace Darts.Avalonia.ViewModels;
 
@@ -58,8 +59,14 @@ public partial class CreateGameViewModel : ReactiveObject
     }
 
     [ReactiveCommand]
-    private Task AddPlayer()
+    private async Task AddPlayer()
     {
-        return dialogManager.ShowDialog<AddPlayerViewModel>();
+        (DialogResult, AddPlayerViewModel) data = await dialogManager.ShowDialog<AddPlayerViewModel>();
+        if (data.Item1 == DialogResult.Ok)
+        { 
+            await db.Players.Add(new DAL.Entities.Player() { Name = data.Item2.Name });
+            await db.CompleteAsync();
+            await LoadPlayers();
+        }
     }
 }

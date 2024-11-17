@@ -6,9 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reactive.Concurrency;
 using System;
 using Darts.DAL;
-using Darts.Games.Games;
 using Darts.Avalonia.ViewModels;
-using ReactiveUI;
 using Darts.Avalonia.Views.Dialog;
 using Darts.Avalonia.ViewRouting;
 
@@ -56,7 +54,7 @@ public partial class App : Application
             .AddPageNavigation()
             .AddSingleton<MainView>()
             .AddTransient<CreateGameView>()
-            .AddTransient<IDialog<AddPlayerViewModel>, AddPlayerView>()
+            .AddTransient<DialogBase<AddPlayerViewModel>, AddPlayerView>()
             .AddSingleton<CreateGameViewModel>()
             .AddSingleton<AddPlayerViewModel>()
             .AddSingleton<IDialogManager, DialogManager>(s => new DialogManager(s.GetRequiredService<MainView>().MainPanel, s));
