@@ -48,11 +48,11 @@
 		</controls:GroupControl>
 
 		<controls:GroupControl HeaderText="Players"
-								Grid.Row="1"
-								Theme="{StaticResource BasicGroupControl}">
+							   Grid.Row="1"
+							   Theme="{StaticResource BasicGroupControl}">
 			<ListBox SelectionMode="Multiple,Toggle"
-					ItemsSource="{Binding Players, Mode=OneWay}"
-					SelectedItem="{Binding SelectedPlayers}">
+				     ItemsSource="{Binding Players, Mode=OneWay}"
+					 SelectedItems="{Binding SelectedPlayers}">
 				<ListBox.DataTemplates>
 					<DataTemplate x:DataType="vmModels:Player">
 						<TextBlock Text="{Binding Name, Mode=OneWay}"
@@ -68,7 +68,8 @@
 			<Button Content="Add player"
 					Command="{Binding AddPlayerCommand}"/>
 			<Button Content="Remove player"
-					Classes="Danger" />
+					Classes="Danger"
+					Command="{Binding RemoveSelectedPlayersCommand}"/>
 			<Button Content="Edit player"/>
 			<Button Content="Start Game"
 					Classes="Primary"

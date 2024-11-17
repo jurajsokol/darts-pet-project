@@ -30,7 +30,7 @@ public partial class CreateGameViewModel : ReactiveObject
     public IPageNavigation PageNavigation { get; }
 
     [Reactive]
-    private IList<Player> selectedPlayers = Array.Empty<Player>();
+    private List<Player> selectedPlayers = new();
 
     [Reactive]
     private bool isVisible = false;
@@ -68,5 +68,17 @@ public partial class CreateGameViewModel : ReactiveObject
             await db.CompleteAsync();
             await LoadPlayers();
         }
+    }
+
+    [ReactiveCommand]
+    private async Task RemoveSelectedPlayers()
+    {
+        foreach (int id in SelectedPlayers.Select(x => x.ID).ToArray())
+        {
+            await db.Players.Delete(id);
+        }
+
+        await db.CompleteAsync();
+        await LoadPlayers();
     }
 }

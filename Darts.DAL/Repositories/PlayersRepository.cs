@@ -1,6 +1,5 @@
 ﻿using Darts.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
 
 namespace Darts.DAL.Repositories
 {
@@ -28,8 +27,12 @@ namespace Darts.DAL.Repositories
 
         public async Task Delete(int id)
         {
-            T data = await dbSet.FindAsync(id);
-            dbSet.Remove(data);
+            T? data = await dbSet.FindAsync(id);
+
+            if (data is not null)
+            { 
+                dbSet.Remove(data);
+            }
         }
 
         public async Task<IEnumerable<T>> GetAll()
