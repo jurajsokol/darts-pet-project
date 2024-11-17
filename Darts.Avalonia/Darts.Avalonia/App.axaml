@@ -1,6 +1,7 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:controls="using:Darts.Avalonia.Controls"
+			 xmlns:dartControl="using:Darts.Avalonia.Controls.DartControl"
              x:Class="Darts.Avalonia.App"
              RequestedThemeVariant="Default"
 			 xmlns:semi="https://irihi.tech/semi">
@@ -27,6 +28,209 @@
 							<ContentPresenter Content="{TemplateBinding Content}"/>
 						</Border>
 					</StackPanel>
+				</ControlTemplate>
+			</Setter>
+		</ControlTheme>
+
+		<ControlTheme TargetType="dartControl:DartButtonControl"
+					  x:Key="DartBackgroundButtonStyle">
+			<Setter Property="Template">
+				<ControlTemplate TargetType="dartControl:DartButtonControl">
+					<Path Stroke="Black"
+						  StrokeThickness="1"
+						  Fill="#fbe2b8">
+
+						<Path.Data>
+							<PathGeometry>
+								<PathGeometry.Figures>
+									<PathFigure StartPoint="0,0">
+										<PathFigure.Segments>
+											<LineSegment Point="31,-200" />
+											<ArcSegment Size="200,200"
+														RotationAngle="0"
+														IsLargeArc="False"
+														SweepDirection="CounterClockwise"
+														Point="-31,-200" />
+											<LineSegment Point="0,0" />
+										</PathFigure.Segments>
+									</PathFigure>
+								</PathGeometry.Figures>
+							</PathGeometry>
+						</Path.Data>
+					</Path>
+				</ControlTemplate>
+			</Setter>
+		</ControlTheme>
+
+		<ControlTheme x:Key="DartBackgroundButtonControlStyle"
+					  TargetType="dartControl:DartBackgroundButtonControl">
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Canvas>
+
+						<dartControl:DartButtonControl Theme="{StaticResource DartBackgroundButtonStyle}"
+                                                       IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}"
+                                                       Name="BackgroundButtonElement"/>
+						<dartControl:DartButtonControl IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}"
+                                                       Name="DartDoubleButtonElement">
+							<dartControl:DartButtonControl.Theme>
+								<ControlTheme TargetType="dartControl:DartButtonControl">
+									<Setter Property="Template">
+										<ControlTemplate TargetType="dartControl:DartButtonControl">
+											<Path Stroke="Black"
+                                                    Width="50"
+                                                    Height="50"
+                                                    StrokeThickness="1"
+                                                    Name="DoubleDartPath"
+													Fill="#3b933a">
+
+												<Path.Data>
+													<PathGeometry>
+														<PathGeometry.Figures>
+															<PathFigure StartPoint="28,-180">
+																<PathFigure.Segments>
+																	<LineSegment Point="31,-200" />
+																	<ArcSegment Size="200,200"
+                                                                                RotationAngle="0"
+                                                                                IsLargeArc="False"
+                                                                                SweepDirection="CounterClockwise"
+                                                                                Point="-31,-200" />
+																	<LineSegment Point="-28,-180" />
+																	<ArcSegment Size="170,170"
+                                                                                RotationAngle="0"
+                                                                                IsLargeArc="False"
+                                                                                SweepDirection="Clockwise"
+                                                                                Point="28,-180" />
+																</PathFigure.Segments>
+															</PathFigure>
+														</PathGeometry.Figures>
+													</PathGeometry>
+												</Path.Data>
+											</Path>
+										</ControlTemplate>
+									</Setter>
+								</ControlTheme>
+							</dartControl:DartButtonControl.Theme>
+						</dartControl:DartButtonControl>
+						<dartControl:DartButtonControl IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}"
+                                                       Name="DartTrippleButtonElement">
+							<dartControl:DartButtonControl.Theme>
+								<ControlTheme TargetType="dartControl:DartButtonControl">
+									<Setter Property="Template">
+										<ControlTemplate TargetType="dartControl:DartButtonControl">
+											<Path Stroke="Black"
+                                                    StrokeThickness="1"
+                                                    Width="50"
+                                                    Height="50"
+                                                    Name="TripleDartPath"
+													Fill="#3b933a">
+
+												<Path.Data>
+													<PathGeometry>
+														<PathGeometry.Figures>
+															<PathFigure StartPoint="16,-100">
+																<PathFigure.Segments>
+																	<LineSegment Point="19,-120" />
+																	<ArcSegment Size="120,120"
+                                                                                RotationAngle="0"
+                                                                                IsLargeArc="False"
+                                                                                SweepDirection="CounterClockwise"
+                                                                                Point="-19,-120" />
+																	<LineSegment Point="-16,-100" />
+																	<ArcSegment Size="100,100"
+                                                                                RotationAngle="0"
+                                                                                IsLargeArc="False"
+                                                                                SweepDirection="Clockwise"
+                                                                                Point="16,-100" />
+																</PathFigure.Segments>
+															</PathFigure>
+														</PathGeometry.Figures>
+													</PathGeometry>
+												</Path.Data>
+											</Path>
+										</ControlTemplate>
+									</Setter>
+								</ControlTheme>
+							</dartControl:DartButtonControl.Theme>
+						</dartControl:DartButtonControl>
+
+						<Grid Canvas.Top="-250"
+                              Canvas.Left="-30"
+                              Width="60"
+                              Height="45"
+                              Name="ButtonNumberTextContainer">
+							<TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ButtonNumber}"
+                                       Foreground="White"
+                                       FontSize="35"
+                                       Name="ButtonNumberText"
+                                       HorizontalAlignment="Center"/>
+						</Grid>
+					</Canvas>
+				</ControlTemplate>
+			</Setter>
+		</ControlTheme>
+
+		<ControlTheme TargetType="dartControl:DartTargetControl"
+					  x:Key="DartTargetControlTheme">
+			<Setter Property="Template">
+				<ControlTemplate TargetType="dartControl:DartTargetControl">
+					<Grid Name="BackgroundButtonsCanvas">
+						<Button Name="DartMissButton">
+							<Button.Theme>
+								<ControlTheme TargetType="Button">
+									<Setter Property="Template">
+										<ControlTemplate TargetType="Button">
+											<Ellipse Height="500"
+														Width="500"
+														Fill="Black"
+														HorizontalAlignment="Center"
+														VerticalAlignment="Center" />
+										</ControlTemplate>
+									</Setter>
+								</ControlTheme>
+							</Button.Theme>
+						</Button>
+
+						<Button HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Name="SingleBullsEye">
+							<Button.Theme>
+								<ControlTheme TargetType="Button">
+									<Setter Property="Template">
+										<ControlTemplate TargetType="Button">
+											<Ellipse Width="80"
+														Height="80"
+														Fill="#3b933a"
+														Stroke="Black"
+														StrokeThickness="1"
+														HorizontalAlignment="Center"
+														VerticalAlignment="Center" />
+										</ControlTemplate>
+									</Setter>
+								</ControlTheme>
+							</Button.Theme>
+						</Button>
+
+						<Button HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Name="DoubleBullsEye">
+							<Button.Theme>
+								<ControlTheme TargetType="Button">
+									<Setter Property="Template">
+										<ControlTemplate TargetType="Button">
+											<Ellipse Width="40"
+														Height="40"
+														Fill="#e93222"
+														Stroke="Black"
+														StrokeThickness="1"
+														HorizontalAlignment="Center"
+														VerticalAlignment="Center" />
+										</ControlTemplate>
+									</Setter>
+								</ControlTheme>
+							</Button.Theme>
+						</Button>
+					</Grid>
 				</ControlTemplate>
 			</Setter>
 		</ControlTheme>

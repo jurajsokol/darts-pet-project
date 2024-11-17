@@ -73,8 +73,8 @@
 			<Button Content="Edit player"/>
 			<Button Content="Start Game"
 					Classes="Primary"
-					IsDefault=""
-					IsEnabled="False"
+					IsDefault="True"
+					Command="{Binding StartGameCommand}"
 					Theme="{StaticResource SolidButton}"/>
 		</StackPanel>
 

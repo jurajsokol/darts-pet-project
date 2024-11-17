@@ -51,6 +51,7 @@ public class PageNavigation : IPageNavigation
         {
             Type t when t == typeof(AddPlayerViewModel) => services.GetRequiredService<AddPlayerView>(),
             Type t when t == typeof(CreateGameViewModel) => services.GetRequiredService<CreateGameView>(),
+            Type t when t == typeof(DartGameX01ViewModel) => services.GetRequiredService<DartGameX01View>(),
 
             _ => throw new NotImplementedException(),
         };

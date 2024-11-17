@@ -9,6 +9,7 @@ using Darts.DAL;
 using Darts.Avalonia.ViewModels;
 using Darts.Avalonia.Views.Dialog;
 using Darts.Avalonia.ViewRouting;
+using Darts.Games.Games;
 
 namespace Darts.Avalonia;
 
@@ -24,8 +25,8 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        MainView mainView = Services.GetRequiredService<MainView>();
-        Services.GetRequiredService<PageNavigation>().SetFirstView<CreateGameViewModel>();
+        MainView mainView = Services!.GetRequiredService<MainView>();
+        Services!.GetRequiredService<PageNavigation>().SetFirstView<CreateGameViewModel>();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -57,6 +58,8 @@ public partial class App : Application
             .AddTransient<DialogBase<AddPlayerViewModel>, AddPlayerView>()
             .AddSingleton<CreateGameViewModel>()
             .AddSingleton<AddPlayerViewModel>()
+            .AddTransient<DartGameX01View>()
+            .AddTransient<DartGameX01ViewModel>()
             .AddSingleton<IDialogManager, DialogManager>(s => new DialogManager(s.GetRequiredService<MainView>().MainPanel, s));
 
         return services.BuildServiceProvider();

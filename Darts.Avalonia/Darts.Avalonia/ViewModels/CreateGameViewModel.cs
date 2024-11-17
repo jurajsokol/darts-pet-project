@@ -81,4 +81,10 @@ public partial class CreateGameViewModel : ReactiveObject
         await db.CompleteAsync();
         await LoadPlayers();
     }
+
+    [ReactiveCommand]
+    private void StartGame()
+    {
+        PageNavigation.GoNext<DartGameX01ViewModel>();
+    }
 }
