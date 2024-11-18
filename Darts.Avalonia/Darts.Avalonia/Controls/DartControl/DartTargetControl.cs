@@ -5,6 +5,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
 using Avalonia.Styling;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 
@@ -39,16 +40,42 @@ public class DartTargetControl : Button
     };
     private const int BUTTON_ANGLE = 18;
 
+    private ICommand clickCommand;
     public static DirectProperty<DartTargetControl, ICommand> ClickCommandProperty =
         AvaloniaProperty.RegisterDirect<DartTargetControl, ICommand>(nameof(ClickCommand), o => o.ClickCommand, (o, v) => o.ClickCommand = v);
 
     public ICommand ClickCommand
     {
-        get => GetValue(ClickCommandProperty);
-        set => SetValue(ClickCommandProperty, value);
+        get => clickCommand;
+        set => SetAndRaise(ClickCommandProperty, ref clickCommand, value);
     }
 
     public event EventHandler<DartButtonClickEventArgs> DartButtonClick;
+
+    private List<Button> buttonList = new List<Button>();
+    public DartTargetControl()
+    {
+        foreach (var item in dartNumberOrder
+                .Select((num, orderNum) => new { ButtonNumber = num, ButtonAngle = orderNum * BUTTON_ANGLE, IsButtonDark = !(orderNum % 2 == 1) }))
+        {
+            var button = new DartBackgroundButtonControl(
+                item.ButtonNumber,
+                item.ButtonAngle,
+                item.IsButtonDark)
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Theme = new ControlTheme(typeof(DartBackgroundButtonControl)),
+            };
+
+            button.DartButtonClick += (sender, e) =>
+            {
+                OnDartButtonClick(e.Number, e.Type);
+            };
+            
+            buttonList.Add(button);
+        }
+    }
 
     protected void OnDartButtonClick(DartNumbers number, DartsNumberType type)
     {
@@ -61,32 +88,16 @@ public class DartTargetControl : Button
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
+        base.OnApplyTemplate(e);
+
         Panel? background = e.NameScope.Find(DART_TARGET_CANVAS_NAME) as Panel;
         if (background is not null)
         {
-            foreach (var item in dartNumberOrder
-                .Select((num, orderNum) => new { ButtonNumber = num, ButtonAngle = orderNum * BUTTON_ANGLE, IsButtonDark = !(orderNum % 2 == 1) }))
+            foreach (var button in buttonList)
             {
-                var button = new DartBackgroundButtonControl(
-                    item.ButtonNumber,
-                    item.ButtonAngle,
-                    item.IsButtonDark)
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Theme = new ControlTheme(typeof(DartBackgroundButtonControl)),
-                };
-
-                button.DartButtonClick += (sender, e) =>
-                {
-                    OnDartButtonClick(e.Number, e.Type);
-                };
-
                 background.Children.Add(button);
             }
         }
-
-
 
         Button? bullsEye = e.NameScope.Find("SingleBullsEye") as Button;
         if (bullsEye is not null)
