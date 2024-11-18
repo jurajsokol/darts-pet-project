@@ -1,8 +1,9 @@
 ﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using System;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 namespace Darts.Avalonia.Views.Dialog;
@@ -18,7 +19,7 @@ public class DialogManager : IDialogManager
         this.serviceCollection = serviceCollection;
     }
 
-    public async Task<(DialogResult, T)> ShowDialog<T>() where T : ObservableObject
+    public async Task<(DialogResult, T)> ShowDialog<T>() where T : ReactiveObject
     {
         DialogBase<T> dialog = serviceCollection.GetRequiredService<DialogBase<T>>();
 
@@ -28,4 +29,20 @@ public class DialogManager : IDialogManager
         return (result, dialog.ViewModel);
     }
 
+    public IObservable<(DialogResult, T)> ShowDialogReactive<T>() where T : ReactiveObject
+    {
+        return Observable.Create<(DialogResult, T)>(o =>
+        {
+            DialogBase<T> dialog = serviceCollection.GetRequiredService<DialogBase<T>>();
+            IObservable<(DialogResult, T)> result = dialog.ShowReactive()
+                .Publish()
+                .RefCount();
+
+            panel.Children.Add(dialog);
+
+            return new CompositeDisposable(
+                result.Subscribe(_ => { }),
+                result.Subscribe(o));
+        });
+    }
 }

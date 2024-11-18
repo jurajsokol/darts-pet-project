@@ -1,9 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using ReactiveUI;
+using ReactiveUI.SourceGenerators;
 
 namespace Darts.Avalonia.ViewModels;
 
-public partial class AddPlayerViewModel : ObservableObject
+public partial class AddPlayerViewModel : ReactiveObject
 {
-    [ObservableProperty]
+    [Reactive]
     private string name = string.Empty;
 }
