@@ -3,13 +3,14 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
+using Avalonia.Styling;
 using System;
 using System.Linq;
 using System.Windows.Input;
 
 namespace Darts.Avalonia.Controls.DartControl;
 
-[TemplatePart(Name = DART_TARGET_CANVAS_NAME, Type = typeof(Grid))]
+[TemplatePart(Name = DART_TARGET_CANVAS_NAME, Type = typeof(Panel))]
 public class DartTargetControl : Button
 {
     private const string DART_TARGET_CANVAS_NAME = "BackgroundButtonsCanvas";
@@ -60,7 +61,7 @@ public class DartTargetControl : Button
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
-        Grid? background = e.NameScope.Find(DART_TARGET_CANVAS_NAME) as Grid;
+        Panel? background = e.NameScope.Find(DART_TARGET_CANVAS_NAME) as Panel;
         if (background is not null)
         {
             foreach (var item in dartNumberOrder
@@ -73,6 +74,7 @@ public class DartTargetControl : Button
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
+                    Theme = new ControlTheme(typeof(DartBackgroundButtonControl)),
                 };
 
                 button.DartButtonClick += (sender, e) =>
@@ -83,6 +85,8 @@ public class DartTargetControl : Button
                 background.Children.Add(button);
             }
         }
+
+
 
         Button? bullsEye = e.NameScope.Find("SingleBullsEye") as Button;
         if (bullsEye is not null)

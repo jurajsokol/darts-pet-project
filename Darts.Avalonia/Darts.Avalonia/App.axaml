@@ -33,7 +33,7 @@
 		</ControlTheme>
 
 		<ControlTheme TargetType="dartControl:DartButtonControl"
-					  x:Key="DartBackgroundButtonStyle">
+					  x:Key="{x:Type dartControl:DartButtonControl}">
 			<Setter Property="Template">
 				<ControlTemplate TargetType="dartControl:DartButtonControl">
 					<Path Stroke="Black"
@@ -62,14 +62,13 @@
 			</Setter>
 		</ControlTheme>
 
-		<ControlTheme x:Key="DartBackgroundButtonControlStyle"
+		<ControlTheme x:Key="{x:Type dartControl:DartBackgroundButtonControl}"
 					  TargetType="dartControl:DartBackgroundButtonControl">
 			<Setter Property="Template">
 				<ControlTemplate>
 					<Canvas>
 
-						<dartControl:DartButtonControl Theme="{StaticResource DartBackgroundButtonStyle}"
-                                                       IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}"
+						<dartControl:DartButtonControl IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}"
                                                        Name="BackgroundButtonElement"/>
 						<dartControl:DartButtonControl IsButtonDark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsButtonDark}"
                                                        Name="DartDoubleButtonElement">
@@ -154,7 +153,7 @@
 							</dartControl:DartButtonControl.Theme>
 						</dartControl:DartButtonControl>
 
-						<Grid Canvas.Top="-250"
+						<Panel Canvas.Top="-250"
                               Canvas.Left="-30"
                               Width="60"
                               Height="45"
@@ -164,7 +163,7 @@
                                        FontSize="35"
                                        Name="ButtonNumberText"
                                        HorizontalAlignment="Center"/>
-						</Grid>
+						</Panel>
 					</Canvas>
 				</ControlTemplate>
 			</Setter>
@@ -174,7 +173,7 @@
 					  x:Key="DartTargetControlTheme">
 			<Setter Property="Template">
 				<ControlTemplate TargetType="dartControl:DartTargetControl">
-					<Grid Name="BackgroundButtonsCanvas">
+					<Panel Name="BackgroundButtonsCanvas">
 						<Button Name="DartMissButton">
 							<Button.Theme>
 								<ControlTheme TargetType="Button">
@@ -230,7 +229,7 @@
 								</ControlTheme>
 							</Button.Theme>
 						</Button>
-					</Grid>
+					</Panel>
 				</ControlTemplate>
 			</Setter>
 		</ControlTheme>
