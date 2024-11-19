@@ -25,7 +25,8 @@
 								Padding="0"
 								Theme="{StaticResource CardBorder}"
 								Classes="Shadow">
-							<ContentPresenter Content="{TemplateBinding Content}"/>
+							<ContentPresenter Content="{TemplateBinding Content}"
+											  Padding="{TemplateBinding Padding}"/>
 						</Border>
 					</StackPanel>
 				</ControlTemplate>

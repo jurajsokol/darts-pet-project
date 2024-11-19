@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Darts.Avalonia.ViewRouting;
 
 namespace Darts.Avalonia.Views;
 

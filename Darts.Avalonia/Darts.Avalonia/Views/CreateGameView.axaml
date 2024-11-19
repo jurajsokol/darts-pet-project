@@ -24,8 +24,9 @@
 			HorizontalAlignment="Center">
 
 		<controls:GroupControl HeaderText="Game type"
-								Grid.Row="0"
-								Theme="{StaticResource BasicGroupControl}">
+							   Grid.Row="0"
+							   Padding="0"
+							   Theme="{StaticResource BasicGroupControl}">
 
 			<ListBox SelectionMode="Single,Toggle"
 						ItemsSource="{Binding GameTypes, Mode=OneWay}"
@@ -49,6 +50,7 @@
 
 		<controls:GroupControl HeaderText="Players"
 							   Grid.Row="1"
+							   Padding="0"
 							   Theme="{StaticResource BasicGroupControl}">
 			<ListBox SelectionMode="Multiple,Toggle"
 				     ItemsSource="{Binding Players, Mode=OneWay}"

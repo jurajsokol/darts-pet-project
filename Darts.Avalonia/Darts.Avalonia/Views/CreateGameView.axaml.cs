@@ -14,4 +14,8 @@ public partial class CreateGameView : UserControl
         InitializeComponent();
         Loaded += async (_, _) => await ViewModel.LoadPlayers();
     }
+
+    public CreateGameView()
+    { 
+    }
 }
