@@ -18,7 +18,7 @@
 								   Padding="10"
 								   HorizontalAlignment="Center"
 								   VerticalAlignment="Center"
-									Theme="{StaticResource BasicGroupControl}">
+								   Theme="{StaticResource BasicGroupControl}">
 				<StackPanel>
 					<TextBox Text="{Binding Name}"/>
 					<StackPanel Orientation="Horizontal"

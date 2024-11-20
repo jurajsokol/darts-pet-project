@@ -24,7 +24,7 @@
 						<Border Margin="0, 5"
 								Padding="0"
 								Theme="{StaticResource CardBorder}"
-								Classes="Shadow">
+								Classes="Card">
 							<ContentPresenter Content="{TemplateBinding Content}"
 											  Padding="{TemplateBinding Padding}"/>
 						</Border>
@@ -171,7 +171,7 @@
 		</ControlTheme>
 
 		<ControlTheme TargetType="dartControl:DartTargetControl"
-					  x:Key="DartTargetControlTheme">
+					  x:Key="{x:Type dartControl:DartTargetControl}">
 			<Setter Property="Template">
 				<ControlTemplate TargetType="dartControl:DartTargetControl">
 					<Panel Name="BackgroundButtonsCanvas">

@@ -9,6 +9,13 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 x:Class="Darts.Avalonia.Views.MainView">
 
+	<UserControl.Styles>
+		<Style Selector="Control.Blur">
+			<Setter Property="Effect"
+					Value="blur(15)"/>
+		</Style>
+	</UserControl.Styles>
+	
 	<Panel x:Name="MainPanel">
 		<TransitioningContentControl Name="NavigationPanel"/>
 	</Panel>
