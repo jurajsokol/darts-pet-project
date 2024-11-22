@@ -1,0 +1,85 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:Darts.Avalonia.ViewModels"
+			 xmlns:enums="using:Darts.Avalonia.Enums"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
+             x:Class="Darts.Avalonia.Views.X01KeyBoardView">
+
+	<UserControl.Styles>
+		<Style Selector="Button">
+			<Setter Property="HorizontalAlignment"
+					Value="Stretch"/>
+			<Setter Property="VerticalAlignment"
+					Value="Stretch"/>
+			<Setter Property="Margin"
+					Value="2.5"/>
+		</Style>
+		<Style Selector="ToggleButton">
+			<Setter Property="HorizontalAlignment"
+					Value="Stretch"/>
+			<Setter Property="VerticalAlignment"
+					Value="Stretch"/>
+			<Setter Property="Margin"
+					Value="2.5"/>
+		</Style>
+	</UserControl.Styles>
+	
+	<UniformGrid Columns="5"
+				 Margin="2.5">
+		<Button Content="1"
+				x:Name="OneButton"/>
+		<Button Content="2"
+				x:Name="TwoButton"/>
+		<Button Content="3"
+				x:Name="ThreeButton"/>
+		<Button Content="4"
+				x:Name="FourButton"/>
+		<ToggleButton Content="Double"
+					  Classes="Secondary"
+					  x:Name="DoubleButton"/>
+		<Button Content="5"
+				x:Name="FiveButton"/>
+		<Button Content="6"
+				x:Name="SixButton"/>
+		<Button Content="7"
+				x:Name="SevenButton"/>
+		<Button Content="8"
+				x:Name="EightButton"/>
+		<ToggleButton Content="Triple"
+					  x:Name="TripleButton"
+					  Classes="Secondary"/>
+		<Button Content="9"
+				x:Name="NineButton"/>
+		<Button Content="10"
+				x:Name="TenButton"/>
+		<Button Content="11"
+				x:Name="ElevenButton"/>
+		<Button Content="12"
+				x:Name="TwelveButton"/>
+		<Button Content="0"
+				x:Name="ZeroButton"
+				Classes="Secondary"/>
+		<Button Content="13"
+				x:Name="ThirteenButton"/>
+		<Button Content="14"
+				x:Name="FourteenButton"/>
+		<Button Content="15"
+				x:Name="FifteenButton"/>
+		<Button Content="16"
+				x:Name="SixteenButton"/>
+		<Button Content="25"
+				x:Name="BullsEyeButton"/>
+		<Button Content="17"
+				x:Name="SeventeenButton"/>
+		<Button Content="18"
+				x:Name="EighteenButton"/>
+		<Button Content="19"
+				x:Name="NineteenButton"/>
+		<Button Content="20"
+				x:Name="TwentyButton"/>
+		<Button Content="50"
+				x:Name="DoubleBullsEyeButton"/>
+	</UniformGrid>
+</UserControl>

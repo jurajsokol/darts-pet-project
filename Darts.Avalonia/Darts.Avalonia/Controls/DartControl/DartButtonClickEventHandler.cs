@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Darts.Avalonia.Enums;
+using System;
 
 namespace Darts.Avalonia.Controls.DartControl;
 
@@ -7,9 +8,9 @@ public delegate void DartButtonClickEventHandler(object sender, DartButtonClickE
 public class DartButtonClickEventArgs : EventArgs
 {
     public DartNumbers Number { get; }
-    public DartsNumberType Type { get; }
+    public DartsNumberModifier Type { get; }
 
-    public DartButtonClickEventArgs(DartNumbers number, DartsNumberType type)
+    public DartButtonClickEventArgs(DartNumbers number, DartsNumberModifier type)
     {
         Number = number;
         Type = type;

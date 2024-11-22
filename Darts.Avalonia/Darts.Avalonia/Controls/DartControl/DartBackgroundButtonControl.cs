@@ -4,6 +4,7 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Darts.Avalonia.Enums;
 using System;
 
 namespace Darts.Avalonia.Controls.DartControl;
@@ -135,7 +136,7 @@ public class DartBackgroundButtonControl : Button
 
     public event EventHandler<DartButtonClickEventArgs>? DartButtonClick;
 
-    protected void OnDartButtonClick(DartNumbers number, DartsNumberType type)
+    protected void OnDartButtonClick(DartNumbers number, DartsNumberModifier type)
     {
         DartButtonClick?.Invoke(this, new DartButtonClickEventArgs(number, type));
     }
@@ -160,23 +161,23 @@ public class DartBackgroundButtonControl : Button
 
         if (buttonNumberText is not null)
         {
-            buttonNumberText.PointerPressed += (o, args) => OnDartButtonClick(DartNumbers.Miss, DartsNumberType.Single);
+            buttonNumberText.PointerPressed += (o, args) => OnDartButtonClick(DartNumbers.Miss, DartsNumberModifier.Single);
         }
 
     }
 
     private void DartBackgroundButton_Click(object? sender, RoutedEventArgs args)
     {
-        OnDartButtonClick(buttonNumber, DartsNumberType.Single);
+        OnDartButtonClick(buttonNumber, DartsNumberModifier.Single);
     }
 
     private void DartDoubleButton_Click(object? sender, RoutedEventArgs args)
     {
-        OnDartButtonClick(buttonNumber, DartsNumberType.Double);
+        OnDartButtonClick(buttonNumber, DartsNumberModifier.Double);
     }
 
     private void DartTrippleButtonElement_Click(object? sender, RoutedEventArgs e)
     {
-        OnDartButtonClick(buttonNumber, DartsNumberType.Tripple);
+        OnDartButtonClick(buttonNumber, DartsNumberModifier.Triple);
     }
 }

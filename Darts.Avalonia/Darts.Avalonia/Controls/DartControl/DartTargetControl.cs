@@ -4,6 +4,7 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
 using Avalonia.Styling;
+using Darts.Avalonia.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +78,7 @@ public class DartTargetControl : Button
         }
     }
 
-    protected void OnDartButtonClick(DartNumbers number, DartsNumberType type)
+    protected void OnDartButtonClick(DartNumbers number, DartsNumberModifier type)
     {
         DartButtonClick?.Invoke(this, new DartButtonClickEventArgs(number, type));
         if (ClickCommand != null)
@@ -102,19 +103,19 @@ public class DartTargetControl : Button
         Button? bullsEye = e.NameScope.Find("SingleBullsEye") as Button;
         if (bullsEye is not null)
         {
-            bullsEye.Click += (sender, e) => OnDartButtonClick(DartNumbers.BullsEye, DartsNumberType.Single);
+            bullsEye.Click += (sender, e) => OnDartButtonClick(DartNumbers.BullsEye, DartsNumberModifier.Single);
         }
 
         Button? doubleBullsEye = e.NameScope.Find("DoubleBullsEye") as Button;
         if (doubleBullsEye is not null)
         {
-            doubleBullsEye.Click += (sender, e) => OnDartButtonClick(DartNumbers.BullsEye, DartsNumberType.Double);
+            doubleBullsEye.Click += (sender, e) => OnDartButtonClick(DartNumbers.BullsEye, DartsNumberModifier.Double);
         }
 
         Button? missButton = e.NameScope.Find("DartMissButton") as Button;
         if (missButton is not null)
         {
-            missButton.Click += (sender, e) => OnDartButtonClick(DartNumbers.Miss, DartsNumberType.Single);
+            missButton.Click += (sender, e) => OnDartButtonClick(DartNumbers.Miss, DartsNumberModifier.Single);
         }
     }
 }
