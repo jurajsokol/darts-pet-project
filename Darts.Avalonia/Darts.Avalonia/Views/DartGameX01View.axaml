@@ -3,8 +3,60 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="using:Darts.Avalonia.Views"
+			 xmlns:gameModels="using:Darts.Avalonia.Models"
+			 xmlns:vm="using:Darts.Avalonia.ViewModels"
+			 xmlns:controls="using:Darts.Avalonia.Controls"
 			 xmlns:dartControl="using:Darts.Avalonia.Controls.DartControl"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Darts.Avalonia.DartGameX01View">
-	<views:X01KeyBoardView/>
+             x:Class="Darts.Avalonia.DartGameX01View"
+			 x:DataType="vm:DartGameX01ViewModel">
+	<Grid RowDefinitions="auto,*,auto">
+		<controls:GroupControl HeaderText="Players"
+                               HorizontalAlignment="Center"
+							   Height="100">
+					
+			<ItemsControl ItemsSource="{Binding Players, Mode=OneWay}"
+							HorizontalAlignment="Center"
+							Margin="5">
+
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+
+				<ItemsControl.ItemTemplate>
+					<DataTemplate x:DataType="gameModels:GamePlayer">
+						<StackPanel Orientation="Vertical" 
+									Background="Silver">
+							<TextBlock Text="{Binding PlayerName, Mode=OneTime}"
+										Margin="5"
+										FontSize="20"
+										HorizontalAlignment="Center"/>
+							<TextBlock Text="{Binding Score}"
+										FontSize="25"
+										HorizontalAlignment="Center"
+										Margin="5"/>
+						</StackPanel>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+
+			</ItemsControl>
+		</controls:GroupControl>
+		
+		<views:X01KeyBoardView Grid.Row="1"
+							   Command="{Binding PlayerScoreCommand}"/>
+
+		<StackPanel Orientation="Horizontal"
+					Grid.Row="2"
+					HorizontalAlignment="Center">
+			<Button Content="Cancel"
+					Classes="Danger"
+					Margin="5"
+					Command="{Binding CancelGame}"/>
+			<Button Content="Next player"
+					Theme="{StaticResource SolidButton}"
+					Margin="5"/>
+		</StackPanel>
+	</Grid>
 </UserControl>

@@ -13,8 +13,6 @@
 		<Style Selector="Button">
 			<Setter Property="Margin"
 					Value="5, 10"/>
-			<Setter Property="Theme"
-					Value="{StaticResource OutlineButton}"/>
 		</Style>
 	</UserControl.Styles>
 
@@ -29,9 +27,9 @@
 							   Theme="{StaticResource BasicGroupControl}">
 
 			<ListBox SelectionMode="Single,Toggle"
-						ItemsSource="{Binding GameTypes, Mode=OneWay}"
-						SelectedItem="{Binding SelectedGameType}"
-						HorizontalAlignment="Center">
+					 ItemsSource="{Binding GameTypes, Mode=OneWay}"
+					 SelectedItem="{Binding SelectedGameType}"
+					 HorizontalAlignment="Center">
 				<ListBox.DataTemplates>
 					<DataTemplate x:DataType="vmModels:GameTypeModel">
 						<TextBlock Text="{Binding GameTypeName, Mode=OneTime}"

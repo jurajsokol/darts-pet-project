@@ -53,12 +53,6 @@ public partial class CreateGameViewModel : ReactiveObject
     }
 
     [ReactiveCommand]
-    private void SetVisibility()
-    {
-        IsVisible = !IsVisible;
-    }
-
-    [ReactiveCommand]
     private async Task AddPlayer()
     {
         (DialogResult, AddPlayerViewModel) data = await dialogManager.ShowDialog<AddPlayerViewModel>();
