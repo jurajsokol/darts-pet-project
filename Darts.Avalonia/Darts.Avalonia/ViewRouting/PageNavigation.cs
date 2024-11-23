@@ -1,7 +1,6 @@
 ﻿using Avalonia.Controls;
 using Darts.Avalonia.ViewModels;
 using Darts.Avalonia.Views;
-using Darts.Avalonia.Views.Dialog;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using System;
@@ -49,7 +48,6 @@ public class PageNavigation : IPageNavigation
     {
         return typeof(T) switch
         {
-            Type t when t == typeof(AddPlayerViewModel) => services.GetRequiredService<AddPlayerView>(),
             Type t when t == typeof(CreateGameViewModel) => services.GetRequiredService<CreateGameView>(),
             Type t when t == typeof(DartGameX01ViewModel) => services.GetRequiredService<DartGameX01View>(),
 

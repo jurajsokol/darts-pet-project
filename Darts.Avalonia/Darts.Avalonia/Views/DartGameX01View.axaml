@@ -3,21 +3,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="using:Darts.Avalonia.Views"
-			 xmlns:gameModels="using:Darts.Avalonia.Models"
+			 xmlns:gameModels="using:Darts.Games.Models;assembly=Dart.Games"
 			 xmlns:vm="using:Darts.Avalonia.ViewModels"
 			 xmlns:controls="using:Darts.Avalonia.Controls"
 			 xmlns:dartControl="using:Darts.Avalonia.Controls.DartControl"
+			 xmlns:models="using:Darts.Games.Models"			 
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Darts.Avalonia.DartGameX01View"
 			 x:DataType="vm:DartGameX01ViewModel">
-	<Grid RowDefinitions="auto,*,auto">
+
+	<UserControl.Styles>
+		<Style Selector="Border.isSelectedPlayer">
+			<Setter Property="Background"
+					Value="{StaticResource SemiColorPrimary}"/>
+		</Style>
+	</UserControl.Styles>
+	
+	<Grid RowDefinitions="auto,auto,*,auto">
 		<controls:GroupControl HeaderText="Players"
-                               HorizontalAlignment="Center"
-							   Height="100">
+                               HorizontalAlignment="Center">
 					
 			<ItemsControl ItemsSource="{Binding Players, Mode=OneWay}"
-							HorizontalAlignment="Center"
-							Margin="5">
+						  HorizontalAlignment="Center"
+						  Margin="5">
 
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
@@ -26,35 +34,67 @@
 				</ItemsControl.ItemsPanel>
 
 				<ItemsControl.ItemTemplate>
-					<DataTemplate x:DataType="gameModels:GamePlayer">
-						<StackPanel Orientation="Vertical" 
-									Background="Silver">
-							<TextBlock Text="{Binding PlayerName, Mode=OneTime}"
-										Margin="5"
-										FontSize="20"
-										HorizontalAlignment="Center"/>
-							<TextBlock Text="{Binding Score}"
-										FontSize="25"
-										HorizontalAlignment="Center"
-										Margin="5"/>
-						</StackPanel>
+					<DataTemplate x:DataType="models:Player">
+						<Border Classes.isSelectedPlayer="{Binding IsPlayerActive}"
+								Theme="{StaticResource CardBorder}"
+								Classes="Card">
+							<StackPanel Orientation="Vertical">
+								<TextBlock Text="{Binding PlayerName, Mode=OneTime}"
+										   Margin="5"
+										   FontSize="20"
+										   HorizontalAlignment="Center"/>
+								<TextBlock Text="{Binding Score}"
+											FontSize="25"
+											HorizontalAlignment="Center"
+											Margin="5"/>
+							</StackPanel>
+						</Border>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 
 			</ItemsControl>
 		</controls:GroupControl>
+
+		<controls:GroupControl HorizontalAlignment="Center"
+                               HeaderText="Score"
+							   Grid.Row="1">
+			<ItemsControl ItemsSource="{Binding PlayerRound}">
+
+				<ItemsControl.ItemTemplate>
+					<DataTemplate x:DataType="models:PlayerMove">
+						<StackPanel Orientation="Horizontal"
+									Margin="10">
+							<TextBlock Text="{Binding TargetButtonType}"
+									   HorizontalAlignment="Center"
+									   Margin="5"/>
+							<TextBlock Text="{Binding TargetButton, Mode=OneTime}"
+									   Margin="5"
+									   HorizontalAlignment="Center"/>
+						</StackPanel>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+
+			</ItemsControl>
+		</controls:GroupControl>
 		
-		<views:X01KeyBoardView Grid.Row="1"
-							   Command="{Binding PlayerScoreCommand}"/>
+		<views:X01KeyBoardView Grid.Row="2"
+							   Command="{Binding DartClickCommand}"/>
 
 		<StackPanel Orientation="Horizontal"
-					Grid.Row="2"
+					Grid.Row="3"
 					HorizontalAlignment="Center">
 			<Button Content="Cancel"
 					Classes="Danger"
 					Margin="5"
 					Command="{Binding CancelGame}"/>
 			<Button Content="Next player"
+					Command="{Binding NextPlayerCommand}"
 					Theme="{StaticResource SolidButton}"
 					Margin="5"/>
 		</StackPanel>

@@ -1,10 +1,9 @@
-﻿namespace Darts.Games.Games
+﻿namespace Darts.Games.Games;
+
+public enum GameTypes
 {
-    public enum GameTypes
-    {
-        _301,
-        _401,
-        _501,
-        _601,
-    }
+    _301,
+    _401,
+    _501,
+    _601,
 }

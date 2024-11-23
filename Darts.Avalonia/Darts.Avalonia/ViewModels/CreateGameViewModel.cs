@@ -18,6 +18,7 @@ public partial class CreateGameViewModel : ReactiveObject
 {
     private readonly IUnitOfWork db;
     private readonly IDialogManager dialogManager;
+
     [Reactive]
     private GameTypeModel selectedGameType;
 

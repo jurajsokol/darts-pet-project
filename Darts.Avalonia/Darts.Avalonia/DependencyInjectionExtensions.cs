@@ -2,7 +2,12 @@
 using Darts.Avalonia.ViewRouting;
 using Darts.Avalonia.Views;
 using Darts.Avalonia.Views.Dialog;
+using Darts.Games.Games;
 using Microsoft.Extensions.DependencyInjection;
+using Darts.Avalonia;
+using System;
+using System.Linq;
+using Darts.Games.Models;
 
 namespace Darts.Avalonia;
 
@@ -36,5 +41,30 @@ public static class DependencyInjectionExtensions
             .AddSingleton<MainView>()
             .AddTransient<CreateGameView>()
             .AddTransient<DartGameX01View>();
+    }
+
+    public static IServiceCollection AddGameLogic(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<IDartGame, X01>();
+    }
+
+    public static IServiceCollection AddDartGames(this IServiceCollection services)
+    {
+        return services.AddTransient<IDartGame, X01>(s =>
+        {
+            CreateGameViewModel createGameParams = s.GetRequiredService<CreateGameViewModel>();
+            Player[] players = createGameParams.SelectedPlayers.Select((x, i) => x.ToDartPlayer(i)).ToArray();
+
+            return createGameParams.SelectedGameType.GameType switch
+            {
+                GameTypes._301 => new X01(players, 301),
+                GameTypes._401 => new X01(players, 401),
+                GameTypes._501 => new X01(players, 501),
+                GameTypes._601 => new X01(players, 601),
+
+                _ => throw new NotImplementedException($"Game type {createGameParams.SelectedGameType.GameType} is not implemented yet"),
+            };
+        });
     }
 }

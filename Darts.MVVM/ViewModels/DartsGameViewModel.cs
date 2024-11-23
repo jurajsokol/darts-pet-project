@@ -29,10 +29,10 @@ public partial class DartsGameViewModel : ObservableObject, IDisposable
     public ObservableCollection<Games.Models.PlayerMove> PlayerRound => playerRound;
     private ObservableCollectionExtended<Games.Models.PlayerMove> playerRound = new();
 
-    public DartsGameViewModel(INewDartGameArgs newGameArgs, IDartGameFactory gameFactory, CurrentThreadScheduler guiScheduler)
+    public DartsGameViewModel(INewDartGameArgs newGameArgs, IDartGame game, CurrentThreadScheduler guiScheduler)
     {
-        game = gameFactory.GetGame(newGameArgs.GameType, newGameArgs.GamePlayers.Select((x, i) => x.ToDartPlayer(i)).ToArray());
-        game.Players
+        this.game = game;
+            game.Players
             .Sort(SortExpressionComparer<Games.Models.Player>.Ascending(p => p.PlayerOrder))
             .ObserveOn(guiScheduler)
             .Bind(players)
