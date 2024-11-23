@@ -55,8 +55,13 @@
 					 SelectedItems="{Binding SelectedPlayers}">
 				<ListBox.DataTemplates>
 					<DataTemplate x:DataType="vmModels:Player">
-						<TextBlock Text="{Binding Name, Mode=OneWay}"
-									Padding="10"/>
+						<StackPanel Orientation="Horizontal">
+							<Svg Path="/Assets/dart.svg" 
+								 Stretch="Uniform" 
+								 Height="30"/>
+							<TextBlock Text="{Binding Name, Mode=OneWay}"
+										Padding="10"/>
+						</StackPanel>
 					</DataTemplate>
 				</ListBox.DataTemplates>
 			</ListBox>

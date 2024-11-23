@@ -6,7 +6,7 @@
         xmlns:views="clr-namespace:Darts.Avalonia.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Darts.Avalonia.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/dart.ico"
         Title="Darts.Avalonia"
 		UseLayoutRounding="True"
 		SystemDecorations="Full"
