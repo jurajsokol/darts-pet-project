@@ -1,4 +1,5 @@
 ﻿using Darts.Games.Models;
+using Darts.Games.State;
 using DynamicData;
 using System.Reactive.Linq;
 
@@ -7,84 +8,65 @@ namespace Darts.Games.Games;
 public class X01 : IDartGame, IDisposable
 {
     private const int MAX_THROWS_PER_ROUND = 3;
+    private readonly Store gameStore;
 
-    private SourceCache<Player, int> playersCollection;
-    private SourceCache<PlayerMove, int> playerRoundScore;
-    private Player actualPlayer;
-    private int moveCount = 0;
-
-    public Player ActualPLayer => actualPlayer;
+    public Player ActualPlayer => gameStore.Players.Items.First(x => x.IsPlayerActive);
     public IObservable<IChangeSet<Player, int>> Players { get; }
     public IObservable<IChangeSet<PlayerMove, int>> PlayerRoundScore { get; }
     public IObservable<bool> CanSetNextPlayer { get; }
 
 
-    public X01(IList<Player> players, int initialScore)
+    public X01(IList<Player> players, Store gameStore)
     {
-        playersCollection = new SourceCache<Player, int>(player => player.PlayerOrder);
-        Players = playersCollection.Connect();
-        playersCollection.Edit(cache =>
-        {
-            cache.AddOrUpdate(players.Select(p => p with { Score = initialScore }));
-        });
+        Players = gameStore.Players.Connect();
 
-        actualPlayer = playersCollection.Items.First() with { IsPlayerActive = true };
-        playersCollection.AddOrUpdate(actualPlayer);
+        PlayerRoundScore = gameStore.PlayerRoundScore.Connect();
 
-        playerRoundScore = new SourceCache<PlayerMove, int>(move => move.OrderNum);
-        ResetPlayerScore();
-        PlayerRoundScore = playerRoundScore.Connect();
+        gameStore.ResetPlayerScore();
         CanSetNextPlayer = PlayerRoundScore.ToCollection().Select(x => x.All(i => i.TargetButton != TargetButtonNum.None));
+        this.gameStore = gameStore;
     }
 
     public void PlayerMove(TargetButtonNum number, TargetButtonType type)
     {
-        if (moveCount >= MAX_THROWS_PER_ROUND)
+        if (gameStore.MoveCount >= MAX_THROWS_PER_ROUND)
         {
             return;
         }
 
-        Models.PlayerMove move = playerRoundScore.Items
-            .First(x => x.OrderNum == moveCount) with { TargetButton = number, TargetButtonType = type };
+        gameStore.MakeSnapshot();
+        PlayerMove move = gameStore.PlayerRoundScore.Items
+            .First(x => x.OrderNum == gameStore. MoveCount) with { TargetButton = number, TargetButtonType = type };
 
-        playerRoundScore.AddOrUpdate(move);
-        actualPlayer = actualPlayer with { Score = actualPlayer.Score - move.GetScore };
-        playersCollection.AddOrUpdate(actualPlayer);
+        gameStore.UpdatePlayerScore(move);
+        Player actualPlayer = ActualPlayer with { Score = ActualPlayer.Score - move.GetScore };
+        gameStore.UpdatePlayers(actualPlayer);
 
         // winner
         if (actualPlayer.HasWon)
         { 
             
         }
-
-        moveCount++;
     }
 
     public void NextPlayer()
     {
-        int actualPLayerScore = playerRoundScore.Items.Select(x => x.GetScore).Sum();
-        playersCollection.Edit(cache =>
-        {
-            cache.AddOrUpdate(actualPlayer with { IsPlayerActive = false });
-            actualPlayer = (playersCollection.Items.FirstOrDefault(x => x.PlayerOrder == actualPlayer.PlayerOrder + 1) ?? playersCollection.Items.First()) with { IsPlayerActive = true };
-            cache.AddOrUpdate(actualPlayer);
-        });
+        gameStore.MakeSnapshot();
+        Player actualPlayer = (gameStore.Players.Items.FirstOrDefault(x => x.PlayerOrder == ActualPlayer.PlayerOrder + 1) ?? gameStore.Players.Items.First()) with { IsPlayerActive = true };
+        gameStore.UpdatePlayers(ActualPlayer with { IsPlayerActive = false });
+        gameStore.UpdatePlayers(actualPlayer);
 
-        ResetPlayerScore();
-        moveCount = 0;
+        gameStore.ResetPlayerScore();
+        gameStore.ResetMoveCount();
     }
 
-    private void ResetPlayerScore()
+    public void Undo()
     {
-        playerRoundScore.Edit(cache =>
-           cache.AddOrUpdate(Enumerable
-               .Range(0, 3)
-               .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x))));
+        gameStore.Undo();
     }
 
     public void Dispose()
     {
-        playersCollection.Dispose();
-        playerRoundScore.Dispose();
+        gameStore.Dispose();
     }
 }

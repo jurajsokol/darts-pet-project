@@ -63,6 +63,12 @@ public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewMode
         dartGame.NextPlayer();
     }
 
+    [ReactiveCommand]
+    private void Undo()
+    {
+        dartGame.Undo();
+    }
+
     public void CancelGame()
     {
         pageNavigation.GoBack();

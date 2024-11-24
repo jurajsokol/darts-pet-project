@@ -93,6 +93,8 @@
 					Classes="Danger"
 					Margin="5"
 					Command="{Binding CancelGame}"/>
+			<Button Content="Undo"
+					Command="{Binding UndoCommand}"/>
 			<Button Content="Next player"
 					Command="{Binding NextPlayerCommand}"
 					Theme="{StaticResource SolidButton}"

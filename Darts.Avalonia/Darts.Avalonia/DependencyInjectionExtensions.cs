@@ -8,6 +8,9 @@ using Darts.Avalonia;
 using System;
 using System.Linq;
 using Darts.Games.Models;
+using Darts.Games.State;
+using System.Collections.Generic;
+using Darts.Games;
 
 namespace Darts.Avalonia;
 
@@ -56,12 +59,21 @@ public static class DependencyInjectionExtensions
             CreateGameViewModel createGameParams = s.GetRequiredService<CreateGameViewModel>();
             Player[] players = createGameParams.SelectedPlayers.Select((x, i) => x.ToDartPlayer(i)).ToArray();
 
+            IEnumerable<Player> gamePlayers = players
+                .Select((p, i) => p with { Score = (int)createGameParams.SelectedGameType.GameType, IsPlayerActive = i == 0 });
+            IEnumerable<PlayerMove> moves = Enumerable
+               .Range(0, 3)
+               .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x));
+
+
+            Store store = new Store(gamePlayers.ToArray(), moves.ToArray());
+
             return createGameParams.SelectedGameType.GameType switch
             {
-                GameTypes._301 => new X01(players, 301),
-                GameTypes._401 => new X01(players, 401),
-                GameTypes._501 => new X01(players, 501),
-                GameTypes._601 => new X01(players, 601),
+                GameTypes._301 => new X01(players, store),
+                GameTypes._401 => new X01(players, store),
+                GameTypes._501 => new X01(players, store),
+                GameTypes._601 => new X01(players, store),
 
                 _ => throw new NotImplementedException($"Game type {createGameParams.SelectedGameType.GameType} is not implemented yet"),
             };

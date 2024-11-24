@@ -11,4 +11,5 @@ public interface IDartGame : IDisposable
 
     void PlayerMove(TargetButtonNum number, TargetButtonType type);
     void NextPlayer();
+    void Undo();
 }

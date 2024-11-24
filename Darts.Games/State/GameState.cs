@@ -1,17 +1,19 @@
 ﻿using Darts.Games.Models;
-using DynamicData;
 
 namespace Darts.Games.State;
 
 public class GameState
 {
-    public IChangeSet<Player, int> PLayerChanges { get; }
+    public Player[] PlayersState { get; }
 
-    public IChangeSet<PlayerMove, int> PlayerMoves { get; }
+    public PlayerMove[] PlayerMoves { get; }
 
-    public GameState(IChangeSet<Player, int> pLayerChanges, IChangeSet<PlayerMove, int> playerMoves)
+    public int MoveCount { get; }
+
+    public GameState(Player[] playersState, PlayerMove[] playerMoves, int moveCount)
     {
-        PLayerChanges = pLayerChanges;
+        PlayersState = playersState;
         PlayerMoves = playerMoves;
+        MoveCount = moveCount;
     }
 }
