@@ -11,6 +11,7 @@ using Darts.DAL;
 using Darts.Avalonia.ViewRouting;
 using Darts.Avalonia.Views.Dialog;
 using System.Reactive.Linq;
+using System.Collections.Specialized;
 
 namespace Darts.Avalonia.ViewModels;
 
@@ -18,6 +19,7 @@ public partial class CreateGameViewModel : ReactiveObject
 {
     private readonly IUnitOfWork db;
     private readonly IDialogManager dialogManager;
+    private IObservable<bool> canStartGame;
 
     [Reactive]
     private GameTypeModel selectedGameType;
@@ -30,8 +32,7 @@ public partial class CreateGameViewModel : ReactiveObject
     public ObservableCollection<Player> Players { get; } = new();
     public IPageNavigation PageNavigation { get; }
 
-    [Reactive]
-    private List<Player> selectedPlayers = new();
+    public ObservableCollection<Player> SelectedPlayers { get; } = new();
 
     [Reactive]
     private bool isVisible = false;
@@ -41,6 +42,20 @@ public partial class CreateGameViewModel : ReactiveObject
         this.db = db;
         PageNavigation = pageNavigation;
         this.dialogManager = dialogManager;
+       
+        IObservable<bool> isAnyPlayerSelected = Observable
+            .FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
+                h => SelectedPlayers.CollectionChanged += h,
+                h => SelectedPlayers.CollectionChanged -= h)
+            .Select(x =>
+            {
+                ObservableCollection<Player> selectedPlayers = (x.Sender as ObservableCollection<Player>)!;
+                return selectedPlayers.Any();
+            });
+        
+        canStartGame = this.WhenAnyValue(x => x.SelectedGameType)
+            .Select(x => x is not null)
+            .CombineLatest(isAnyPlayerSelected, (gameType, player) => gameType && player);
     }
 
     public async Task LoadPlayers()
@@ -77,7 +92,7 @@ public partial class CreateGameViewModel : ReactiveObject
         await LoadPlayers();
     }
 
-    [ReactiveCommand]
+    [ReactiveCommand(CanExecute = nameof(canStartGame))]
     private void StartGame()
     {
         PageNavigation.GoNext<DartGameX01ViewModel>();
