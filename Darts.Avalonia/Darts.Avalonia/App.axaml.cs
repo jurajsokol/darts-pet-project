@@ -9,6 +9,8 @@ using Darts.Avalonia.ViewModels;
 using Darts.Avalonia.ViewRouting;
 using System.Reactive.Concurrency;
 using ReactiveUI;
+using Avalonia.Controls;
+using System.IO;
 
 namespace Darts.Avalonia;
 
@@ -48,7 +50,7 @@ public partial class App : Application
     {
         var services = new ServiceCollection();
 
-        return services.AddDatabase("./darts.db")
+        return services.AddDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "darts.db"))
             .AddSingleton<IScheduler>(_ => RxApp.MainThreadScheduler)
             .AddPageNavigation()
             .AddViewModels()
