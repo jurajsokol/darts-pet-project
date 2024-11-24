@@ -75,7 +75,8 @@
 			<Button Content="Remove player"
 					Classes="Danger"
 					Command="{Binding RemoveSelectedPlayersCommand}"/>
-			<Button Content="Edit player"/>
+			<Button Content="Theme"
+					Click="Button_Click"/>
 			<Button Content="Start Game"
 					Classes="Primary"
 					IsDefault="True"
