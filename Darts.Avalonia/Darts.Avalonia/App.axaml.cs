@@ -1,16 +1,15 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Darts.Avalonia.Views;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using Darts.DAL;
 using Darts.Avalonia.ViewModels;
 using Darts.Avalonia.ViewRouting;
-using System.Reactive.Concurrency;
+using Darts.Avalonia.Views;
+using Darts.DAL;
+using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
-using Avalonia.Controls;
+using System;
 using System.IO;
+using System.Reactive.Concurrency;
 
 namespace Darts.Avalonia;
 

@@ -23,6 +23,5 @@ public enum DartNumbers
     Twelve = 12,
     Five = 5,
     BullsEye = 25,
-    DoubleBullsEye = 50,
     Miss = 0,
 }

@@ -108,7 +108,7 @@ public partial class X01KeyBoardView : UserControl, IActivatableView
                         BullsEyeButton.GetObservable(Button.ClickEvent)
                             .Select(_ => new DartScore() { DartNumbers = DartNumbers.BullsEye, Modifier = DartsNumberModifier.Single }),
                         DoubleBullsEyeButton.GetObservable(Button.ClickEvent)
-                            .Select(_ => new DartScore() { DartNumbers = DartNumbers.DoubleBullsEye, Modifier = DartsNumberModifier.Single })))
+                            .Select(_ => new DartScore() { DartNumbers = DartNumbers.BullsEye, Modifier = DartsNumberModifier.Double })))
                 .Subscribe(x => Command?.Execute(x))
                 .DisposeWith(disposables);
         });
