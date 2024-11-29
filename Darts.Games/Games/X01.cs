@@ -2,6 +2,7 @@
 using Darts.Games.State;
 using DynamicData;
 using System.Reactive.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Darts.Games.Games;
 
@@ -27,11 +28,11 @@ public class X01 : IDartGame, IDisposable
         this.gameStore = gameStore;
     }
 
-    public void PlayerMove(TargetButtonNum number, TargetButtonType type)
+    public bool PlayerMove(TargetButtonNum number, TargetButtonType type)
     {
         if (gameStore.MoveCount >= MAX_THROWS_PER_ROUND)
         {
-            return;
+            return false;
         }
 
         gameStore.MakeSnapshot();
@@ -43,16 +44,23 @@ public class X01 : IDartGame, IDisposable
         gameStore.UpdatePlayers(actualPlayer);
 
         // winner
-        if (actualPlayer.HasWon)
-        { 
-            
-        }
+        return actualPlayer.HasWon;
     }
 
     public void NextPlayer()
     {
         gameStore.MakeSnapshot();
-        Player actualPlayer = (gameStore.Players.Items.FirstOrDefault(x => x.PlayerOrder == ActualPlayer.PlayerOrder + 1) ?? gameStore.Players.Items.First()) with { IsPlayerActive = true };
+
+        if (ActualPlayer.OverShot)
+        {
+            int playerScore = gameStore.PlayerRoundScore.Items
+                .Where(x => x.TargetButton != TargetButtonNum.None)
+                .Select(x => (int)x.TargetButton * (int)x.TargetButtonType).Sum();
+            gameStore.UpdatePlayers(ActualPlayer with { Score = ActualPlayer.Score + playerScore });
+        }
+
+        Player actualPlayer = (gameStore.Players.Items.FirstOrDefault(x => x.PlayerOrder == ActualPlayer.PlayerOrder + 1) ?? gameStore.Players.Items.First())
+            with { IsPlayerActive = true };
         gameStore.UpdatePlayers(ActualPlayer with { IsPlayerActive = false });
         gameStore.UpdatePlayers(actualPlayer);
 

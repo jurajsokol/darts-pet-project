@@ -54,7 +54,11 @@ public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewMode
     [ReactiveCommand]
     private void DartClick(DartScore score)
     {
-        dartGame.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType());
+        bool hasWon = dartGame.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType());
+        if (hasWon)
+        {
+
+        }
     }
 
     [ReactiveCommand]
