@@ -5,7 +5,7 @@
 			 xmlns:vm="using:Darts.Avalonia.ViewModels"
 			 xmlns:enums="using:Darts.Avalonia.Enums"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
-             x:Class="Darts.Avalonia.Views.X01KeyBoardView">
+             x:Class="Darts.Avalonia.Views.X01GameView.X01KeyBoardView">
 
 	<UserControl.Styles>
 		<Style Selector="Button">

@@ -3,13 +3,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="using:Darts.Avalonia.Views"
+			 xmlns:x01Views="using:Darts.Avalonia.Views.X01GameView"
 			 xmlns:gameModels="using:Darts.Games.Models;assembly=Dart.Games"
 			 xmlns:vm="using:Darts.Avalonia.ViewModels"
 			 xmlns:controls="using:Darts.Avalonia.Controls"
 			 xmlns:dartControl="using:Darts.Avalonia.Controls.DartControl"
 			 xmlns:models="using:Darts.Games.Models"			 
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Darts.Avalonia.DartGameX01View"
+             x:Class="Darts.Avalonia.Views.X01GameView.DartGameX01View"
 			 x:DataType="vm:DartGameX01ViewModel">
 
 	<UserControl.Styles>
@@ -83,7 +84,7 @@
 			</ItemsControl>
 		</controls:GroupControl>
 		
-		<views:X01KeyBoardView Grid.Row="2"
+		<x01Views:X01KeyBoardView Grid.Row="2"
 							   Command="{Binding DartClickCommand}"/>
 
 		<StackPanel Orientation="Horizontal"

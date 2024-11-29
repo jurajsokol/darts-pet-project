@@ -9,7 +9,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
 
-namespace Darts.Avalonia.Views;
+namespace Darts.Avalonia.Views.X01GameView;
 
 public partial class X01KeyBoardView : UserControl, IActivatableView
 {

@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Darts.Avalonia.ViewModels;
 using Darts.Avalonia.Views;
+using Darts.Avalonia.Views.X01GameView;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using System;
