@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:Darts.Avalonia.ViewModels"
+			 xmlns:vmModels="using:Darts.Avalonia.Models"
+			 xmlns:controls="using:Darts.Avalonia.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Darts.Avalonia.PlayersView"
+			 x:DataType="vm:PlayersViewModel">
+
+	<UserControl.Styles>
+		<Style Selector="Button">
+			<Setter Property="Margin"
+					Value="5, 10"/>
+		</Style>
+	</UserControl.Styles>
+	
+	<Grid RowDefinitions="*,auto"
+		  MaxWidth="500"
+		  VerticalAlignment="Stretch"
+	   	  HorizontalAlignment="Center">
+
+		<controls:GroupControl HeaderText="Players"
+							   Padding="0"
+							   Theme="{StaticResource BasicGroupControl}">
+			<ListBox SelectionMode="Multiple,Toggle"
+				     ItemsSource="{Binding Players, Mode=OneWay}"
+					 SelectedItems="{Binding SelectedPlayers}">
+				<ListBox.DataTemplates>
+					<DataTemplate x:DataType="vmModels:Player">
+						<StackPanel Orientation="Horizontal">
+							<Svg Path="/Assets/dart.svg"
+								 Stretch="Uniform"
+								 Height="30"/>
+							<TextBlock Text="{Binding Name, Mode=OneWay}"
+										Padding="10"/>
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.DataTemplates>
+			</ListBox>
+		</controls:GroupControl>
+
+		<StackPanel Orientation="Horizontal"
+					VerticalAlignment="Bottom">
+			<Button Content="Back"
+					Command="{Binding GoBackCommand, Mode=OneTime}"/>
+			<Button Content="Add player"
+					Command="{Binding AddPlayerCommand}"/>
+			<Button Content="Edit player"
+					Command="{Binding EditPlayerCommand}"/>
+			<Button Content="Remove player"
+					Command="{Binding RemoveSelectedPlayersCommand }"/>
+		</StackPanel>
+		
+	</Grid>
+</UserControl>

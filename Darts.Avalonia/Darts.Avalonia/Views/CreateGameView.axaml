@@ -70,11 +70,9 @@
 		<StackPanel Orientation="Horizontal"
 					Grid.Row="2"
 					HorizontalAlignment="Center">
-			<Button Content="Add player"
-					Command="{Binding AddPlayerCommand}"/>
-			<Button Content="Remove player"
-					Classes="Danger"
-					Command="{Binding RemoveSelectedPlayersCommand}"/>
+
+			<Button Content="Players"
+					Command="{Binding PlayersViewCommand, Mode=OneTime}"/>
 			<Button Content="Theme"
 					Click="Button_Click"/>
 			<Button Content="Start Game"

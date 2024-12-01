@@ -9,5 +9,7 @@ namespace Darts.Avalonia.Views.Dialog
         Task<(DialogResult, T)> ShowDialog<T>() where T : ReactiveObject;
 
         IObservable<(DialogResult, T)> ShowDialogReactive<T>() where T : ReactiveObject;
+
+        IDialogScope<T> CreateDialogScope<T>() where T : ReactiveObject;
     }
 }

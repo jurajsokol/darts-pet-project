@@ -11,7 +11,6 @@ using Darts.Games.State;
 using System.Collections.Generic;
 using Darts.Games;
 using Darts.Avalonia.Views.X01GameView;
-using Avalonia.Controls;
 
 namespace Darts.Avalonia;
 
@@ -27,6 +26,7 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddDialogs(this IServiceCollection services)
     {
         return services
+            .AddTransient<IDialogScope<AddPlayerViewModel>, DialogScope<AddPlayerViewModel>>(s => new DialogScope<AddPlayerViewModel>(s.CreateScope(), s.GetRequiredService<MainView>().MainPanel))
             .AddTransient<DialogBase<AddPlayerViewModel>, AddPlayerView>()
             .AddSingleton<IDialogManager, DialogManager>(s => new DialogManager(s.GetRequiredService<MainView>().MainPanel, s));
     }
@@ -35,9 +35,10 @@ public static class DependencyInjectionExtensions
     {
         return services
             .AddSingleton<CreateGameViewModel>()
-            .AddSingleton<AddPlayerViewModel>()
+            .AddScoped<AddPlayerViewModel>()
             .AddTransient<DartGameX01ViewModel>()
-            .AddScoped<X01SetupViewModel>();
+            .AddScoped<X01SetupViewModel>()
+            .AddTransient<PlayersViewModel>();
     }
 
     public static IServiceCollection AddViews(this IServiceCollection services)
@@ -46,7 +47,8 @@ public static class DependencyInjectionExtensions
             .AddSingleton<MainView>()
             .AddTransient<CreateGameView>()
             .AddTransient<DartGameX01View>()
-            .AddTransient<X01GameSetup>();
+            .AddTransient<X01GameSetup>()
+            .AddTransient<PlayersView>();
     }
 
     public static IServiceCollection AddGameLogic(this IServiceCollection services)

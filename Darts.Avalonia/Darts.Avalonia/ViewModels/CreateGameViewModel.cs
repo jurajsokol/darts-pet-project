@@ -68,33 +68,15 @@ public partial class CreateGameViewModel : ReactiveObject
         }
     }
 
-    [ReactiveCommand]
-    private async Task AddPlayer()
-    {
-        (DialogResult, AddPlayerViewModel) data = await dialogManager.ShowDialog<AddPlayerViewModel>();
-        if (data.Item1 == DialogResult.Ok)
-        { 
-            await db.Players.Add(new DAL.Entities.Player() { Name = data.Item2.Name });
-            await db.CompleteAsync();
-            await LoadPlayers();
-        }
-    }
-
-    [ReactiveCommand]
-    private async Task RemoveSelectedPlayers()
-    {
-        foreach (int id in SelectedPlayers.Select(x => x.ID).ToArray())
-        {
-            await db.Players.Delete(id);
-        }
-
-        await db.CompleteAsync();
-        await LoadPlayers();
-    }
-
     [ReactiveCommand(CanExecute = nameof(canStartGame))]
     private void StartGame()
     {
         PageNavigation.GoNext<X01SetupViewModel>();
+    }
+
+    [ReactiveCommand]
+    private void PlayersView()
+    {
+        PageNavigation.GoNext<PlayersViewModel>();
     }
 }
