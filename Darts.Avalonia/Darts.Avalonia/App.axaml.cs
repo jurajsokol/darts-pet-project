@@ -26,7 +26,8 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         MainView mainView = Services!.GetRequiredService<MainView>();
-        Services!.GetRequiredService<PageNavigation>().SetFirstView<CreateGameViewModel>();
+        IPageNavigation navigation = Services!.GetRequiredService<PageNavigation>();
+        navigation.GoNext<CreateGameViewModel>();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

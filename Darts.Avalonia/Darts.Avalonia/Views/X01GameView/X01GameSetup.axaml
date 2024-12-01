@@ -2,7 +2,98 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:Darts.Avalonia.ViewModels"
+			 xmlns:vmModels="using:Darts.Avalonia.Models"
+			 xmlns:controls="using:Darts.Avalonia.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Darts.Avalonia.Views.X01GameView.X01GameSetup">
-  Welcome to Avalonia!
+             x:Class="Darts.Avalonia.Views.X01GameView.X01GameSetup"
+			 x:DataType="vm:X01SetupViewModel">
+  
+	<Grid RowDefinitions="auto,auto,auto,auto">
+		<controls:GroupControl HeaderText="Points"
+							   Grid.Row="0"
+							   Padding="0"
+							   Theme="{StaticResource BasicGroupControl}">
+
+			<ListBox SelectionMode="Single,Toggle"
+					 ItemsSource="{Binding GamePoints, Mode=OneTime}"
+					 SelectedItem="{Binding X01GameType}"
+					 HorizontalAlignment="Center">
+				<ListBox.DataTemplates>
+					<DataTemplate x:DataType="vmModels:X01GameTypeModel">
+						<TextBlock Text="{Binding GameTypeName, Mode=OneTime}"
+								   Padding="10"/>
+					</DataTemplate>
+				</ListBox.DataTemplates>
+
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+
+			</ListBox>
+		</controls:GroupControl>
+
+		<controls:GroupControl HeaderText="Game in"
+							   Grid.Row="1"
+							   Padding="0"
+							   Theme="{StaticResource BasicGroupControl}">
+
+			<ListBox SelectionMode="Single,Toggle"
+					 ItemsSource="{Binding DartsNumberModifier, Mode=OneTime}"
+					 SelectedItem="{Binding GameIn}"
+					 HorizontalAlignment="Center">
+				<ListBox.DataTemplates>
+					<DataTemplate x:DataType="vmModels:DartNumberModifierModel">
+						<TextBlock Text="{Binding ModifierTypeName, Mode=OneTime}"
+								   Padding="10"/>
+					</DataTemplate>
+				</ListBox.DataTemplates>
+
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+
+			</ListBox>
+		</controls:GroupControl>
+		
+		<controls:GroupControl HeaderText="Game out"
+							   Grid.Row="2"
+							   Padding="0"
+							   Theme="{StaticResource BasicGroupControl}">
+
+			<ListBox SelectionMode="Single,Toggle"
+					 ItemsSource="{Binding DartsNumberModifier, Mode=OneTime}"
+					 SelectedItem="{Binding GameOut}"
+					 HorizontalAlignment="Center">
+				<ListBox.DataTemplates>
+					<DataTemplate x:DataType="vmModels:DartNumberModifierModel">
+						<TextBlock Text="{Binding ModifierTypeName, Mode=OneTime}"
+								   Padding="10"/>
+					</DataTemplate>
+				</ListBox.DataTemplates>
+
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+
+			</ListBox>
+		</controls:GroupControl>
+
+		<StackPanel Grid.Row="3"
+					Orientation="Horizontal"
+					HorizontalAlignment="Right">
+			<Button Content="Back"
+					Margin="5"
+					Command="{Binding GoBackCommand}"/>
+			<Button Content="Start game"
+					Margin="5"/>
+		</StackPanel>
+	</Grid>
+	
 </UserControl>

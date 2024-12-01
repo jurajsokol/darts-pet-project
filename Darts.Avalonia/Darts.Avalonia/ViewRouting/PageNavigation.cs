@@ -13,11 +13,9 @@ namespace Darts.Avalonia.ViewRouting;
 
 public class PageNavigation : IPageNavigation
 {
-    private readonly TransitioningContentControl contentControl;
     private readonly IServiceProvider services;
+    private readonly TransitioningContentControl contentControl;
     private Stack<Control> navigationStack = new Stack<Control>();
-
-    public ReactiveCommand<Type, Unit> GoNextCommand { get; }
 
     public ReactiveCommand<Unit, Unit> GoBackCommand { get; }
 
@@ -25,13 +23,13 @@ public class PageNavigation : IPageNavigation
     {
         this.contentControl = contentControl;
         this.services = services;
-
-        GoBackCommand = ReactiveCommand.Create(() => GoBack());
+        GoBackCommand = ReactiveCommand.Create(GoBack);
     }
 
-    public void SetFirstView<T>() where T : ReactiveObject
+    public void GoToRootPage()
     {
-        contentControl.Content = ResolveView<CreateGameViewModel>();
+        contentControl.Content = navigationStack.FirstOrDefault();
+        navigationStack.Clear();
     }
 
     public void GoNext<T>() where T : ReactiveObject
@@ -51,11 +49,12 @@ public class PageNavigation : IPageNavigation
         {
             Type t when t == typeof(CreateGameViewModel) => services.GetRequiredService<CreateGameView>(),
             Type t when t == typeof(DartGameX01ViewModel) => services.GetRequiredService<DartGameX01View>(),
+            Type t when t == typeof(X01SetupViewModel) => services.GetRequiredService<X01GameSetup>(),
 
             _ => throw new NotImplementedException(),
         };
     }
-
+    
     public void GoBack()
     {
         if (navigationStack.Any())

@@ -24,10 +24,10 @@ public partial class CreateGameViewModel : ReactiveObject
     [Reactive]
     private GameTypeModel selectedGameType;
 
-    public ObservableCollection<GameTypeModel> GameTypes { get; } = new ObservableCollection<GameTypeModel>(
-        Enum.GetValues(typeof(GameTypes))
+    public GameTypeModel[] GameTypes { get; } = Enum.GetValues(typeof(GameTypes))
         .Cast<GameTypes>()
-        .Select(x => new GameTypeModel(x)));
+        .Select(x => new GameTypeModel(x))
+        .ToArray();
 
     public ObservableCollection<Player> Players { get; } = new();
     public IPageNavigation PageNavigation { get; }
@@ -95,6 +95,6 @@ public partial class CreateGameViewModel : ReactiveObject
     [ReactiveCommand(CanExecute = nameof(canStartGame))]
     private void StartGame()
     {
-        PageNavigation.GoNext<DartGameX01ViewModel>();
+        PageNavigation.GoNext<X01SetupViewModel>();
     }
 }

@@ -2,8 +2,7 @@
 
 public enum GameTypes
 {
-    _301 = 301,
-    _401 = 401,
-    _501 = 501,
-    _601 = 601,
+    X01,
+    Cricket,
+    CutThroat
 }

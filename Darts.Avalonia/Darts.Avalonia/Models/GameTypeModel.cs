@@ -6,10 +6,9 @@ public class GameTypeModel
 {
     public string GameTypeName => GameType switch
     {
-        GameTypes._301 => "301",
-        GameTypes._401 => "401",
-        GameTypes._501 => "501",
-        GameTypes._601 => "601",
+        GameTypes.X01 => "X01",
+        GameTypes.Cricket => "Cricket",
+        GameTypes.CutThroat => "Cut throat",
         _ => string.Empty,
     };
 
