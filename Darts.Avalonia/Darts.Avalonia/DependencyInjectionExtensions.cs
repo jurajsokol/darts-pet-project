@@ -11,6 +11,7 @@ using Darts.Games.State;
 using System.Collections.Generic;
 using Darts.Games;
 using Darts.Avalonia.Views.X01GameView;
+using Darts.Avalonia.Factories;
 
 namespace Darts.Avalonia;
 
@@ -28,7 +29,11 @@ public static class DependencyInjectionExtensions
         return services
             .AddTransient<IDialogScope<AddPlayerViewModel>, DialogScope<AddPlayerViewModel>>(s => new DialogScope<AddPlayerViewModel>(s.CreateScope(), s.GetRequiredService<MainView>().MainPanel))
             .AddTransient<DialogBase<AddPlayerViewModel>, AddPlayerView>()
-            .AddSingleton<IDialogManager, DialogManager>(s => new DialogManager(s.GetRequiredService<MainView>().MainPanel, s));
+            .AddSingleton<IAbstractFactory<IDialogScope<AddPlayerViewModel>>, AbstractFactory<IDialogScope<AddPlayerViewModel>>>(s =>
+            {
+                return new AbstractFactory<IDialogScope<AddPlayerViewModel>>(
+                    () => new DialogScope<AddPlayerViewModel>(s.CreateScope(), s.GetRequiredService<MainView>().MainPanel));
+            });
     }
 
     public static IServiceCollection AddViewModels(this IServiceCollection services)

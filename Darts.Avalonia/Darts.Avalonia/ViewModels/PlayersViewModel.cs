@@ -1,4 +1,5 @@
-﻿using Darts.Avalonia.Models;
+﻿using Darts.Avalonia.Factories;
+using Darts.Avalonia.Models;
 using Darts.Avalonia.ViewRouting;
 using Darts.Avalonia.Views.Dialog;
 using Darts.DAL;
@@ -14,18 +15,18 @@ namespace Darts.Avalonia.ViewModels;
 public partial class PlayersViewModel : ReactiveObject
 {
     private readonly IUnitOfWork db;
-    private readonly IDialogManager dialogManager;
+    private readonly IAbstractFactory<IDialogScope<AddPlayerViewModel>> dialogFactory;
 
     public ObservableCollection<Player> Players { get; } = new();
     public IPageNavigation PageNavigation { get; }
 
     public ObservableCollection<Player> SelectedPlayers { get; } = new();
 
-    public PlayersViewModel(IPageNavigation pageNavigation, IUnitOfWork db, IDialogManager dialogManager)
+    public PlayersViewModel(IPageNavigation pageNavigation, IUnitOfWork db, IAbstractFactory<IDialogScope<AddPlayerViewModel>> dialogFactory)
     {
         PageNavigation = pageNavigation;
         this.db = db;
-        this.dialogManager = dialogManager;
+        this.dialogFactory = dialogFactory;
     }
 
     [ReactiveCommand]
@@ -49,7 +50,9 @@ public partial class PlayersViewModel : ReactiveObject
     [ReactiveCommand]
     private async Task AddPlayer()
     {
-        (DialogResult, AddPlayerViewModel) data = await dialogManager.ShowDialog<AddPlayerViewModel>();
+        using IDialogScope<AddPlayerViewModel> scope = dialogFactory.Create();
+
+        (DialogResult, AddPlayerViewModel) data = await scope.ShowDialog();
         if (data.Item1 == DialogResult.Ok)
         {
             await db.Players.Add(new DAL.Entities.Player() { Name = data.Item2.Name });
@@ -65,7 +68,7 @@ public partial class PlayersViewModel : ReactiveObject
 
         if (selectedPlayer is not null)
         {
-            using IDialogScope<AddPlayerViewModel> scope = dialogManager.CreateDialogScope<AddPlayerViewModel>();
+            using IDialogScope<AddPlayerViewModel> scope = dialogFactory.Create();
 
             scope.ViewModel.Name = selectedPlayer.Name;
 
