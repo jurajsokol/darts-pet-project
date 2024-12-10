@@ -52,10 +52,10 @@ public partial class PlayersViewModel : ReactiveObject
     {
         using IDialogScope<AddPlayerViewModel> scope = dialogFactory.Create();
 
-        (DialogResult, AddPlayerViewModel) data = await scope.ShowDialog();
-        if (data.Item1 == DialogResult.Ok)
+        DialogResult result = await scope.ShowDialog();
+        if (result == DialogResult.Ok)
         {
-            await db.Players.Add(new DAL.Entities.Player() { Name = data.Item2.Name });
+            await db.Players.Add(new DAL.Entities.Player() { Name = scope.ViewModel.Name });
             await db.CompleteAsync();
             await LoadPlayers();
         }
@@ -72,10 +72,10 @@ public partial class PlayersViewModel : ReactiveObject
 
             scope.ViewModel.Name = selectedPlayer.Name;
 
-            (DialogResult, AddPlayerViewModel) data = await scope.ShowDialog();
-            if (data.Item1 == DialogResult.Ok)
+            DialogResult result = await scope.ShowDialog();
+            if (result == DialogResult.Ok)
             {
-                db.Players.Update(new DAL.Entities.Player() { ID = selectedPlayer.ID, Name = data.Item2.Name });
+                db.Players.Update(new DAL.Entities.Player() { ID = selectedPlayer.ID, Name = scope.ViewModel.Name });
                 await db.CompleteAsync();
                 await LoadPlayers();
             }

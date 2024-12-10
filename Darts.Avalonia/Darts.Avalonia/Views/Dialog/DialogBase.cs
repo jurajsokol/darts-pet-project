@@ -10,7 +10,7 @@ namespace Darts.Avalonia.Views.Dialog;
 public abstract class DialogBase<T> : UserControl where T : ReactiveObject
 {
     private TaskCompletionSource<DialogResult>? closeDialog;
-    private IObserver<(DialogResult, T)>? observer;
+    private IObserver<DialogResult>? observer;
 
     public T ViewModel { get; }
 
@@ -26,9 +26,9 @@ public abstract class DialogBase<T> : UserControl where T : ReactiveObject
         return closeDialog.Task;
     }
 
-    public IObservable<(DialogResult, T)> ShowReactive()
+    public IObservable<DialogResult> ShowReactive()
     {
-        return Observable.Create<(DialogResult, T)>(o =>
+        return Observable.Create<DialogResult>(o =>
         {
             observer = o;
             return Disposable.Empty;
@@ -38,7 +38,7 @@ public abstract class DialogBase<T> : UserControl where T : ReactiveObject
     public void Close(DialogResult result)
     {
         closeDialog?.SetResult(result);
-        observer?.OnNext((result, ViewModel));
+        observer?.OnNext(result);
         observer?.OnCompleted();
     }
 }

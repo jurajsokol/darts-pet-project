@@ -8,8 +8,8 @@ namespace Darts.Avalonia.Views.Dialog
     {
         T ViewModel { get; }
 
-        Task<(DialogResult, T)> ShowDialog();
+        Task<DialogResult> ShowDialog();
 
-        IObservable<(DialogResult, T)> ShowDialogReactive();
+        IObservable<DialogResult> ShowDialogReactive();
     }
 }
