@@ -16,8 +16,8 @@ namespace Darts.Avalonia.ViewModels;
 
 public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewModel
 {
-    private readonly IPageNavigation pageNavigation;
     private readonly IDartGame dartGame;
+    private readonly GameScope gameScope;
 
     public ObservableCollection<Darts.Games.Models.Player> Players => players;
     private ObservableCollectionExtended<Darts.Games.Models.Player> players = new();
@@ -28,11 +28,10 @@ public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewMode
 
     private ObservableCollectionExtended<Games.Models.PlayerMove> playerRound = new();
 
-    public DartGameX01ViewModel(IPageNavigation pageNavigation, IDartGame dartGame, IScheduler guiScheduler)
+    public DartGameX01ViewModel(IDartGame dartGame, IScheduler guiScheduler, GameScope gameScope)
     {
-        this.pageNavigation = pageNavigation;
         this.dartGame = dartGame;
-
+        this.gameScope = gameScope;
         this.WhenActivated(disposable =>
         {
             dartGame.Players
@@ -75,6 +74,6 @@ public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewMode
 
     public void CancelGame()
     {
-        pageNavigation.GoBack();
+        gameScope.Dispose();
     }
 }

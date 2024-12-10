@@ -92,6 +92,7 @@
 					Margin="5"
 					Command="{Binding GoBackCommand}"/>
 			<Button Content="Start game"
+					Command="{Binding GoNextCommand}"
 					Margin="5"/>
 		</StackPanel>
 	</Grid>

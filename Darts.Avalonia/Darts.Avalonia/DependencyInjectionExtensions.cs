@@ -19,8 +19,8 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddPageNavigation(this IServiceCollection services)
     {
         return services
-            .AddSingleton<PageNavigation>(s => new PageNavigation(s.GetRequiredService<MainView>().NavigationPanel, s))
-            .AddSingleton<IPageNavigation, PageNavigation>(s => s.GetRequiredService<PageNavigation>());
+            .AddScoped<PageNavigation>(s => new PageNavigation(s.GetRequiredService<MainView>().NavigationPanel, s))
+            .AddScoped<IPageNavigation, PageNavigation>(s => s.GetRequiredService<PageNavigation>());
     }
 
     public static IServiceCollection AddDialogs(this IServiceCollection services)
@@ -46,42 +46,41 @@ public static class DependencyInjectionExtensions
         return services
             .AddSingleton<MainView>()
             .AddTransient<CreateGameView>()
-            .AddTransient<DartGameX01View>()
-            .AddTransient<X01GameSetup>()
+            .AddScoped<DartGameX01View>()
+            .AddScoped<X01GameSetup>()
             .AddTransient<PlayersView>();
-    }
-
-    public static IServiceCollection AddGameLogic(this IServiceCollection services)
-    {
-        return services
-            .AddTransient<IDartGame, X01>();
     }
 
     public static IServiceCollection AddDartGames(this IServiceCollection services)
     {
-        return services.AddTransient<IDartGame, X01>(s =>
-        {
-            CreateGameViewModel createGameParams = s.GetRequiredService<CreateGameViewModel>();
-            Player[] players = createGameParams.SelectedPlayers.Select((x, i) => x.ToDartPlayer(i)).ToArray();
-
-            IEnumerable<Player> gamePlayers = players
-                .Select((p, i) => p with { Score = (int)createGameParams.SelectedGameType.GameType, IsPlayerActive = i == 0 });
-            IEnumerable<PlayerMove> moves = Enumerable
-               .Range(0, 3)
-               .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x));
-
-
-            Store store = new Store(gamePlayers.ToArray(), moves.ToArray());
-
-            return createGameParams.SelectedGameType.GameType switch
+        return services.AddScoped<IDartGame, X01>(s =>
             {
-                //X01GameTypes._301 => new X01(players, store),
-                //X01GameTypes._401 => new X01(players, store),
-                //X01GameTypes._501 => new X01(players, store),
-                //X01GameTypes._601 => new X01(players, store),
+                CreateGameViewModel createGameParams = s.GetRequiredService<CreateGameViewModel>();
+                Player[] players = createGameParams.SelectedPlayers.Select((x, i) => x.ToDartPlayer(i)).ToArray();
 
-                _ => throw new NotImplementedException($"Game type {createGameParams.SelectedGameType.GameType} is not implemented yet"),
-            };
-        });
+                IEnumerable<Player> gamePlayers = players
+                    .Select((p, i) => p with { Score = (int)createGameParams.SelectedGameType.GameType, IsPlayerActive = i == 0 });
+                IEnumerable<PlayerMove> moves = Enumerable
+                   .Range(0, 3)
+                   .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x));
+
+
+                Store store = new Store(gamePlayers.ToArray(), moves.ToArray());
+
+                return createGameParams.SelectedGameType.GameType switch
+                {
+                    GameTypes.X01 => new X01(players, store),
+
+                    _ => throw new NotImplementedException($"Game type {createGameParams.SelectedGameType.GameType} is not implemented yet"),
+                };
+            })
+            .AddScoped<GameScope>(services =>
+            {
+                IServiceScope scope = services.CreateScope();
+                return new GameScope(
+                    scope,
+                    scope.ServiceProvider.GetRequiredService<PageNavigation>(),
+                    services.GetRequiredService<PageNavigation>());
+            });
     }
 }

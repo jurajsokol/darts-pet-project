@@ -1,6 +1,5 @@
 ﻿using Darts.Avalonia.Enums;
 using Darts.Avalonia.Models;
-using Darts.Avalonia.ViewRouting;
 using Darts.Games.Games;
 using ReactiveUI;
 using ReactiveUI.SourceGenerators;
@@ -11,7 +10,7 @@ namespace Darts.Avalonia.ViewModels;
 
 public partial class X01SetupViewModel : ReactiveObject
 {
-    private readonly IPageNavigation pageNavigation;
+    private readonly GameScope gameScope;
 
     public DartNumberModifierModel[] DartsNumberModifier { get; } = Enum.GetValues(typeof(DartsNumberModifier))
         .Cast<DartsNumberModifier>()
@@ -32,23 +31,23 @@ public partial class X01SetupViewModel : ReactiveObject
     [Reactive]
     private DartNumberModifierModel gameOut;
 
-    public X01SetupViewModel(IPageNavigation pageNavigation)
+    public X01SetupViewModel(GameScope gameScope)
     {
-        this.pageNavigation = pageNavigation;
         GameIn = DartsNumberModifier.First();
         GameOut = DartsNumberModifier.First();
         X01GameType = GamePoints.First();
+        this.gameScope = gameScope;
     }
 
     [ReactiveCommand]
     private void GoNext()
     {
-        pageNavigation.GoNext<DartGameX01ViewModel>();
+        gameScope.GoTo<DartGameX01ViewModel>();
     }
 
     [ReactiveCommand]
     private void GoBack()
     {
-        pageNavigation.GoBack();
+        gameScope.Dispose();
     }
 }
