@@ -45,10 +45,16 @@ public class DialogScope<T> : IDialogScope<T> where T : ReactiveObject
                 .Publish()
                 .RefCount();
 
+            Control? c = panel.Children.FirstOrDefault();
+            c.Effect = BlurEffect.Parse("blur(10)");
             panel.Children.Add(dialog);
 
             return new CompositeDisposable(
-                result.Subscribe(_ => { }),
+                result.Subscribe(_ => 
+                {
+                    panel.Children.Remove(dialog);
+                    c.Effect = null;
+                }),
                 result.Subscribe(o));
         });
     }

@@ -1,37 +1,44 @@
-﻿using Darts.Avalonia.ViewModels;
-using Darts.Avalonia.ViewRouting;
+﻿using Avalonia.Controls;
+using Darts.Avalonia.Views;
+using Darts.Avalonia.Views.X01GameView;
 using Microsoft.Extensions.DependencyInjection;
-using ReactiveUI;
 using System;
+using System.Reactive.Disposables;
 
 namespace Darts.Avalonia;
 
 public class GameScope : IDisposable
 {
-    private readonly IServiceScope serviceScope;
-    private readonly PageNavigation pageNavigation;
-    private readonly PageNavigation rootPageNavigation;
+    private readonly IServiceProvider serviceScope;
+    private readonly TransitioningContentControl contentControl;
+    private bool isDisposed = false;
 
-    public GameScope(IServiceScope serviceScope, PageNavigation pageNavigation, PageNavigation rootPageNavigation)
+    public CompositeDisposable Disposables { get; } = new CompositeDisposable();
+
+    public GameScope(IServiceProvider serviceScope, TransitioningContentControl contentControl)
     {
         this.serviceScope = serviceScope;
-        this.pageNavigation = pageNavigation;
-        this.rootPageNavigation = rootPageNavigation;
+        this.contentControl = contentControl;
+    }
+
+    public void StartSetup()
+    {
+        contentControl.Content = serviceScope.GetRequiredService<X01GameSetup>();
     }
 
     public void StartGame()
     {
-        pageNavigation.GoNext<X01SetupViewModel>();
+        contentControl.Content = serviceScope.GetRequiredService<DartGameX01View>();
     }
 
     public void Dispose()
     {
-        rootPageNavigation.GoToRootPage();
-        serviceScope.Dispose();
-    }
+        if (!isDisposed)
+        { 
+            isDisposed = true;
+            contentControl.Content = serviceScope.GetRequiredService<CreateGameView>();
+            Disposables.Dispose();
+        }
 
-    public void GoTo<T>() where T : ReactiveObject
-    {
-        pageNavigation.GoNext<T>();
     }
 }

@@ -1,5 +1,7 @@
-﻿using Darts.Avalonia.ViewRouting;
+﻿using Darts.Avalonia.Factories;
+using Darts.Avalonia.ViewRouting;
 using Darts.Avalonia.Views;
+using Darts.Avalonia.Views.Dialog;
 using Darts.Games.Games;
 using Darts.Games.Models;
 using DynamicData;
@@ -11,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace Darts.Avalonia.ViewModels;
 
@@ -18,6 +21,7 @@ public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewMode
 {
     private readonly IDartGame dartGame;
     private readonly GameScope gameScope;
+    private readonly IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>> dialogFactory;
 
     public ObservableCollection<Darts.Games.Models.Player> Players => players;
     private ObservableCollectionExtended<Darts.Games.Models.Player> players = new();
@@ -28,10 +32,11 @@ public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewMode
 
     private ObservableCollectionExtended<Games.Models.PlayerMove> playerRound = new();
 
-    public DartGameX01ViewModel(IDartGame dartGame, IScheduler guiScheduler, GameScope gameScope)
+    public DartGameX01ViewModel(IDartGame dartGame, IScheduler guiScheduler, GameScope gameScope, IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>> dialogFactory)
     {
         this.dartGame = dartGame;
         this.gameScope = gameScope;
+        this.dialogFactory = dialogFactory;
         this.WhenActivated(disposable =>
         {
             dartGame.Players
@@ -72,8 +77,14 @@ public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewMode
         dartGame.Undo();
     }
 
-    public void CancelGame()
+    public async Task CancelGame()
     {
-        gameScope.Dispose();
+        using IDialogScope<ConfirmGameExitViewModel> dialog = dialogFactory.Create();
+        var result = await dialog.ShowDialog();
+
+        if (result == DialogResult.Ok)
+        { 
+            gameScope.Dispose();
+        }
     }
 }

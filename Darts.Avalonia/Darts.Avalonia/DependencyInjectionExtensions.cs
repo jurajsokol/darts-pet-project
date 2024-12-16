@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Darts.Games;
 using Darts.Avalonia.Views.X01GameView;
 using Darts.Avalonia.Factories;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Darts.Avalonia;
 
@@ -27,12 +28,19 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddDialogs(this IServiceCollection services)
     {
         return services
+            .AddTransient<IDialogScope<ConfirmGameExitViewModel>, DialogScope<ConfirmGameExitViewModel>>(s => new DialogScope<ConfirmGameExitViewModel>(s.CreateScope(), s.GetRequiredService<MainView>().MainPanel))
+            .AddTransient<DialogBase<ConfirmGameExitViewModel>, ConfirmGameClose>()
             .AddTransient<IDialogScope<AddPlayerViewModel>, DialogScope<AddPlayerViewModel>>(s => new DialogScope<AddPlayerViewModel>(s.CreateScope(), s.GetRequiredService<MainView>().MainPanel))
             .AddTransient<DialogBase<AddPlayerViewModel>, AddPlayerView>()
             .AddSingleton<IAbstractFactory<IDialogScope<AddPlayerViewModel>>, AbstractFactory<IDialogScope<AddPlayerViewModel>>>(s =>
             {
                 return new AbstractFactory<IDialogScope<AddPlayerViewModel>>(
                     () => new DialogScope<AddPlayerViewModel>(s.CreateScope(), s.GetRequiredService<MainView>().MainPanel));
+            })
+            .AddSingleton<IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>>, AbstractFactory<IDialogScope<ConfirmGameExitViewModel>>>(s =>
+            {
+                return new AbstractFactory<IDialogScope<ConfirmGameExitViewModel>>(
+                    () => new DialogScope<ConfirmGameExitViewModel>(s.CreateScope(), s.GetRequiredService<MainView>().MainPanel));
             });
     }
 
@@ -43,7 +51,8 @@ public static class DependencyInjectionExtensions
             .AddScoped<AddPlayerViewModel>()
             .AddTransient<DartGameX01ViewModel>()
             .AddScoped<X01SetupViewModel>()
-            .AddTransient<PlayersViewModel>();
+            .AddTransient<PlayersViewModel>()
+            .AddSingleton<ConfirmGameExitViewModel>();
     }
 
     public static IServiceCollection AddViews(this IServiceCollection services)
@@ -53,7 +62,8 @@ public static class DependencyInjectionExtensions
             .AddTransient<CreateGameView>()
             .AddScoped<DartGameX01View>()
             .AddScoped<X01GameSetup>()
-            .AddTransient<PlayersView>();
+            .AddTransient<PlayersView>()
+            .AddTransient<ConfirmGameClose>();
     }
 
     public static IServiceCollection AddDartGames(this IServiceCollection services)
@@ -79,13 +89,17 @@ public static class DependencyInjectionExtensions
                     _ => throw new NotImplementedException($"Game type {createGameParams.SelectedGameType.GameType} is not implemented yet"),
                 };
             })
-            .AddScoped<GameScope>(services =>
+            .AddScoped(services => new GameScope(services, services.GetRequiredService<MainView>().NavigationPanel))
+            .AddSingleton<IAbstractFactory<GameScope>>(services =>
             {
-                IServiceScope scope = services.CreateScope();
-                return new GameScope(
-                    scope,
-                    scope.ServiceProvider.GetRequiredService<PageNavigation>(),
-                    services.GetRequiredService<PageNavigation>());
+                return new AbstractFactory<GameScope>(() =>
+                {
+                    IServiceScope scope = services.CreateScope();
+
+                    GameScope gameScope = scope.ServiceProvider.GetRequiredService<GameScope>();
+                    gameScope.Disposables.Add(scope);
+                    return gameScope;
+                });
             });
     }
 }

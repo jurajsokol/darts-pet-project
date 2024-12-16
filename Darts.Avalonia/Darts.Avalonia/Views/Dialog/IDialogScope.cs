@@ -2,14 +2,13 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Darts.Avalonia.Views.Dialog
+namespace Darts.Avalonia.Views.Dialog;
+
+public interface IDialogScope<T> : IDisposable where T : ReactiveObject
 {
-    public interface IDialogScope<T> : IDisposable where T : ReactiveObject
-    {
-        T ViewModel { get; }
+    T ViewModel { get; }
 
-        Task<DialogResult> ShowDialog();
+    Task<DialogResult> ShowDialog();
 
-        IObservable<DialogResult> ShowDialogReactive();
-    }
+    IObservable<DialogResult> ShowDialogReactive();
 }

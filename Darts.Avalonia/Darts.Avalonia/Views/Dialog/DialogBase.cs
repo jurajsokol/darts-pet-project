@@ -7,11 +7,8 @@ using System.Reactive.Disposables;
 
 namespace Darts.Avalonia.Views.Dialog;
 
-public abstract class DialogBase<T> : UserControl where T : ReactiveObject
+public abstract class DialogBase<T> : DialogBase where T : ReactiveObject
 {
-    private TaskCompletionSource<DialogResult>? closeDialog;
-    private IObserver<DialogResult>? observer;
-
     public T ViewModel { get; }
 
     public DialogBase(T viewModel)
@@ -19,6 +16,12 @@ public abstract class DialogBase<T> : UserControl where T : ReactiveObject
         ViewModel = viewModel;
         DataContext = viewModel;
     }
+}
+
+public abstract class DialogBase : UserControl
+{
+    private TaskCompletionSource<DialogResult>? closeDialog;
+    private IObserver<DialogResult>? observer;
 
     public Task<DialogResult> Show()
     {

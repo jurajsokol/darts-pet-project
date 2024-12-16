@@ -42,7 +42,7 @@ public partial class X01SetupViewModel : ReactiveObject
     [ReactiveCommand]
     private void GoNext()
     {
-        gameScope.GoTo<DartGameX01ViewModel>();
+        gameScope.StartGame();
     }
 
     [ReactiveCommand]

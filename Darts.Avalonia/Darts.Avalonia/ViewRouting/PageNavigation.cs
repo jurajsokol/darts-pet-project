@@ -15,7 +15,7 @@ public class PageNavigation : IPageNavigation
 {
     private readonly IServiceProvider serviceProvider;
     private readonly TransitioningContentControl contentControl;
-    private Stack<Control> navigationStack = new Stack<Control>();
+    private Stack<ReactiveObject> navigationStack = new Stack<ReactiveObject>();
 
     public ReactiveCommand<Unit, Unit> GoBackCommand { get; }
 
@@ -40,17 +40,18 @@ public class PageNavigation : IPageNavigation
     public void GoNext<T>(IServiceProvider services) where T : ReactiveObject
     {
         Control? actualControl = contentControl.Content as Control;
-        if (actualControl is not null)
+        ReactiveObject? viewModel = actualControl?.DataContext as ReactiveObject;
+        if (viewModel is not null)
         { 
-            navigationStack.Push(actualControl);
+            navigationStack.Push(viewModel);
         }
 
-        contentControl.Content = ResolveView<T>(services);
+        contentControl.Content = ResolveView(typeof(T), services);
     }
 
-    private Control ResolveView<T>(IServiceProvider services) where T : ReactiveObject
+    private Control ResolveView(Type type, IServiceProvider services)
     {
-        return typeof(T) switch
+        return type switch
         {
             Type t when t == typeof(CreateGameViewModel) => services.GetRequiredService<CreateGameView>(),
             Type t when t == typeof(DartGameX01ViewModel) => services.GetRequiredService<DartGameX01View>(),
@@ -68,14 +69,15 @@ public class PageNavigation : IPageNavigation
 
     public void Switch<T>(IServiceProvider services) where T : ReactiveObject
     {
-        contentControl.Content = ResolveView<T>(services);
+        contentControl.Content = ResolveView(typeof(T), services);
     }
     
     public void GoBack()
     {
         if (navigationStack.Any())
         {
-            contentControl.Content = navigationStack.Pop();
+            ReactiveObject viewModel = navigationStack.Pop();
+            contentControl.Content = ResolveView(viewModel.GetType(), serviceProvider);
         }
     }
 }
