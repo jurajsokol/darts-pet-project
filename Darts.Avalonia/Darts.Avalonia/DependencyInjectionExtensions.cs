@@ -71,14 +71,14 @@ public static class DependencyInjectionExtensions
         return services.AddScoped<IDartGame, X01>(s =>
             {
                 CreateGameViewModel createGameParams = s.GetRequiredService<CreateGameViewModel>();
+                X01SetupViewModel setupViewModel = s.GetRequiredService<X01SetupViewModel>();
                 Player[] players = createGameParams.SelectedPlayers.Select((x, i) => x.ToDartPlayer(i)).ToArray();
 
                 IEnumerable<Player> gamePlayers = players
-                    .Select((p, i) => p with { Score = (int)createGameParams.SelectedGameType.GameType, IsPlayerActive = i == 0 });
+                    .Select((p, i) => p with { Score = (int)setupViewModel.X01GameType.GameType, IsPlayerActive = i == 0 });
                 IEnumerable<PlayerMove> moves = Enumerable
                    .Range(0, 3)
                    .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x));
-
 
                 Store store = new Store(gamePlayers.ToArray(), moves.ToArray());
 
