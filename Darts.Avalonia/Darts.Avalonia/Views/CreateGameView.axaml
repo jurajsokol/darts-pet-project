@@ -16,7 +16,7 @@
 		</Style>
 	</UserControl.Styles>
 
-	<Grid RowDefinitions="auto,*,auto"
+	<Grid RowDefinitions="auto,*"
 			MaxWidth="500"
 			VerticalAlignment="Stretch"
 			HorizontalAlignment="Center">
@@ -66,21 +66,6 @@
 				</ListBox.DataTemplates>
 			</ListBox>
 		</controls:GroupControl>
-
-		<StackPanel Orientation="Horizontal"
-					Grid.Row="2"
-					HorizontalAlignment="Center">
-
-			<Button Content="Players"
-					Command="{Binding PlayersViewCommand, Mode=OneTime}"/>
-			<Button Content="Theme"
-					Click="Button_Click"/>
-			<Button Content="Start Game"
-					Classes="Primary"
-					IsDefault="True"
-					Command="{Binding StartGameCommand}"
-					Theme="{StaticResource SolidButton}"/>
-		</StackPanel>
 
 	</Grid>
 </UserControl>

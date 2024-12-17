@@ -63,7 +63,9 @@ public static class DependencyInjectionExtensions
             .AddScoped<DartGameX01View>()
             .AddScoped<X01GameSetup>()
             .AddTransient<PlayersView>()
-            .AddTransient<ConfirmGameClose>();
+            .AddTransient<ConfirmGameClose>()
+            .AddTransient<MainMenuView>()
+            .AddTransient<SettingsView>();
     }
 
     public static IServiceCollection AddDartGames(this IServiceCollection services)

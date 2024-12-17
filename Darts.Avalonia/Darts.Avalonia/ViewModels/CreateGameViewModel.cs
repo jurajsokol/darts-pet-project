@@ -37,10 +37,9 @@ public partial class CreateGameViewModel : ReactiveObject
     [Reactive]
     private bool isVisible = false;
 
-    public CreateGameViewModel(IUnitOfWork db, IPageNavigation pageNavigation, IAbstractFactory<GameScope> gameScopeFactory)
+    public CreateGameViewModel(IUnitOfWork db, IAbstractFactory<GameScope> gameScopeFactory)
     {
         this.db = db;
-        PageNavigation = pageNavigation;
         this.gameScopeFactory = gameScopeFactory;
         IObservable<bool> isAnyPlayerSelected = Observable
             .FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(

@@ -16,13 +16,45 @@
 		</Style>
 	</UserControl.Styles>
 	
-	<Grid RowDefinitions="*,auto"
-		  MaxWidth="500"
-		  VerticalAlignment="Stretch"
-	   	  HorizontalAlignment="Center">
+	<Grid RowDefinitions="auto,*">
+
+		<Border Background="{StaticResource SemiGrey9}"
+				CornerRadius="5"
+				HorizontalAlignment="Stretch">
+			<StackPanel Orientation="Horizontal"
+						HorizontalAlignment="Right">
+				<Button Command="{Binding AddPlayerCommand}">
+					<StackPanel Orientation="Horizontal">
+						<Svg Path="./Resources/Icons/addUser.svg"
+							 Height="20"
+							 Margin="5"
+							 Css=".lucide { stroke: #FFFFFF; }"/>
+					</StackPanel>
+				</Button>
+				<Button Command="{Binding EditPlayerCommand}">
+					<StackPanel Orientation="Horizontal">
+						<Svg Path="./Resources/Icons/editUser.svg"
+							 Height="20"
+							 Margin="5"
+							 Css=".lucide { stroke: #FFFFFF; }"/>
+					</StackPanel>
+				</Button>
+				<Button Command="{Binding RemoveSelectedPlayersCommand }">
+					<StackPanel Orientation="Horizontal">
+						<Svg Path="./Resources/Icons/removeUser.svg"
+							 Height="20"
+							 Margin="5"
+							 Css=".lucide { stroke: #FFFFFF; }"/>
+					</StackPanel>
+				</Button>
+			</StackPanel>
+		</Border>
 
 		<controls:GroupControl HeaderText="Players"
+							   Grid.Row="2"
 							   Padding="0"
+							   MaxWidth="500"
+							   HorizontalAlignment="Center"
 							   Theme="{StaticResource BasicGroupControl}">
 			<ListBox SelectionMode="Multiple,Toggle"
 				     ItemsSource="{Binding Players, Mode=OneWay}"
@@ -40,18 +72,6 @@
 				</ListBox.DataTemplates>
 			</ListBox>
 		</controls:GroupControl>
-
-		<StackPanel Orientation="Horizontal"
-					VerticalAlignment="Bottom">
-			<Button Content="Back"
-					Command="{Binding GoBackCommand, Mode=OneTime}"/>
-			<Button Content="Add player"
-					Command="{Binding AddPlayerCommand}"/>
-			<Button Content="Edit player"
-					Command="{Binding EditPlayerCommand}"/>
-			<Button Content="Remove player"
-					Command="{Binding RemoveSelectedPlayersCommand }"/>
-		</StackPanel>
 		
 	</Grid>
 </UserControl>

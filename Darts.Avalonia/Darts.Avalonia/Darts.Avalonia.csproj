@@ -9,6 +9,10 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="Resources\Icons\game.svg" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.2.1" />
@@ -29,4 +33,11 @@
     <ProjectReference Include="..\..\Darts.DAL\Darts.DAL.csproj" />
     <ProjectReference Include="..\..\Darts.Games\Darts.Games.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+	<Content Include="Resources\Icons\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

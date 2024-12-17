@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Darts.Avalonia.MainMenuView">
+
+	<UserControl.Styles>
+		<Style Selector="Button">
+			<Setter Property="Theme"
+					Value="{StaticResource BorderlessButton}"/>
+		</Style>
+	</UserControl.Styles>
+
+	<Grid RowDefinitions="*,auto">
+		<TransitioningContentControl x:Name="MainBoard"/>
+		<Border Grid.Row="1"
+				Background="{StaticResource SemiGrey9}"
+				CornerRadius="5">
+			<UniformGrid Rows="1"
+						 Margin="5">
+				<Button Click="GameButton_Click">
+					<StackPanel>
+						<Svg Path="./Resources/Icons/game.svg"
+							 Height="25"
+							 Css=".lucide { stroke: #FFFFFF; }"
+							 HorizontalAlignment="Center"/>
+						<TextBlock Text="Game"
+								   HorizontalAlignment="Center"/>
+					</StackPanel>
+				</Button>
+				<Button Click="PlayersButton_Click">
+					<StackPanel>
+						<Svg Path="./Resources/Icons/user.svg"
+							 Height="25"
+							 Css=".lucide { stroke: #FFFFFF; }"
+							 HorizontalAlignment="Center"/>
+						<TextBlock Text="Players"
+								   HorizontalAlignment="Center"/>
+					</StackPanel>
+				</Button>
+				<Button Content="Settings"
+						Click="SettingsButton_Click">
+					<StackPanel>
+						<Svg Path="./Resources/Icons/settings.svg"
+							 Height="25"
+							 Css=".lucide { stroke: #FFFFFF; }"
+							 HorizontalAlignment="Center"/>
+						<TextBlock Text="Settings"
+								   HorizontalAlignment="Center"/>
+					</StackPanel>
+				</Button>
+				<Button Classes="Primary"
+						Theme="{StaticResource SolidButton}">
+					<StackPanel>
+						<Svg Path="./Resources/Icons/darthFlight.svg"
+							 Height="25"
+							 HorizontalAlignment="Center"/>
+						<TextBlock Text="Start game"
+								   HorizontalAlignment="Center"/>
+					</StackPanel>
+				</Button>
+			</UniformGrid>
+		</Border>
+	</Grid>
+</UserControl>
