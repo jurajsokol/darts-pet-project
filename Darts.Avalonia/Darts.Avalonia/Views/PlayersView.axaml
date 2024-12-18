@@ -18,7 +18,7 @@
 	
 	<Grid RowDefinitions="auto,*">
 
-		<Border Background="{StaticResource SemiGrey9}"
+		<Border Background="{DynamicResource SemiGrey0}"
 				CornerRadius="5"
 				HorizontalAlignment="Stretch">
 			<StackPanel Orientation="Horizontal"
