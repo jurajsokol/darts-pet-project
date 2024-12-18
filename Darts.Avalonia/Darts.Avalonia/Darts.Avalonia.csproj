@@ -4,15 +4,29 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+	<GenerateGitMetadata>True</GenerateGitMetadata>
   </PropertyGroup>
-  
-  <ItemGroup>
+
+	<ItemGroup>
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   
   <ItemGroup>
     <None Remove="Resources\Icons\game.svg" />
   </ItemGroup>
+
+	<Target Name="Git"
+			BeforeTargets="GetAssemblyAttributes"
+            Condition=" '$(GenerateGitMetadata)' == 'true' ">
+		<Exec Command="git rev-list --count HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low" IgnoreExitCode="true" Condition=" '$(RevisionCount)' == '' ">
+			<Output TaskParameter="ConsoleOutput" PropertyName="RevisionCount" />
+		</Exec>
+
+		<ItemGroup>
+			<AssemblyMetadata Condition=" $(RevisionCount) != '' " Include="RevisionCount" Value="$(RevisionCount)" />
+			<AssemblyMetadata Include="BuildDate" Value="$([System.DateTime]::Now.ToString('dd.MM.yyyy'))" />
+		</ItemGroup>
+	</Target>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.2.1" />

@@ -5,13 +5,36 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Darts.Avalonia.SettingsView">
 
-	<Grid ColumnDefinitions="*,*"
-		  Margin="10">
-		<TextBlock Text="Dark theme"
-				   VerticalAlignment="Top"/>
-	    <ToggleSwitch Click="ThemeButton_Click"
-					  x:Name="ThemeToggle"
-					  VerticalAlignment="Top"
-					  Grid.Column="2"/>
-	</Grid>
+	<StackPanel Margin="10">
+		
+		<Border Theme="{StaticResource CardBorder}">
+			<Grid ColumnDefinitions="*,*">			
+				<TextBlock Text="Dark theme"
+						   VerticalAlignment="Center"
+						   FontWeight="Bold"/>
+				<ToggleSwitch Click="ThemeButton_Click"
+							  HorizontalAlignment="Right"
+							  x:Name="ThemeToggle"
+							  VerticalAlignment="Top"
+							  IsChecked="true"
+							  Grid.Column="2"/>	
+			</Grid>
+		</Border>
+		<Border Theme="{StaticResource CardBorder}">
+			<StackPanel>
+				<TextBlock Text="Revision"
+						   FontWeight="Bold"/>
+				<TextBlock x:Name="RevisionText"
+						   Classes="Secondary"/>
+			</StackPanel>
+		</Border>
+		<Border Theme="{StaticResource CardBorder}">
+			<StackPanel>
+				<TextBlock Text="BuildDate"
+						   FontWeight="Bold"/>
+				<TextBlock x:Name="BuildDateText"
+						   Classes="Secondary"/>
+			</StackPanel>
+		</Border>
+	</StackPanel>
 </UserControl>

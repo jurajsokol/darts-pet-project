@@ -1,8 +1,6 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Darts.Avalonia.ViewModels;
-using Darts.Avalonia.ViewRouting;
 using Darts.Avalonia.Views;
 using Darts.DAL;
 using Microsoft.Extensions.DependencyInjection;
