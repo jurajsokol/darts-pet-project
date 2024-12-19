@@ -1,18 +1,20 @@
-using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.ReactiveUI;
+using Darts.Avalonia.ViewModels;
 using Darts.Avalonia.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Darts.Avalonia;
 
-public partial class MainMenuView : UserControl
+public partial class MainMenuView : ReactiveUserControl<MainMenuViewModel>
 {
     private readonly IServiceProvider services;
 
-    public MainMenuView(IServiceProvider services)
+    public MainMenuView(IServiceProvider services, MainMenuViewModel viewModel)
     {
         InitializeComponent();
+        ViewModel = viewModel;
         this.services = services;
         MainBoard.Content = services.GetRequiredService<CreateGameView>();
     }

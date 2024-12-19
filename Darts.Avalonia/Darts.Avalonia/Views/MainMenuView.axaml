@@ -2,9 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:Darts.Avalonia.ViewModels"
 			 xmlns:system="using:System"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Darts.Avalonia.MainMenuView">
+             x:Class="Darts.Avalonia.MainMenuView"
+			 x:DataType="vm:MainMenuViewModel">
 
 	<UserControl.Resources>
 		<ResourceDictionary>
@@ -38,7 +40,7 @@
 						 Margin="5">
 				<Button Click="GameButton_Click">
 					<StackPanel>
-						<Svg Path="./Resources/Icons/game.svg"
+						<Svg Path="/Resources/Icons/game.svg"
 							 Height="25"
 							 HorizontalAlignment="Center"/>
 						<TextBlock Text="Game"
@@ -47,7 +49,7 @@
 				</Button>
 				<Button Click="PlayersButton_Click">
 					<StackPanel>
-						<Svg Path="./Resources/Icons/user.svg"
+						<Svg Path="/Resources/Icons/user.svg"
 							 Height="25"
 							 HorizontalAlignment="Center"/>
 						<TextBlock Text="Players"
@@ -57,7 +59,7 @@
 				<Button Content="Settings"
 						Click="SettingsButton_Click">
 					<StackPanel>
-						<Svg Path="./Resources/Icons/settings.svg"
+						<Svg Path="/Resources/Icons/settings.svg"
 							 Height="25"
 							 HorizontalAlignment="Center"/>
 						<TextBlock Text="Settings"
@@ -65,9 +67,10 @@
 					</StackPanel>
 				</Button>
 				<Button Classes="Primary"
-						Theme="{StaticResource SolidButton}">
+						Theme="{StaticResource SolidButton}"
+						Command="{Binding StartGameCommand}">
 					<StackPanel>
-						<Svg Path="./Resources/Icons/darthFlight.svg"
+						<Svg Path="/Resources/Icons/darthFlight.svg"
 							 Height="25"
 							 HorizontalAlignment="Center"/>
 						<TextBlock Text="Start game"

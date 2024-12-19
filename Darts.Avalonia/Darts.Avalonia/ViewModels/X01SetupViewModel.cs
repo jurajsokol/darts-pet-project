@@ -48,6 +48,6 @@ public partial class X01SetupViewModel : ReactiveObject
     [ReactiveCommand]
     private void GoBack()
     {
-        gameScope.Dispose();
+        gameScope.ExitGame();
     }
 }

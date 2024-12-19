@@ -53,7 +53,8 @@ public static class DependencyInjectionExtensions
             .AddScoped<X01SetupViewModel>()
             .AddTransient<PlayersViewModel>()
             .AddSingleton<ConfirmGameExitViewModel>()
-            .AddTransient<SettingsViewModel>();
+            .AddTransient<SettingsViewModel>()
+            .AddSingleton<MainMenuViewModel>();
     }
 
     public static IServiceCollection AddViews(this IServiceCollection services)
@@ -95,14 +96,7 @@ public static class DependencyInjectionExtensions
             .AddScoped(services => new GameScope(services, services.GetRequiredService<MainView>().NavigationPanel))
             .AddSingleton<IAbstractFactory<GameScope>>(services =>
             {
-                return new AbstractFactory<GameScope>(() =>
-                {
-                    IServiceScope scope = services.CreateScope();
-
-                    GameScope gameScope = scope.ServiceProvider.GetRequiredService<GameScope>();
-                    gameScope.Disposables.Add(scope);
-                    return gameScope;
-                });
+                return new AbstractFactory<GameScope>(() => services.GetRequiredService<GameScope>());
             });
     }
 }

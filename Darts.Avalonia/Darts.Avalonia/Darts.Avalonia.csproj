@@ -7,7 +7,7 @@
 	<GenerateGitMetadata>True</GenerateGitMetadata>
   </PropertyGroup>
 
-	<ItemGroup>
+    <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   
@@ -49,9 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<Content Include="Resources\Icons\**">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+	  <AvaloniaResource Include="Resources\Icons\**"/>
   </ItemGroup>
 
 </Project>

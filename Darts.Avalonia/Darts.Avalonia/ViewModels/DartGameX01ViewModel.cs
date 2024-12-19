@@ -1,5 +1,4 @@
 ﻿using Darts.Avalonia.Factories;
-using Darts.Avalonia.ViewRouting;
 using Darts.Avalonia.Views;
 using Darts.Avalonia.Views.Dialog;
 using Darts.Games.Games;
@@ -83,8 +82,8 @@ public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewMode
         var result = await dialog.ShowDialog();
 
         if (result == DialogResult.Ok)
-        { 
-            gameScope.Dispose();
+        {
+            gameScope.ExitGame();
         }
     }
 }

@@ -25,7 +25,7 @@
 						HorizontalAlignment="Right">
 				<Button Command="{Binding AddPlayerCommand}">
 					<StackPanel Orientation="Horizontal">
-						<Svg Path="./Resources/Icons/addUser.svg"
+						<Svg Path="/Resources/Icons/addUser.svg"
 							 Height="20"
 							 Margin="5"
 							 Css=".lucide { stroke: #FFFFFF; }"/>
@@ -33,7 +33,7 @@
 				</Button>
 				<Button Command="{Binding EditPlayerCommand}">
 					<StackPanel Orientation="Horizontal">
-						<Svg Path="./Resources/Icons/editUser.svg"
+						<Svg Path="/Resources/Icons/editUser.svg"
 							 Height="20"
 							 Margin="5"
 							 Css=".lucide { stroke: #FFFFFF; }"/>
@@ -41,7 +41,7 @@
 				</Button>
 				<Button Command="{Binding RemoveSelectedPlayersCommand }">
 					<StackPanel Orientation="Horizontal">
-						<Svg Path="./Resources/Icons/removeUser.svg"
+						<Svg Path="/Resources/Icons/removeUser.svg"
 							 Height="20"
 							 Margin="5"
 							 Css=".lucide { stroke: #FFFFFF; }"/>

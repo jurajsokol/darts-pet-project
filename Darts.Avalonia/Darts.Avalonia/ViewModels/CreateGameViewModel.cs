@@ -11,15 +11,14 @@ using Darts.DAL;
 using Darts.Avalonia.ViewRouting;
 using System.Reactive.Linq;
 using System.Collections.Specialized;
-using Darts.Avalonia.Factories;
 
 namespace Darts.Avalonia.ViewModels;
 
 public partial class CreateGameViewModel : ReactiveObject
 {
     private readonly IUnitOfWork db;
-    private readonly IAbstractFactory<GameScope> gameScopeFactory;
-    private IObservable<bool> canStartGame;
+
+    public IObservable<bool> CanStartGame { get; }
 
     [Reactive]
     private GameTypeModel selectedGameType;
@@ -37,10 +36,9 @@ public partial class CreateGameViewModel : ReactiveObject
     [Reactive]
     private bool isVisible = false;
 
-    public CreateGameViewModel(IUnitOfWork db, IAbstractFactory<GameScope> gameScopeFactory)
+    public CreateGameViewModel(IUnitOfWork db)
     {
         this.db = db;
-        this.gameScopeFactory = gameScopeFactory;
         IObservable<bool> isAnyPlayerSelected = Observable
             .FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                 h => SelectedPlayers.CollectionChanged += h,
@@ -51,7 +49,7 @@ public partial class CreateGameViewModel : ReactiveObject
                 return selectedPlayers.Any();
             });
         
-        canStartGame = this.WhenAnyValue(x => x.SelectedGameType)
+        CanStartGame = this.WhenAnyValue(x => x.SelectedGameType)
             .Select(x => x is not null)
             .CombineLatest(isAnyPlayerSelected, (gameType, player) => gameType && player);
     }
@@ -64,13 +62,6 @@ public partial class CreateGameViewModel : ReactiveObject
         {
             Players.Add(player);
         }
-    }
-
-    [ReactiveCommand(CanExecute = nameof(canStartGame))]
-    private void StartGame()
-    {
-        GameScope gameScope = gameScopeFactory.Create();
-        gameScope.StartSetup();
     }
 
     [ReactiveCommand]
