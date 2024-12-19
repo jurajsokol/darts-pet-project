@@ -3,7 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Darts.Avalonia.SettingsView">
+			 xmlns:vm="using:Darts.Avalonia.ViewModels"
+             x:Class="Darts.Avalonia.SettingsView"
+			 x:DataType="vm:SettingsViewModel">
 
 	<StackPanel Margin="10">
 		
@@ -16,7 +18,7 @@
 							  HorizontalAlignment="Right"
 							  x:Name="ThemeToggle"
 							  VerticalAlignment="Top"
-							  IsChecked="true"
+							  IsChecked="{Binding IsDarkTheme}"
 							  Grid.Column="2"/>	
 			</Grid>
 		</Border>
@@ -25,6 +27,7 @@
 				<TextBlock Text="Revision"
 						   FontWeight="Bold"/>
 				<TextBlock x:Name="RevisionText"
+						   Text="{Binding Revision, Mode=OneTime}"
 						   Classes="Secondary"/>
 			</StackPanel>
 		</Border>
@@ -33,6 +36,7 @@
 				<TextBlock Text="BuildDate"
 						   FontWeight="Bold"/>
 				<TextBlock x:Name="BuildDateText"
+						   Text="{Binding BuildDate, Mode=OneTime}"
 						   Classes="Secondary"/>
 			</StackPanel>
 		</Border>

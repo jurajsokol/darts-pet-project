@@ -52,7 +52,8 @@ public static class DependencyInjectionExtensions
             .AddTransient<DartGameX01ViewModel>()
             .AddScoped<X01SetupViewModel>()
             .AddTransient<PlayersViewModel>()
-            .AddSingleton<ConfirmGameExitViewModel>();
+            .AddSingleton<ConfirmGameExitViewModel>()
+            .AddTransient<SettingsViewModel>();
     }
 
     public static IServiceCollection AddViews(this IServiceCollection services)

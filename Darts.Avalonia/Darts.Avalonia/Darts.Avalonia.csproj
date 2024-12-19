@@ -18,12 +18,12 @@
 	<Target Name="Git"
 			BeforeTargets="GetAssemblyAttributes"
             Condition=" '$(GenerateGitMetadata)' == 'true' ">
-		<Exec Command="git rev-list --count HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low" IgnoreExitCode="true" Condition=" '$(RevisionCount)' == '' ">
+		<Exec Command="git rev-list --count HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low" IgnoreExitCode="true">
 			<Output TaskParameter="ConsoleOutput" PropertyName="RevisionCount" />
 		</Exec>
 
 		<ItemGroup>
-			<AssemblyMetadata Condition=" $(RevisionCount) != '' " Include="RevisionCount" Value="$(RevisionCount)" />
+			<AssemblyMetadata Include="RevisionCount" Value="$(RevisionCount)" />
 			<AssemblyMetadata Include="BuildDate" Value="$([System.DateTime]::Now.ToString('dd.MM.yyyy'))" />
 		</ItemGroup>
 	</Target>

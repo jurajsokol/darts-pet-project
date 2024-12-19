@@ -53,8 +53,7 @@
 		<controls:GroupControl HeaderText="Players"
 							   Grid.Row="2"
 							   Padding="0"
-							   MaxWidth="500"
-							   HorizontalAlignment="Center"
+							   HorizontalAlignment="Stretch"
 							   Theme="{StaticResource BasicGroupControl}">
 			<ListBox SelectionMode="Multiple,Toggle"
 				     ItemsSource="{Binding Players, Mode=OneWay}"
