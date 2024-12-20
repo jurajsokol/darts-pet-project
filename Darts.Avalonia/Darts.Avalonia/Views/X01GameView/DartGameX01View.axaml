@@ -20,9 +20,48 @@
 		</Style>
 	</UserControl.Styles>
 	
-	<Grid RowDefinitions="auto,auto,*,auto">
+	<Grid RowDefinitions="auto,auto,auto,*">
+
+		<Border Background="{DynamicResource SemiGrey0}"
+				CornerRadius="5"
+				HorizontalAlignment="Stretch">
+			<StackPanel Orientation="Horizontal"
+						HorizontalAlignment="Right">
+				<Button Theme="{StaticResource BorderlessButton}"
+						Command="{Binding UndoCommand}">
+					<Svg Path="/Resources/Icons/undo.svg"
+						 Height="20"
+						 Margin="5"
+						 Css=".lucide { stroke: #FFFFFF; }"/>
+				</Button>
+				<Button Content="Next player"
+						Command="{Binding NextPlayerCommand}"
+						Theme="{StaticResource OutlineButton}"
+						Margin="5">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Next player"
+								   VerticalAlignment="Center"/>
+						<Svg Path="/Resources/Icons/next.svg"
+							 Margin="5"
+							 Height="20"
+							 Css=".lucide { stroke: #FFFFFF; }"/>
+					</StackPanel>
+				</Button>
+				<Button Classes="Danger"
+						Margin="5"
+						Command="{Binding CancelGame}"
+						Theme="{StaticResource BorderlessButton}">
+					<Svg Path="/Resources/Icons/close.svg"
+						 Height="20"
+						 Margin="5"
+						 Css=".lucide { stroke: #FFFFFF; }"/>
+				</Button>
+			</StackPanel>
+		</Border>
+		
 		<controls:GroupControl HeaderText="Players"
-                               HorizontalAlignment="Center">
+                               HorizontalAlignment="Center"
+							   Grid.Row="1">
 					
 			<ItemsControl ItemsSource="{Binding Players, Mode=OneWay}"
 						  HorizontalAlignment="Center"
@@ -58,7 +97,7 @@
 
 		<controls:GroupControl HorizontalAlignment="Center"
                                HeaderText="Score"
-							   Grid.Row="1">
+							   Grid.Row="2">
 			<ItemsControl ItemsSource="{Binding PlayerRound}">
 
 				<ItemsControl.ItemTemplate>
@@ -84,22 +123,7 @@
 			</ItemsControl>
 		</controls:GroupControl>
 		
-		<x01Views:X01KeyBoardView Grid.Row="2"
+		<x01Views:X01KeyBoardView Grid.Row="3"
 							   Command="{Binding DartClickCommand}"/>
-
-		<StackPanel Orientation="Horizontal"
-					Grid.Row="3"
-					HorizontalAlignment="Center">
-			<Button Content="Cancel"
-					Classes="Danger"
-					Margin="5"
-					Command="{Binding CancelGame}"/>
-			<Button Content="Undo"
-					Command="{Binding UndoCommand}"/>
-			<Button Content="Next player"
-					Command="{Binding NextPlayerCommand}"
-					Theme="{StaticResource SolidButton}"
-					Margin="5"/>
-		</StackPanel>
 	</Grid>
 </UserControl>

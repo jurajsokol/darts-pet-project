@@ -8,13 +8,6 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Darts.Avalonia.PlayersView"
 			 x:DataType="vm:PlayersViewModel">
-
-	<UserControl.Styles>
-		<Style Selector="Button">
-			<Setter Property="Margin"
-					Value="5, 10"/>
-		</Style>
-	</UserControl.Styles>
 	
 	<Grid RowDefinitions="auto,*">
 
@@ -23,29 +16,20 @@
 				HorizontalAlignment="Stretch">
 			<StackPanel Orientation="Horizontal"
 						HorizontalAlignment="Right">
-				<Button Command="{Binding AddPlayerCommand}">
-					<StackPanel Orientation="Horizontal">
-						<Svg Path="/Resources/Icons/addUser.svg"
-							 Height="20"
-							 Margin="5"
-							 Css=".lucide { stroke: #FFFFFF; }"/>
-					</StackPanel>
+				<Button Command="{Binding AddPlayerCommand}"
+						Classes="commandBarButton">
+					<Svg Path="/Resources/Icons/addUser.svg"
+					     Classes="command"/>
 				</Button>
-				<Button Command="{Binding EditPlayerCommand}">
-					<StackPanel Orientation="Horizontal">
-						<Svg Path="/Resources/Icons/editUser.svg"
-							 Height="20"
-							 Margin="5"
-							 Css=".lucide { stroke: #FFFFFF; }"/>
-					</StackPanel>
+				<Button Command="{Binding EditPlayerCommand}"
+						Classes="commandBarButton">
+					<Svg Path="/Resources/Icons/editUser.svg"
+						 Classes="command"/>
 				</Button>
-				<Button Command="{Binding RemoveSelectedPlayersCommand }">
-					<StackPanel Orientation="Horizontal">
-						<Svg Path="/Resources/Icons/removeUser.svg"
-							 Height="20"
-							 Margin="5"
-							 Css=".lucide { stroke: #FFFFFF; }"/>
-					</StackPanel>
+				<Button Command="{Binding RemoveSelectedPlayersCommand }"
+						Classes="commandBarButton">
+					<Svg Path="/Resources/Icons/removeUser.svg"
+						 Classes="command"/>
 				</Button>
 			</StackPanel>
 		</Border>

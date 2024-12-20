@@ -66,7 +66,7 @@ public static class DependencyInjectionExtensions
             .AddScoped<X01GameSetup>()
             .AddTransient<PlayersView>()
             .AddTransient<ConfirmGameClose>()
-            .AddTransient<MainMenuView>()
+            .AddSingleton<MainMenuView>()
             .AddTransient<SettingsView>();
     }
 

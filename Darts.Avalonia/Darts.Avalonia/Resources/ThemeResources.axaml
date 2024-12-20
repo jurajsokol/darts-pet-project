@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:system="using:System"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<ResourceDictionary.ThemeDictionaries>
+		<ResourceDictionary x:Key='Light'>
+			<system:String x:Key='SvgIcon'>.lucide { stroke: #000000; }</system:String>
+		</ResourceDictionary>
+		<ResourceDictionary x:Key='Dark'>
+			<system:String x:Key='SvgIcon'>.lucide { stroke: #FFFFFF; }</system:String>
+		</ResourceDictionary>
+	</ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

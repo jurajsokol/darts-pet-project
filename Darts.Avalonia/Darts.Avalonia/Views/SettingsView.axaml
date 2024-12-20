@@ -33,7 +33,7 @@
 		</Border>
 		<Border Theme="{StaticResource CardBorder}">
 			<StackPanel>
-				<TextBlock Text="BuildDate"
+				<TextBlock Text="Build date"
 						   FontWeight="Bold"/>
 				<TextBlock x:Name="BuildDateText"
 						   Text="{Binding BuildDate, Mode=OneTime}"

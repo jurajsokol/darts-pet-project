@@ -3,75 +3,61 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="using:Darts.Avalonia.ViewModels"
-			 xmlns:system="using:System"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Darts.Avalonia.MainMenuView"
 			 x:DataType="vm:MainMenuViewModel">
-
-	<UserControl.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.ThemeDictionaries>
-				<ResourceDictionary x:Key='Light'>
-					<system:String x:Key='SvgIcon'>.lucide { stroke: #000000; }</system:String>
-				</ResourceDictionary>
-				<ResourceDictionary x:Key='Dark'>
-					<system:String x:Key='SvgIcon'>.lucide { stroke: #FFFFFF; }</system:String>
-				</ResourceDictionary>
-			</ResourceDictionary.ThemeDictionaries>
-		</ResourceDictionary>
-	</UserControl.Resources>
 	
-	<UserControl.Styles>
-		<Style Selector="Button">
-			<Setter Property="Theme"
-					Value="{StaticResource BorderlessButton}"/>
-		</Style>
-		<Style Selector="Svg">
-			<Setter Property="(Svg.Css)" Value="{DynamicResource SvgIcon}" />
-		</Style>
-	</UserControl.Styles>
-
 	<Grid RowDefinitions="*,auto">
 		<TransitioningContentControl x:Name="MainBoard"/>
 		<Border Grid.Row="1"
 				Background="{DynamicResource SemiGrey0}"
 				CornerRadius="5">
+
+			<Border.Styles>
+				<Style Selector="Button">
+					<Setter Property="Theme" Value="{StaticResource BorderlessButton}"/>
+				</Style>
+				<Style Selector="Svg">
+					<Setter Property="(Svg.Css)" Value="{DynamicResource SvgIcon}" />
+					<Setter Property="Height" Value="20"/>
+					<Setter Property="HorizontalAlignment" Value="Center"/>
+				</Style>
+				<Style Selector="RadioButton">
+					<Setter Property="Theme" Value="{DynamicResource PureCardRadioButton}"/>
+					<Setter Property="HorizontalAlignment" Value="Center"/>
+				</Style>
+				<Style Selector="TextBlock">
+					<Setter Property="HorizontalAlignment" Value="Center"/>
+					<Setter Property="VerticalAlignment" Value="Center"/>
+				</Style>
+			</Border.Styles>
+			
 			<UniformGrid Rows="1"
 						 Margin="5">
-				<Button Click="GameButton_Click">
+				<RadioButton Click="GameButton_Click"
+							 IsChecked="True">
 					<StackPanel>
-						<Svg Path="/Resources/Icons/game.svg"
-							 Height="25"
-							 HorizontalAlignment="Center"/>
-						<TextBlock Text="Game"
-								   HorizontalAlignment="Center"/>
+						<Svg Path="/Resources/Icons/game.svg"/>
+						<TextBlock Text="Game"/>
 					</StackPanel>
-				</Button>
-				<Button Click="PlayersButton_Click">
+				</RadioButton>
+				<RadioButton Click="PlayersButton_Click">
 					<StackPanel>
-						<Svg Path="/Resources/Icons/user.svg"
-							 Height="25"
-							 HorizontalAlignment="Center"/>
-						<TextBlock Text="Players"
-								   HorizontalAlignment="Center"/>
+						<Svg Path="/Resources/Icons/user.svg"/>
+						<TextBlock Text="Players"/>
 					</StackPanel>
-				</Button>
-				<Button Content="Settings"
-						Click="SettingsButton_Click">
+				</RadioButton>
+				<RadioButton Click="SettingsButton_Click">
 					<StackPanel>
-						<Svg Path="/Resources/Icons/settings.svg"
-							 Height="25"
-							 HorizontalAlignment="Center"/>
-						<TextBlock Text="Settings"
-								   HorizontalAlignment="Center"/>
+						<Svg Path="/Resources/Icons/settings.svg"/>
+						<TextBlock Text="Settings"/>
 					</StackPanel>
-				</Button>
+				</RadioButton>
 				<Button Classes="Primary"
 						Theme="{StaticResource SolidButton}"
 						Command="{Binding StartGameCommand}">
 					<StackPanel>
 						<Svg Path="/Resources/Icons/darthFlight.svg"
-							 Height="25"
 							 HorizontalAlignment="Center"/>
 						<TextBlock Text="Start game"
 								   HorizontalAlignment="Center"/>

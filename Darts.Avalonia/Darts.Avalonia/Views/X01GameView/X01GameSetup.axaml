@@ -10,8 +10,40 @@
 			 x:DataType="vm:X01SetupViewModel">
   
 	<Grid RowDefinitions="auto,auto,auto,auto">
+		<Border Background="{DynamicResource SemiGrey0}"
+				CornerRadius="5"
+				HorizontalAlignment="Stretch">
+			<Grid>
+				<Button Content="Back"
+						HorizontalAlignment="Left"
+						Classes="commandBarButton"
+						Command="{Binding GoBackCommand}">
+					<Svg Path="/Resources/Icons/back.svg"
+						 Classes="command"/>
+				</Button>
+				
+				<Button Content="Start game"
+						Margin="5"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Top"
+						Classes="Primary"
+						Theme="{StaticResource SolidButton}"
+						Command="{Binding GoNextCommand}">
+					<StackPanel Orientation="Horizontal">
+						<Svg Path="/Resources/Icons/darthFlight.svg"
+							 Height="20"
+							 HorizontalAlignment="Center"/>
+						<TextBlock Text="Start game"
+								   Margin="5"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Center"/>
+					</StackPanel>
+				</Button>
+			</Grid>
+		</Border>
+		
 		<controls:GroupControl HeaderText="Points"
-							   Grid.Row="0"
+							   Grid.Row="1"
 							   Padding="0"
 							   Theme="{StaticResource BasicGroupControl}">
 
@@ -36,7 +68,7 @@
 		</controls:GroupControl>
 
 		<controls:GroupControl HeaderText="Game in"
-							   Grid.Row="1"
+							   Grid.Row="2"
 							   Padding="0"
 							   Theme="{StaticResource BasicGroupControl}">
 
@@ -61,7 +93,7 @@
 		</controls:GroupControl>
 		
 		<controls:GroupControl HeaderText="Game out"
-							   Grid.Row="2"
+							   Grid.Row="3"
 							   Padding="0"
 							   Theme="{StaticResource BasicGroupControl}">
 
@@ -84,17 +116,6 @@
 
 			</ListBox>
 		</controls:GroupControl>
-
-		<StackPanel Grid.Row="3"
-					Orientation="Horizontal"
-					HorizontalAlignment="Right">
-			<Button Content="Back"
-					Margin="5"
-					Command="{Binding GoBackCommand}"/>
-			<Button Content="Start game"
-					Command="{Binding GoNextCommand}"
-					Margin="5"/>
-		</StackPanel>
 	</Grid>
 	
 </UserControl>

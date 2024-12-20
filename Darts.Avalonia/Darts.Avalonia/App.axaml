@@ -9,9 +9,11 @@
   
     <Application.Styles>
 		<semi:SemiTheme/>
+		<StyleInclude Source="/Resources/Styles.axaml" />
     </Application.Styles>
-
+	
 	<Application.Resources>
+		
 		<ControlTheme x:Key="BasicGroupControl" TargetType="controls:GroupControl">
 			<Setter Property="Padding" Value="8"/>
 			<Setter Property="Template">

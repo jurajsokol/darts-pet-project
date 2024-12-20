@@ -15,9 +15,7 @@
     <None Remove="Resources\Icons\game.svg" />
   </ItemGroup>
 
-	<Target Name="Git"
-			BeforeTargets="GetAssemblyAttributes"
-            Condition=" '$(GenerateGitMetadata)' == 'true' ">
+	<Target Name="Git" BeforeTargets="GetAssemblyAttributes" Condition=" '$(GenerateGitMetadata)' == 'true' ">
 		<Exec Command="git rev-list --count HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low" IgnoreExitCode="true">
 			<Output TaskParameter="ConsoleOutput" PropertyName="RevisionCount" />
 		</Exec>
@@ -49,7 +47,11 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <AvaloniaResource Include="Resources\Icons\**"/>
+	  <AvaloniaResource Include="Resources\Icons\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Remove="Resources\Icons\ThemeResources.axaml" />
   </ItemGroup>
 
 </Project>
