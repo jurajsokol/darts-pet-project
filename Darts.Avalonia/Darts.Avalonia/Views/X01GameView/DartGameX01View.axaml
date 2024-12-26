@@ -27,12 +27,10 @@
 				HorizontalAlignment="Stretch">
 			<StackPanel Orientation="Horizontal"
 						HorizontalAlignment="Right">
-				<Button Theme="{StaticResource BorderlessButton}"
+				<Button Classes="commandBarButton"
 						Command="{Binding UndoCommand}">
 					<Svg Path="/Resources/Icons/undo.svg"
-						 Height="20"
-						 Margin="5"
-						 Css=".lucide { stroke: #FFFFFF; }"/>
+						 Classes="command"/>
 				</Button>
 				<Button Content="Next player"
 						Command="{Binding NextPlayerCommand}"
@@ -42,19 +40,13 @@
 						<TextBlock Text="Next player"
 								   VerticalAlignment="Center"/>
 						<Svg Path="/Resources/Icons/next.svg"
-							 Margin="5"
-							 Height="20"
-							 Css=".lucide { stroke: #FFFFFF; }"/>
+							 Classes="command"/>
 					</StackPanel>
 				</Button>
-				<Button Classes="Danger"
-						Margin="5"
-						Command="{Binding CancelGame}"
-						Theme="{StaticResource BorderlessButton}">
+				<Button Classes="commandBarButton"
+						Command="{Binding CancelGame}">
 					<Svg Path="/Resources/Icons/close.svg"
-						 Height="20"
-						 Margin="5"
-						 Css=".lucide { stroke: #FFFFFF; }"/>
+						 Classes="command"/>
 				</Button>
 			</StackPanel>
 		</Border>

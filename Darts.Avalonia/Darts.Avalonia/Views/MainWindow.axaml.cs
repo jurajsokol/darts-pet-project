@@ -13,17 +13,5 @@ public partial class MainWindow : Window
 #if DEBUG
         this.AttachDevTools();
 #endif
-
-        EnableTransparency();
-    }
-
-    private void EnableTransparency()
-    {
-        if (TransparencyLevelHint.Contains(WindowTransparencyLevel.Mica))
-        {
-            return;
-        }
-
-        TransparencyLevelHint = [WindowTransparencyLevel.Mica];
     }
 }
