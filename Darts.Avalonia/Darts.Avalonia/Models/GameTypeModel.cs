@@ -1,4 +1,4 @@
-﻿using Darts.Games.Games;
+﻿using Darts.Games.Enums;
 
 namespace Darts.Avalonia.Models;
 

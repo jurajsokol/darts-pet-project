@@ -1,5 +1,4 @@
 ﻿using Darts.Avalonia.Models;
-using Darts.Games.Games;
 using ReactiveUI;
 using ReactiveUI.SourceGenerators;
 using System.Collections.ObjectModel;
@@ -11,6 +10,7 @@ using Darts.DAL;
 using Darts.Avalonia.ViewRouting;
 using System.Reactive.Linq;
 using System.Collections.Specialized;
+using Darts.Games.Enums;
 
 namespace Darts.Avalonia.ViewModels;
 

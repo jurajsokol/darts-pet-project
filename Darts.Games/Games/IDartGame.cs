@@ -1,4 +1,5 @@
-﻿using Darts.Games.Models;
+﻿using Darts.Games.Enums;
+using Darts.Games.Models;
 using DynamicData;
 
 namespace Darts.Games.Games;

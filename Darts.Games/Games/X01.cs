@@ -1,15 +1,15 @@
-﻿using Darts.Games.Models;
+﻿using Darts.Games.Enums;
+using Darts.Games.Models;
 using Darts.Games.State;
 using DynamicData;
 using System.Reactive.Linq;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Darts.Games.Games;
 
 public class X01 : IDartGame, IDisposable
 {
     private const int MAX_THROWS_PER_ROUND = 3;
-    private readonly Store gameStore;
+    private readonly Store<Player> gameStore;
 
     public Player ActualPlayer => gameStore.Players.Items.First(x => x.IsPlayerActive);
     public IObservable<IChangeSet<Player, int>> Players { get; }
@@ -17,7 +17,7 @@ public class X01 : IDartGame, IDisposable
     public IObservable<bool> CanSetNextPlayer { get; }
 
 
-    public X01(IList<Player> players, Store gameStore)
+    public X01(IList<Player> players, Store<Player> gameStore)
     {
         Players = gameStore.Players.Connect();
 
@@ -44,14 +44,14 @@ public class X01 : IDartGame, IDisposable
         gameStore.UpdatePlayers(actualPlayer);
 
         // winner
-        return actualPlayer.HasWon;
+        return HasPlayerWon(actualPlayer);
     }
 
     public void NextPlayer()
     {
         gameStore.MakeSnapshot();
 
-        if (ActualPlayer.OverShot)
+        if (IsOverShot(ActualPlayer))
         {
             int playerScore = gameStore.PlayerRoundScore.Items
                 .Where(x => x.TargetButton != TargetButtonNum.None)
@@ -66,6 +66,16 @@ public class X01 : IDartGame, IDisposable
 
         gameStore.ResetPlayerScore();
         gameStore.ResetMoveCount();
+    }
+
+    private bool IsOverShot(Player player)
+    {
+        return player.Score < 0;
+    }
+
+    private bool HasPlayerWon(Player player)
+    {
+        return player.Score == 0;
     }
 
     public void Undo()

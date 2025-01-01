@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Darts.Games.State;
 
-internal class PlayerComparer : IEqualityComparer<Player>
+public class PlayerComparer : IEqualityComparer<Player>
 {
     public bool Equals(Player? x, Player? y)
     {

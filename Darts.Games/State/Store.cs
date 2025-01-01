@@ -1,27 +1,30 @@
-﻿using Darts.Games.Models;
+﻿using Darts.Games.Enums;
+using Darts.Games.Models;
 using DynamicData;
 
 namespace Darts.Games.State;
 
-public class Store : IDisposable
+public class Store<T> : IDisposable where T : Player
 {
     private int moveCount = 0;
-    private Stack<GameState> stateHistory = new Stack<GameState>();
-    private SourceCache<Player, int> playersCollection = new SourceCache<Player, int>(player => player.PlayerOrder);
+    private Stack<GameState<T>> stateHistory = new Stack<GameState<T>>();
+    private SourceCache<T, int> playersCollection = new SourceCache<T, int>(player => player.PlayerOrder);
     private SourceCache<PlayerMove, int> playerRoundScore = new SourceCache<PlayerMove, int>(move => move.OrderNum);
+    private readonly IEqualityComparer<T> playerEqualityComparer;
 
-    public IObservableCache<Player, int> Players { get; }
+    public IObservableCache<T, int> Players { get; }
     public IObservableCache<PlayerMove, int> PlayerRoundScore { get; }
 
     public int MoveCount => moveCount;
 
-    public Store(Player[] players, PlayerMove[] playerMoves)
+    public Store(T[] players, PlayerMove[] playerMoves, IEqualityComparer<T> playerEqualityComparer)
     {
         playersCollection.Edit(cache => cache.AddOrUpdate(players));
         playerRoundScore.Edit(cache => cache.AddOrUpdate(playerMoves));
 
         Players = playersCollection.AsObservableCache();
         PlayerRoundScore = playerRoundScore.AsObservableCache();
+        this.playerEqualityComparer = playerEqualityComparer;
     }
 
     public void Dispose()
@@ -30,7 +33,7 @@ public class Store : IDisposable
         playerRoundScore.Dispose();
     }
 
-    public void UpdatePlayers(Player player)
+    public void UpdatePlayers(params T[] player)
     {
         playersCollection.Edit(cache =>
         {
@@ -49,7 +52,7 @@ public class Store : IDisposable
 
     public void MakeSnapshot()
     {
-        stateHistory.Push(new GameState(playersCollection.Items.ToArray(), playerRoundScore.Items.ToArray().ToArray(), MoveCount));
+        stateHistory.Push(new GameState<T>(playersCollection.Items.ToArray(), playerRoundScore.Items.ToArray().ToArray(), MoveCount));
     }
 
     public void ResetPlayerScore()
@@ -69,8 +72,8 @@ public class Store : IDisposable
     {
         if (stateHistory.Any())
         { 
-            GameState state = stateHistory.Pop();
-            playersCollection.EditDiff(state.PlayersState, new PlayerComparer());
+            GameState<T> state = stateHistory.Pop();
+            playersCollection.EditDiff(state.PlayersState, playerEqualityComparer);
             playerRoundScore.EditDiff(state.PlayerMoves, new PlayerMoveComparer());
             moveCount = state.MoveCount;
         }

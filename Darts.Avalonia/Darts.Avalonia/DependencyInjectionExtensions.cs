@@ -9,10 +9,9 @@ using System.Linq;
 using Darts.Games.Models;
 using Darts.Games.State;
 using System.Collections.Generic;
-using Darts.Games;
 using Darts.Avalonia.Views.X01GameView;
 using Darts.Avalonia.Factories;
-using static System.Formats.Asn1.AsnWriter;
+using Darts.Games.Enums;
 
 namespace Darts.Avalonia;
 
@@ -84,7 +83,7 @@ public static class DependencyInjectionExtensions
                    .Range(0, 3)
                    .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x));
 
-                Store store = new Store(gamePlayers.ToArray(), moves.ToArray());
+                Store<Player> store = new Store<Player>(gamePlayers.ToArray(), moves.ToArray(), new PlayerComparer());
 
                 return createGameParams.SelectedGameType.GameType switch
                 {

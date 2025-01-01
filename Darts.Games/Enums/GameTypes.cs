@@ -1,4 +1,4 @@
-﻿namespace Darts.Games.Games;
+﻿namespace Darts.Games.Enums;
 
 public enum GameTypes
 {

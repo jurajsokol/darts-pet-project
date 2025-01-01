@@ -1,19 +1,11 @@
-﻿namespace Darts.Games;
-
-public enum TargetButtonType
-{
-    None = -1,
-    Single = 1,
-    Double = 2,
-    Triple = 3,
-}
+﻿namespace Darts.Games.Enums;
 
 public enum TargetButtonNum
 {
     None = -1,
     Miss = 0,
     One = 1,
-    Two = 2, 
+    Two = 2,
     Three = 3,
     Four = 4,
     Five = 5,

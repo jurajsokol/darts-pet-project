@@ -2,15 +2,15 @@
 
 namespace Darts.Games.State;
 
-public class GameState
+public class GameState<T> where T : Player
 {
-    public Player[] PlayersState { get; }
+    public T[] PlayersState { get; }
 
     public PlayerMove[] PlayerMoves { get; }
 
     public int MoveCount { get; }
 
-    public GameState(Player[] playersState, PlayerMove[] playerMoves, int moveCount)
+    public GameState(T[] playersState, PlayerMove[] playerMoves, int moveCount)
     {
         PlayersState = playersState;
         PlayerMoves = playerMoves;

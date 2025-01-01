@@ -36,44 +36,44 @@ public static class ConvertExtensions
         };
     }
 
-    public static Games.TargetButtonType ToGameType(this DartsNumberModifier type)
+    public static Games.Enums.TargetButtonType ToGameType(this DartsNumberModifier type)
     {
         return type switch
         {
-            DartsNumberModifier.Triple => Games.TargetButtonType.Triple,
-            DartsNumberModifier.Double => Games.TargetButtonType.Double,
-            DartsNumberModifier.Single => Games.TargetButtonType.Single,
+            DartsNumberModifier.Triple => Games.Enums.TargetButtonType.Triple,
+            DartsNumberModifier.Double => Games.Enums.TargetButtonType.Double,
+            DartsNumberModifier.Single => Games.Enums.TargetButtonType.Single,
 
             _ => throw new NotSupportedException($"Type {type} cannot be converted"),
         };
     }
 
-    public static Games.TargetButtonNum ToGameType(this DartNumbers number)
+    public static Games.Enums.TargetButtonNum ToGameType(this DartNumbers number)
     {
         return number switch
         {
-            DartNumbers.Miss => Games.TargetButtonNum.Miss,
-            DartNumbers.One => Games.TargetButtonNum.One,
-            DartNumbers.Two => Games.TargetButtonNum.Two,
-            DartNumbers.Three => Games.TargetButtonNum.Three,
-            DartNumbers.Four => Games.TargetButtonNum.Four,
-            DartNumbers.Five => Games.TargetButtonNum.Five,
-            DartNumbers.Six => Games.TargetButtonNum.Six,
-            DartNumbers.Seven => Games.TargetButtonNum.Seven,
-            DartNumbers.Eight => Games.TargetButtonNum.Eight,
-            DartNumbers.Nine => Games.TargetButtonNum.Nine,
-            DartNumbers.Ten => Games.TargetButtonNum.Ten,
-            DartNumbers.Eleven => Games.TargetButtonNum.Eleven,
-            DartNumbers.Twelve => Games.TargetButtonNum.Twelve,
-            DartNumbers.Thirteen => Games.TargetButtonNum.Thirteen,
-            DartNumbers.Fourteen => Games.TargetButtonNum.Fourteen,
-            DartNumbers.Fifteen => Games.TargetButtonNum.Fifteen,
-            DartNumbers.Sixteen => Games.TargetButtonNum.Sixteen,
-            DartNumbers.Seventeen => Games.TargetButtonNum.Seventeen,
-            DartNumbers.Eighteen => Games.TargetButtonNum.Eighteen,
-            DartNumbers.Nineteen => Games.TargetButtonNum.Nineteen,
-            DartNumbers.Twenty => Games.TargetButtonNum.Twenty,
-            DartNumbers.BullsEye => Games.TargetButtonNum.BullsEye,
+            DartNumbers.Miss => Games.Enums.TargetButtonNum.Miss,
+            DartNumbers.One => Games.Enums.TargetButtonNum.One,
+            DartNumbers.Two => Games.Enums.TargetButtonNum.Two,
+            DartNumbers.Three => Games.Enums.TargetButtonNum.Three,
+            DartNumbers.Four => Games.Enums.TargetButtonNum.Four,
+            DartNumbers.Five => Games.Enums.TargetButtonNum.Five,
+            DartNumbers.Six => Games.Enums.TargetButtonNum.Six,
+            DartNumbers.Seven => Games.Enums.TargetButtonNum.Seven,
+            DartNumbers.Eight => Games.Enums.TargetButtonNum.Eight,
+            DartNumbers.Nine => Games.Enums.TargetButtonNum.Nine,
+            DartNumbers.Ten => Games.Enums.TargetButtonNum.Ten,
+            DartNumbers.Eleven => Games.Enums.TargetButtonNum.Eleven,
+            DartNumbers.Twelve => Games.Enums.TargetButtonNum.Twelve,
+            DartNumbers.Thirteen => Games.Enums.TargetButtonNum.Thirteen,
+            DartNumbers.Fourteen => Games.Enums.TargetButtonNum.Fourteen,
+            DartNumbers.Fifteen => Games.Enums.TargetButtonNum.Fifteen,
+            DartNumbers.Sixteen => Games.Enums.TargetButtonNum.Sixteen,
+            DartNumbers.Seventeen => Games.Enums.TargetButtonNum.Seventeen,
+            DartNumbers.Eighteen => Games.Enums.TargetButtonNum.Eighteen,
+            DartNumbers.Nineteen => Games.Enums.TargetButtonNum.Nineteen,
+            DartNumbers.Twenty => Games.Enums.TargetButtonNum.Twenty,
+            DartNumbers.BullsEye => Games.Enums.TargetButtonNum.BullsEye,
 
             _ => throw new NotSupportedException($"Number {number} cannot be converted"),
         };

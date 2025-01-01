@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using Darts.Games.Enums;
 
 namespace Darts.Games.Models;
 

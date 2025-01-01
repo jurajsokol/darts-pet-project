@@ -1,6 +1,6 @@
 ﻿using Darts.Avalonia.Enums;
 using Darts.Avalonia.Models;
-using Darts.Games.Games;
+using Darts.Games.Enums;
 using ReactiveUI;
 using ReactiveUI.SourceGenerators;
 using System;
