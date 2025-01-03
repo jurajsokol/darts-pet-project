@@ -1,1 +1,25 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16mm"
+   height="16mm"
+   viewBox="0 0 16 16"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   class="black"><defs
+     id="defs1" /><g
+     id="layer1"><g
+       id="g7"
+       transform="translate(0,-0.3385444)"><circle
+         style="fill:none;stroke-width:1.32292;stroke-dasharray:none"
+         id="path1"
+         cx="8"
+         cy="5.3385406"
+         r="2.9999998" /><path
+         id="rect1"
+         style="fill:none;stroke-width:1.32292;stroke-linecap:round;stroke-dasharray:none"
+         d="m 12.999894,14.338548 2.12e-4,-1.55416 c 1.85e-4,-1.35488 -1.090963,-2.44584 -2.445846,-2.44584 H 5.4455282 c -1.354883,0 -2.445063,1.09096 -2.445329,2.44584 l -3.05e-4,1.55416" /></g></g></svg>

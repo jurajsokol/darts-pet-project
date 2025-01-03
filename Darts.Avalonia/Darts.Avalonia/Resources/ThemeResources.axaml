@@ -3,10 +3,10 @@
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<ResourceDictionary.ThemeDictionaries>
 		<ResourceDictionary x:Key='Light'>
-			<system:String x:Key='SvgIcon'>.lucide { stroke: #000000; }</system:String>
+			<system:String x:Key='SvgIcon'>.black { stroke: #000000; } .blue { stroke: #2a7fff }</system:String>
 		</ResourceDictionary>
 		<ResourceDictionary x:Key='Dark'>
-			<system:String x:Key='SvgIcon'>.lucide { stroke: #FFFFFF; }</system:String>
+			<system:String x:Key='SvgIcon'>.black { stroke: #FFFFFF; } .blue { stroke: #0055d4 }</system:String>
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

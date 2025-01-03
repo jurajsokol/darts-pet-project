@@ -18,17 +18,17 @@
 						HorizontalAlignment="Right">
 				<Button Command="{Binding AddPlayerCommand}"
 						Classes="commandBarButton">
-					<Svg Path="/Resources/Icons/addUser.svg"
+					<Svg Path="/Resources/Icons/add.svg"
 					     Classes="command"/>
 				</Button>
 				<Button Command="{Binding EditPlayerCommand}"
 						Classes="commandBarButton">
-					<Svg Path="/Resources/Icons/editUser.svg"
+					<Svg Path="/Resources/Icons/edit.svg"
 						 Classes="command"/>
 				</Button>
 				<Button Command="{Binding RemoveSelectedPlayersCommand }"
 						Classes="commandBarButton">
-					<Svg Path="/Resources/Icons/removeUser.svg"
+					<Svg Path="/Resources/Icons/trash.svg"
 						 Classes="command"/>
 				</Button>
 			</StackPanel>

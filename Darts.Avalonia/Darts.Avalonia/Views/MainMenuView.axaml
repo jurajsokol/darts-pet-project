@@ -37,7 +37,7 @@
 				<RadioButton Click="GameButton_Click"
 							 IsChecked="True">
 					<StackPanel>
-						<Svg Path="/Resources/Icons/game.svg"/>
+						<Svg Path="/Resources/Icons/dartTarget.svg"/>
 						<TextBlock Text="Game"/>
 					</StackPanel>
 				</RadioButton>
@@ -57,7 +57,7 @@
 						Theme="{StaticResource SolidButton}"
 						Command="{Binding StartGameCommand}">
 					<StackPanel>
-						<Svg Path="/Resources/Icons/darthFlight.svg"
+						<Svg Path="/Resources/Icons/dartFlight.svg"
 							 HorizontalAlignment="Center"/>
 						<TextBlock Text="Start game"
 								   HorizontalAlignment="Center"/>
