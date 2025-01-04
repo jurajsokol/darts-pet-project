@@ -1,5 +1,7 @@
 ﻿using Darts.Avalonia.Enums;
+using Darts.Games.Models;
 using System;
+using System.Collections.Immutable;
 
 namespace Darts.Avalonia;
 
@@ -23,12 +25,26 @@ public static class ConvertExtensions
         };
     }
 
-    public static Darts.Games.Models.Player ToDartPlayer(this Models.Player data, int count)
+    public static Player ToDartPlayer(this Models.Player data, int count)
     {
-        return new Games.Models.Player(data.Name, 0, count, false);
+        return new Player(data.Name, 0, count, false);
     }
 
-    public static Models.Player ToModel(this Games.Models.Player data)
+    public static CricketPlayer ToCricketPlayer(this Models.Player data, int count)
+    {
+        ImmutableArray<CricketDartButtonState> dartState = [
+            new CricketDartButtonState(Games.Enums.TargetButtonNum.BullsEye, Games.Enums.CricketTargetButtonState.NoHit),
+            new CricketDartButtonState(Games.Enums.TargetButtonNum.Twenty, Games.Enums.CricketTargetButtonState.NoHit),
+            new CricketDartButtonState(Games.Enums.TargetButtonNum.Nineteen, Games.Enums.CricketTargetButtonState.NoHit),
+            new CricketDartButtonState(Games.Enums.TargetButtonNum.Eighteen, Games.Enums.CricketTargetButtonState.NoHit),
+            new CricketDartButtonState(Games.Enums.TargetButtonNum.Seventeen, Games.Enums.CricketTargetButtonState.NoHit),
+            new CricketDartButtonState(Games.Enums.TargetButtonNum.Sixteen, Games.Enums.CricketTargetButtonState.NoHit),
+            new CricketDartButtonState(Games.Enums.TargetButtonNum.Fifteen, Games.Enums.CricketTargetButtonState.NoHit)];
+
+        return new CricketPlayer(data.Name, 0, count, false, dartState);
+    }
+
+    public static Models.Player ToModel(this Player data)
     {
         return new Models.Player()
         {

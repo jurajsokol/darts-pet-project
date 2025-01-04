@@ -37,18 +37,13 @@ public class CricketGame
             return false;
         }
 
-        if (((int)number) < 15)
-        {
-            return false;
-        }
-
         gameStore.MakeSnapshot();
         PlayerMove move = gameStore.PlayerRoundScore.Items
             .First(x => x.OrderNum == gameStore.MoveCount) with { TargetButton = number, TargetButtonType = type };
 
         gameStore.UpdatePlayerScore(move);
 
-        if (type == TargetButtonType.None)
+        if (((int)number) < 15)
         {
             return false;
         }
@@ -99,13 +94,13 @@ public class CricketGame
                 else
                 { 
                     int playerPointsMultiplier = hitCount - (int)CricketTargetButtonState.Open;
-                    buttonState = buttonState with { CricketTargetButtonState = CricketTargetButtonState.Open };
+                    newButtonState = buttonState with { CricketTargetButtonState = CricketTargetButtonState.Open };
                     newPlayerScore = actualPlayer.Score + (playerPointsMultiplier * (int)number);
                 }
             }
             else
             {
-                buttonState = buttonState with { CricketTargetButtonState = (CricketTargetButtonState)((int)buttonState.CricketTargetButtonState + (int)type) };
+                newButtonState = buttonState with { CricketTargetButtonState = (CricketTargetButtonState)((int)buttonState.CricketTargetButtonState + (int)type) };
             }
 
             ImmutableArray<CricketDartButtonState> states = actualPlayer.CricketDartButtonStates.Replace(buttonState, newButtonState);
@@ -127,6 +122,11 @@ public class CricketGame
 
         gameStore.ResetPlayerScore();
         gameStore.ResetMoveCount();
+    }
+
+    public void Undo()
+    {
+        gameStore.Undo();
     }
 
     private bool HasPlayerWon()

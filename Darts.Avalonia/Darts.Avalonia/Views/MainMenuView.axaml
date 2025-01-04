@@ -53,16 +53,6 @@
 						<TextBlock Text="Settings"/>
 					</StackPanel>
 				</RadioButton>
-				<Button Classes="Primary"
-						Theme="{StaticResource SolidButton}"
-						Command="{Binding StartGameCommand}">
-					<StackPanel>
-						<Svg Path="/Resources/Icons/dartFlight.svg"
-							 HorizontalAlignment="Center"/>
-						<TextBlock Text="Start game"
-								   HorizontalAlignment="Center"/>
-					</StackPanel>
-				</Button>
 			</UniformGrid>
 		</Border>
 	</Grid>

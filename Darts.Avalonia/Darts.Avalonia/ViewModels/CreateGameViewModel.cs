@@ -11,12 +11,16 @@ using Darts.Avalonia.ViewRouting;
 using System.Reactive.Linq;
 using System.Collections.Specialized;
 using Darts.Games.Enums;
+using Darts.Avalonia.Factories;
+using Darts.Avalonia.GameScope;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Darts.Avalonia.ViewModels;
 
 public partial class CreateGameViewModel : ReactiveObject
 {
     private readonly IUnitOfWork db;
+    private readonly IServiceProvider serviceProvider;
 
     public IObservable<bool> CanStartGame { get; }
 
@@ -36,9 +40,10 @@ public partial class CreateGameViewModel : ReactiveObject
     [Reactive]
     private bool isVisible = false;
 
-    public CreateGameViewModel(IUnitOfWork db)
+    public CreateGameViewModel(IUnitOfWork db, IServiceProvider serviceProvider)
     {
         this.db = db;
+        this.serviceProvider = serviceProvider;
         IObservable<bool> isAnyPlayerSelected = Observable
             .FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                 h => SelectedPlayers.CollectionChanged += h,
@@ -68,5 +73,14 @@ public partial class CreateGameViewModel : ReactiveObject
     private void PlayersView()
     {
         PageNavigation.GoNext<PlayersViewModel>();
+    }
+
+    [ReactiveCommand(CanExecute = nameof(CanStartGame))]
+    private void StartGame()
+    {
+        IServiceScope scope = serviceProvider.CreateScope();
+
+        IGameScope gameScope = scope.ServiceProvider.GetRequiredService<IGameScope>();
+        gameScope.StartSetup();
     }
 }

@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:controls="using:Darts.Avalonia.Controls"
+             x:Class="Darts.Avalonia.Views.PlayerDartScoreView"
+			 xmlns:models="using:Darts.Games.Models"
+			 x:CompileBindings="False">
+	<UserControl.Styles>
+		<Style Selector="TextBlock.isEmpty">
+			<Setter Property="Foreground" Value="{DynamicResource TextBlockQuaternaryForeground}" />
+		</Style>
+	</UserControl.Styles>
+
+	<controls:GroupControl HorizontalAlignment="Center"
+                           HeaderText="Score">
+		<ItemsControl ItemsSource="{Binding PlayerRound}">
+
+			<ItemsControl.ItemTemplate>
+				<DataTemplate x:DataType="models:PlayerMove">
+					<Label Classes="Large"
+						   Width="80"
+						   Padding="5"
+						   Theme="{StaticResource TagLabel}"
+						   Margin="5">
+						<TextBlock Text="{Binding}"
+								   Classes.isEmpty="{Binding IsEmpty}"
+								   FontSize="15"
+								   HorizontalAlignment="Center"/>
+					</Label>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+
+		</ItemsControl>
+	</controls:GroupControl>
+</UserControl>

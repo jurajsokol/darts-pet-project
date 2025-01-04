@@ -65,5 +65,24 @@
 			</ListBox>
 		</controls:GroupControl>
 
+		<Button Classes="Primary"
+				Grid.Row="1"
+				CornerRadius="20"
+				Theme="{StaticResource SolidButton}"
+				Command="{Binding StartGameCommand}"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Bottom"
+				Margin="25">
+			<StackPanel Margin="10">
+				<Svg Path="/Resources/Icons/dartFlight.svg"
+					 HorizontalAlignment="Center"
+					 Height="25"
+					 Css=".black { stroke: #FFFFFF; }"/>
+				<TextBlock Text="Start"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"/>
+			</StackPanel>
+		</Button>
+
 	</Grid>
 </UserControl>

@@ -1,51 +1,52 @@
 ﻿using Darts.Avalonia.Factories;
-using Darts.Avalonia.GameScope;
-using Darts.Avalonia.Views;
 using Darts.Avalonia.Views.Dialog;
 using Darts.Games.Games;
-using Darts.Games.Models;
-using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
-using ReactiveUI.SourceGenerators;
-using System;
 using System.Collections.ObjectModel;
 using System.Reactive.Concurrency;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
+using ReactiveUI.SourceGenerators;
 using System.Threading.Tasks;
+using DynamicData;
+using System.Reactive.Linq;
+using System;
+using System.Reactive.Disposables;
+using Darts.Avalonia.GameScope;
+using Darts.Avalonia.Views;
+using Darts.Games.Models;
 
 namespace Darts.Avalonia.ViewModels;
 
-public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewModel
+public partial class CricketGameViewModel : ReactiveObject, IActivatableViewModel
 {
-    private readonly X01 dartGame;
-    private readonly X01GameScope gameScope;
+    private readonly IGameScope gameScope;
     private readonly IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>> dialogFactory;
+    private readonly CricketGame game;
 
-    public ObservableCollection<Darts.Games.Models.Player> Players => players;
-    private ObservableCollectionExtended<Darts.Games.Models.Player> players = new();
-
-    public ObservableCollection<Games.Models.PlayerMove> PlayerRound => playerRound;
+    public ObservableCollection<Darts.Games.Models.CricketPlayer> Players => players;
 
     public ViewModelActivator Activator { get; } = new ViewModelActivator();
 
+    private ObservableCollectionExtended<Darts.Games.Models.CricketPlayer> players = new();
+
+    public ObservableCollection<Games.Models.PlayerMove> PlayerRound => playerRound;
     private ObservableCollectionExtended<Games.Models.PlayerMove> playerRound = new();
 
-    public DartGameX01ViewModel(X01 dartGame, IScheduler guiScheduler, X01GameScope gameScope, IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>> dialogFactory)
+    public CricketGameViewModel(CricketGame game, IScheduler guiScheduler, IGameScope gameScope, IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>> dialogFactory)
     {
-        this.dartGame = dartGame;
+        this.game = game;
         this.gameScope = gameScope;
         this.dialogFactory = dialogFactory;
+
         this.WhenActivated(disposable =>
         {
-            dartGame.Players
+            game.Players
                 .ObserveOn(guiScheduler)
-                .SortAndBind(players, SortExpressionComparer<Games.Models.Player>.Ascending(p => p.PlayerOrder))
+                .SortAndBind(players, SortExpressionComparer<Games.Models.CricketPlayer>.Ascending(p => p.PlayerOrder))
                 .Subscribe()
                 .DisposeWith(disposable);
 
-            dartGame.PlayerRoundScore
+            game.PlayerRoundScore
                .ObserveOn(guiScheduler)
                .SortAndBind(playerRound, SortExpressionComparer<PlayerMove>.Ascending(p => p.OrderNum))
                .Subscribe()
@@ -54,25 +55,21 @@ public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewMode
     }
 
     [ReactiveCommand]
-    private void DartClick(DartScore score)
+    public void DartClick(DartScore score)
     {
-        bool hasWon = dartGame.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType());
-        if (hasWon)
-        {
-
-        }
+        game.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType());
     }
 
     [ReactiveCommand]
     private void NextPlayer()
     {
-        dartGame.NextPlayer();
+        game.NextPlayer();
     }
 
     [ReactiveCommand]
     private void Undo()
     {
-        dartGame.Undo();
+        game.Undo();
     }
 
     public async Task CancelGame()

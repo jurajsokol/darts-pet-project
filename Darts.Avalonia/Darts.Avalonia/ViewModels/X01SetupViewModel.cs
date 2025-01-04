@@ -1,4 +1,5 @@
 ﻿using Darts.Avalonia.Enums;
+using Darts.Avalonia.GameScope;
 using Darts.Avalonia.Models;
 using Darts.Games.Enums;
 using ReactiveUI;
@@ -10,7 +11,7 @@ namespace Darts.Avalonia.ViewModels;
 
 public partial class X01SetupViewModel : ReactiveObject
 {
-    private readonly GameScope gameScope;
+    private readonly IGameScope gameScope;
 
     public DartNumberModifierModel[] DartsNumberModifier { get; } = Enum.GetValues(typeof(DartsNumberModifier))
         .Cast<DartsNumberModifier>()
@@ -31,7 +32,7 @@ public partial class X01SetupViewModel : ReactiveObject
     [Reactive]
     private DartNumberModifierModel gameOut;
 
-    public X01SetupViewModel(GameScope gameScope)
+    public X01SetupViewModel(IGameScope gameScope)
     {
         GameIn = DartsNumberModifier.First();
         GameOut = DartsNumberModifier.First();

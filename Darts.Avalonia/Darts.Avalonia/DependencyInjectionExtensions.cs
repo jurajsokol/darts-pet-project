@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Darts.Avalonia.Views.X01GameView;
 using Darts.Avalonia.Factories;
 using Darts.Games.Enums;
+using Darts.Avalonia.GameScope;
 
 namespace Darts.Avalonia;
 
@@ -53,7 +54,8 @@ public static class DependencyInjectionExtensions
             .AddTransient<PlayersViewModel>()
             .AddSingleton<ConfirmGameExitViewModel>()
             .AddTransient<SettingsViewModel>()
-            .AddSingleton<MainMenuViewModel>();
+            .AddSingleton<MainMenuViewModel>()
+            .AddTransient<CricketGameViewModel>();
     }
 
     public static IServiceCollection AddViews(this IServiceCollection services)
@@ -66,12 +68,13 @@ public static class DependencyInjectionExtensions
             .AddTransient<PlayersView>()
             .AddTransient<ConfirmGameClose>()
             .AddSingleton<MainMenuView>()
-            .AddTransient<SettingsView>();
+            .AddTransient<SettingsView>()
+            .AddTransient<CricketGameView>();
     }
 
     public static IServiceCollection AddDartGames(this IServiceCollection services)
     {
-        return services.AddScoped<IDartGame, X01>(s =>
+        return services.AddScoped<X01>(s =>
             {
                 CreateGameViewModel createGameParams = s.GetRequiredService<CreateGameViewModel>();
                 X01SetupViewModel setupViewModel = s.GetRequiredService<X01SetupViewModel>();
@@ -84,18 +87,35 @@ public static class DependencyInjectionExtensions
                    .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x));
 
                 Store<Player> store = new Store<Player>(gamePlayers.ToArray(), moves.ToArray(), new PlayerComparer());
-
-                return createGameParams.SelectedGameType.GameType switch
-                {
-                    GameTypes.X01 => new X01(players, store),
-
-                    _ => throw new NotImplementedException($"Game type {createGameParams.SelectedGameType.GameType} is not implemented yet"),
-                };
+                return new X01(players, store);
             })
-            .AddScoped(services => new GameScope(services, services.GetRequiredService<MainView>().NavigationPanel))
-            .AddSingleton<IAbstractFactory<GameScope>>(services =>
+            .AddScoped<CricketGame>(s =>
             {
-                return new AbstractFactory<GameScope>(() => services.GetRequiredService<GameScope>());
+                CreateGameViewModel createGameParams = s.GetRequiredService<CreateGameViewModel>();
+                CricketPlayer[] players = createGameParams.SelectedPlayers.Select((x, i) => x.ToCricketPlayer(i)).ToArray();
+
+                IEnumerable<CricketPlayer> gamePlayers = players
+                    .Select((p, i) => p with { IsPlayerActive = i == 0 });
+                IEnumerable<PlayerMove> moves = Enumerable
+                   .Range(0, 3)
+                   .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x));
+
+                Store<CricketPlayer> store = new Store<CricketPlayer>(gamePlayers.ToArray(), moves.ToArray(), new CricketPlayerComparer());
+                return new CricketGame(players, store);
+            })
+            .AddTransient(services => new X01GameScope(services, services.GetRequiredService<MainView>().NavigationPanel))
+            .AddTransient(services => new CricketGameScope(services, services.GetRequiredService<MainView>().NavigationPanel))
+            .AddScoped<IGameScope>(services =>
+            {
+                CreateGameViewModel createGameViewModel = services.GetRequiredService<CreateGameViewModel>();
+
+                return createGameViewModel.SelectedGameType.GameType switch
+                {
+                    GameTypes.X01 => services.GetRequiredService<X01GameScope>(),
+                    GameTypes.Cricket => services.GetRequiredService<CricketGameScope>(),
+
+                    _ => throw new NotImplementedException($"Game type {createGameViewModel.SelectedGameType.GameType} is not implemented")
+                };
             });
     }
 }
