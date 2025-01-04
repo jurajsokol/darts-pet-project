@@ -35,6 +35,22 @@
 			</Setter>
 		</ControlTheme>
 
+		<ControlTheme x:Key="GroupControl" TargetType="controls:GroupControl">
+			<Setter Property="Padding" Value="8"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<StackPanel Orientation="Vertical"
+								Margin="10">
+						<TextBlock Text="{TemplateBinding HeaderText}"
+								   FontWeight="Bold"
+								   FontSize="15"/>
+							<ContentPresenter Content="{TemplateBinding Content}"
+											  Padding="{TemplateBinding Padding}"/>
+					</StackPanel>
+				</ControlTemplate>
+			</Setter>
+		</ControlTheme>
+
 		<ControlTheme TargetType="dartControl:DartButtonControl"
 					  x:Key="{x:Type dartControl:DartButtonControl}">
 			<Setter Property="Template">

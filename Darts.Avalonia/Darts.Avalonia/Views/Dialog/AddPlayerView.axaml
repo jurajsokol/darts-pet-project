@@ -13,28 +13,36 @@
 			<SolidColorBrush Color="Black"
 							 Opacity="0.5"/>
 		</Border.Background>
-			<controls:GroupControl HeaderText="Player name"
-								   Width="400"
-								   Padding="10"
-								   HorizontalAlignment="Center"
-								   VerticalAlignment="Center"
-								   Theme="{StaticResource BasicGroupControl}">
-				<StackPanel>
-					<TextBox Text="{Binding Name}"/>
-					<StackPanel Orientation="Horizontal"
-								HorizontalAlignment="Right">
-						<Button Content="Cancel"
-								IsCancel="True"
-								Margin="0, 10, 0, 0"
-								Click="Button_Click"
-								Theme="{StaticResource BorderlessButton}"
-								Classes="Danger"/>
-						<Button Content="Ok"
-								Margin="10, 10, 0, 0"
-								Click="OkButton_Click"
-								IsDefault="True"/>
+		<Border Classes="Shadow" 
+				Theme="{StaticResource CardBorder}"
+				Width="400"
+				Padding="5"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center">
+
+			<StackPanel>			
+				<controls:GroupControl HeaderText="Player name"
+									   Theme="{StaticResource GroupControl}"
+									   Padding="0 5">
+					<StackPanel>
+						<TextBox Text="{Binding Name}"
+								 Margin="0"/>
+						<StackPanel Orientation="Horizontal"
+									HorizontalAlignment="Right">
+							<Button Content="Cancel"
+									IsCancel="True"
+									Margin="0, 10, 0, 0"
+									Click="Button_Click"
+									Theme="{StaticResource BorderlessButton}"
+									Classes="Danger"/>
+							<Button Content="Ok"
+									Margin="10, 10, 0, 0"
+									Click="OkButton_Click"
+									IsDefault="True"/>
+						</StackPanel>
 					</StackPanel>
-				</StackPanel>
-			</controls:GroupControl>
+				</controls:GroupControl>
+			</StackPanel>
+		</Border>
 	</Border>
 </UserControl>

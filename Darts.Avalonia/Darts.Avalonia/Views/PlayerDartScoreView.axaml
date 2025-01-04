@@ -10,6 +10,7 @@
 	<UserControl.Styles>
 		<Style Selector="TextBlock.isEmpty">
 			<Setter Property="Foreground" Value="{DynamicResource TextBlockQuaternaryForeground}" />
+			
 		</Style>
 	</UserControl.Styles>
 
@@ -19,10 +20,10 @@
 
 			<ItemsControl.ItemTemplate>
 				<DataTemplate x:DataType="models:PlayerMove">
-					<Label Classes="Large"
-						   Width="80"
-						   Padding="5"
+					<Label Width="80"
+						   Classes="Blue Large" 
 						   Theme="{StaticResource TagLabel}"
+						   Padding="5"
 						   Margin="5">
 						<TextBlock Text="{Binding}"
 								   Classes.isEmpty="{Binding IsEmpty}"

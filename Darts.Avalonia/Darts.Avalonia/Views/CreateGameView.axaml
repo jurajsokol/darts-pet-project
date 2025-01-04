@@ -78,7 +78,7 @@
 					 HorizontalAlignment="Center"
 					 Height="25"
 					 Css=".black { stroke: #FFFFFF; }"/>
-				<TextBlock Text="Start"
+				<TextBlock Text="Create"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Center"/>
 			</StackPanel>

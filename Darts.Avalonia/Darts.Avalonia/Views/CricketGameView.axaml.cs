@@ -87,7 +87,7 @@ public partial class CricketGameView : ReactiveUserControl<CricketGameViewModel>
                     tripleModifierObservable)
                 .StartWith(DartsNumberModifier.Single);
 
-            Observable
+            IObservable<DartScore> scoreObservable = Observable
                .Merge(
                    FifteenButton.GetObservable(Button.ClickEvent).Select(_ => DartNumbers.Fifteen),
                    SixteenButton.GetObservable(Button.ClickEvent).Select(_ => DartNumbers.Sixteen),
@@ -98,8 +98,20 @@ public partial class CricketGameView : ReactiveUserControl<CricketGameViewModel>
                    BullsEyeButton.GetObservable(Button.ClickEvent).Select(_ => DartNumbers.BullsEye),
                    MissButton.GetObservable(Button.ClickEvent).Select(_ => DartNumbers.Miss))
                .WithLatestFrom(modifierObservable, (number, modifier) => new DartScore() { DartNumbers = number, Modifier = modifier })
-               .Subscribe(x => ViewModel!.DartClick(new DartScore() { DartNumbers = x.DartNumbers, Modifier = x.Modifier }))
-               .DisposeWith(disposables);
+               .Publish()
+               .RefCount();
+               
+            scoreObservable
+                .Subscribe(x => ViewModel!.DartClick(new DartScore() { DartNumbers = x.DartNumbers, Modifier = x.Modifier }))
+                .DisposeWith(disposables);
+
+            scoreObservable
+                .Subscribe(_ =>
+                {
+                    DoubleButton.IsChecked = false;
+                    TripleButton.IsChecked = false;
+                })
+                .DisposeWith(disposables);
         });
     }
 }
