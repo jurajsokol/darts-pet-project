@@ -80,7 +80,7 @@ public partial class X01KeyBoardView : UserControl, IActivatableView
                     tripleModifierObservable)
                 .StartWith(DartsNumberModifier.Single);
 
-            Observable
+            IObservable<DartScore> scoreObservable = Observable
                 .Merge(
                     OneButton.GetObservable(Button.ClickEvent).Select(_ => DartNumbers.One),
                     TwoButton.GetObservable(Button.ClickEvent).Select(_ => DartNumbers.Two),
@@ -109,7 +109,19 @@ public partial class X01KeyBoardView : UserControl, IActivatableView
                             .Select(_ => new DartScore() { DartNumbers = DartNumbers.BullsEye, Modifier = DartsNumberModifier.Single }),
                         DoubleBullsEyeButton.GetObservable(Button.ClickEvent)
                             .Select(_ => new DartScore() { DartNumbers = DartNumbers.BullsEye, Modifier = DartsNumberModifier.Double })))
+                .Publish()
+                .RefCount();
+
+            scoreObservable
                 .Subscribe(x => Command?.Execute(x))
+                .DisposeWith(disposables);
+
+            scoreObservable
+                .Subscribe(_ =>
+                {
+                    DoubleButton.IsChecked = false;
+                    TripleButton.IsChecked = false;
+                })
                 .DisposeWith(disposables);
         });
     }
