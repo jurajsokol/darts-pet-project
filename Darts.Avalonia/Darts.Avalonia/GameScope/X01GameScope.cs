@@ -19,7 +19,6 @@ public class X01GameScope : GameScopeBase
         if (gameView is not null)
         {
             contentControl.Content = gameView;
-            gameView.ViewModel?.Activator.Activate();
         }
     }
 

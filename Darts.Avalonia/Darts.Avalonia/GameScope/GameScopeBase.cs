@@ -1,11 +1,8 @@
 ﻿using Avalonia.Controls;
 using Darts.Avalonia.Models;
 using Darts.Avalonia.Views;
-using DynamicData;
 using Microsoft.Extensions.DependencyInjection;
-using ReactiveUI;
 using System;
-using System.Collections;
 
 namespace Darts.Avalonia.GameScope;
 
@@ -33,8 +30,6 @@ public abstract class GameScopeBase : IGameScope
 
     public void ShowWinnersView(Player[] players)
     {
-
-        ((contentControl.Content as Control).DataContext as IActivatableViewModel).Activator.Deactivate();
         GameWinnerView view = service.GetRequiredService<GameWinnerView>();
         contentControl.Content = view;
 

@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using Darts.Avalonia.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -19,7 +18,6 @@ namespace Darts.Avalonia.GameScope
             if (gameView is not null)
             {
                 contentControl.Content = gameView;
-                gameView.ViewModel?.Activator.Activate();
             }
         }
 

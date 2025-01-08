@@ -10,7 +10,7 @@ public interface IDartGame : IDisposable
     IObservable<IChangeSet<PlayerMove, int>> PlayerRoundScore { get; }
     IObservable<bool> CanSetNextPlayer { get; }
 
-    bool PlayerMove(TargetButtonNum number, TargetButtonType type);
-    void NextPlayer();
+    void PlayerMove(TargetButtonNum number, TargetButtonType type);
+    bool NextPlayer();
     void Undo();
 }

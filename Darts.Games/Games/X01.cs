@@ -28,11 +28,11 @@ public class X01 : IDartGame, IDisposable
         this.gameStore = gameStore;
     }
 
-    public bool PlayerMove(TargetButtonNum number, TargetButtonType type)
+    public void PlayerMove(TargetButtonNum number, TargetButtonType type)
     {
         if (gameStore.MoveCount >= MAX_THROWS_PER_ROUND)
         {
-            return false;
+            return;
         }
 
         gameStore.MakeSnapshot();
@@ -42,12 +42,9 @@ public class X01 : IDartGame, IDisposable
         gameStore.UpdatePlayerScore(move);
         Player actualPlayer = ActualPlayer with { Score = ActualPlayer.Score - move.GetScore };
         gameStore.UpdatePlayers(actualPlayer);
-
-        // winner
-        return HasPlayerWon(actualPlayer);
     }
 
-    public void NextPlayer()
+    public bool NextPlayer()
     {
         gameStore.MakeSnapshot();
 
@@ -59,6 +56,11 @@ public class X01 : IDartGame, IDisposable
             gameStore.UpdatePlayers(ActualPlayer with { Score = ActualPlayer.Score + playerScore });
         }
 
+        if (HasPlayerWon(ActualPlayer))
+        {
+            return true;
+        }
+
         Player actualPlayer = (gameStore.Players.Items.FirstOrDefault(x => x.PlayerOrder == ActualPlayer.PlayerOrder + 1) ?? gameStore.Players.Items.First())
             with { IsPlayerActive = true };
         gameStore.UpdatePlayers(ActualPlayer with { IsPlayerActive = false });
@@ -66,6 +68,8 @@ public class X01 : IDartGame, IDisposable
 
         gameStore.ResetPlayerScore();
         gameStore.ResetMoveCount();
+
+        return false;
     }
 
     private bool IsOverShot(Player player)
@@ -86,5 +90,13 @@ public class X01 : IDartGame, IDisposable
     public void Dispose()
     {
         gameStore.Dispose();
+    }
+
+    public Player[] GetPlayerResults()
+    {
+        return gameStore.Players.Items
+            .OrderBy(x => x.Score)
+            .Select((p, c) => p with { PlayerOrder = c })
+            .ToArray();
     }
 }

@@ -10,6 +10,7 @@ using ReactiveUI;
 using ReactiveUI.SourceGenerators;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -56,7 +57,10 @@ public partial class DartGameX01ViewModel : KeyboardViewModel, IActivatableViewM
     [ReactiveCommand]
     private void NextPlayer()
     {
-        dartGame.NextPlayer();
+        if (dartGame.NextPlayer())
+        {
+            gameScope.ShowWinnersView(dartGame.GetPlayerResults().Select(x => x.ToModel()).ToArray());
+        }
     }
 
     [ReactiveCommand]
