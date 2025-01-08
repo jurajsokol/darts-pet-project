@@ -14,10 +14,11 @@ using System.Reactive.Disposables;
 using Darts.Avalonia.GameScope;
 using Darts.Avalonia.Views;
 using Darts.Games.Models;
+using System.Linq;
 
 namespace Darts.Avalonia.ViewModels;
 
-public partial class CricketGameViewModel : ReactiveObject, IActivatableViewModel
+public partial class CricketGameViewModel : KeyboardViewModel, IActivatableViewModel
 {
     private readonly IGameScope gameScope;
     private readonly IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>> dialogFactory;
@@ -55,21 +56,23 @@ public partial class CricketGameViewModel : ReactiveObject, IActivatableViewMode
     }
 
     [ReactiveCommand]
-    public void DartClick(DartScore score)
-    {
-        game.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType());
-    }
-
-    [ReactiveCommand]
     private void NextPlayer()
     {
-        game.NextPlayer();
+        if (game.NextPlayer())
+        {
+            gameScope.ShowWinnersView(game.GetPlayersResults().Select(x => x.ToModel()).ToArray());
+        }
     }
 
     [ReactiveCommand]
     private void Undo()
     {
         game.Undo();
+    }
+
+    internal override void OnDartScore(DartScore score)
+    {
+        game.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType());
     }
 
     public async Task CancelGame()

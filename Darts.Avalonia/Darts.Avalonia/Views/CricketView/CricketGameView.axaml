@@ -8,6 +8,7 @@
 			 xmlns:controls="using:Darts.Avalonia.Controls"
 			 xmlns:vm="using:Darts.Avalonia.ViewModels"
 			 xmlns:models="using:Darts.Games.Models"
+			 xmlns:enums="using:Darts.Avalonia.Enums"
 			 x:DataType="vm:CricketGameViewModel">
 
 	<UserControl.Styles>
@@ -17,46 +18,14 @@
 		</Style>
 	</UserControl.Styles>
 	
-	<Grid RowDefinitions="auto,auto,140,*"
+	<Grid RowDefinitions="auto,140,*,auto"
 		  ColumnDefinitions="*,80">
 
-		<Border Background="{DynamicResource SemiGrey0}"
-				CornerRadius="5"
-				Grid.ColumnSpan="2"
-				HorizontalAlignment="Stretch">
-			<StackPanel Orientation="Horizontal"
-						HorizontalAlignment="Right">
-				
-				<Button Classes="commandBarButton"
-						Command="{Binding UndoCommand}">
-					<Svg Path="/Resources/Icons/undo.svg"
-						 Classes="command"/>
-				</Button>
-				<Button Content="Next player"
-						Command="{Binding NextPlayerCommand}"
-						Theme="{StaticResource OutlineButton}"
-						Margin="5">
-					<StackPanel Orientation="Horizontal">
-						<TextBlock Text="Next player"
-								   VerticalAlignment="Center"/>
-						<Svg Path="/Resources/Icons/next.svg"
-							 Classes="command"/>
-					</StackPanel>
-				</Button>
-				<Button Classes="commandBarButton"
-						Command="{Binding CancelGame}">
-					<Svg Path="/Resources/Icons/close.svg"
-						 Classes="command"/>
-				</Button>
-			</StackPanel>
-		</Border>
-
-		<local:PlayerDartScoreView DataContext="{Binding}"
-								   Grid.Row="1"/>
+		<local:PlayerDartScoreView DataContext="{Binding}"/>
 
 		<controls:GroupControl HeaderText="Players"
                                HorizontalAlignment="Center"
-							   Grid.Row="2"
+							   Grid.Row="1"
 							   Grid.RowSpan="2">
 
 			<ScrollViewer HorizontalScrollBarVisibility="Auto"
@@ -127,8 +96,7 @@
 			</ScrollViewer>
 		</controls:GroupControl>
 		
-		<UniformGrid Grid.Row="1"
-					 Grid.RowSpan="2"
+		<UniformGrid Grid.RowSpan="2"
 					 Columns="1"
 					 Grid.Column="1"
 					 HorizontalAlignment="Stretch"
@@ -159,17 +127,21 @@
 				</Style>
 			</UniformGrid.Styles>
 			
-			<Button x:Name="Miss">Miss</Button>
-			<ToggleButton x:Name="Double">
+			<Button x:Name="Miss"
+					Command="{Binding OnDartNumberCommand}"
+					CommandParameter="{x:Static enums:DartNumbers.Miss}">Miss</Button>
+			<ToggleButton x:Name="Double"
+						  IsChecked="{Binding IsDoubleSelected}">
 				Double
 			</ToggleButton>
 
-			<ToggleButton x:Name="Tripple">
+			<ToggleButton x:Name="Tripple"
+						  IsChecked="{Binding IsTripleSelected}">
 				Triple
 			</ToggleButton>
 		</UniformGrid>
 
-		<UniformGrid Grid.Row="3"
+		<UniformGrid Grid.Row="2"
 					 Grid.Column="1"
 					 HorizontalAlignment="Stretch"
 					 Columns="1"
@@ -190,13 +162,27 @@
 			</UniformGrid.Styles>
 
 			<Button x:Name="BullsEye"
-					IsEnabled="{Binding !#Tripple.IsChecked}">25</Button>
-			<Button x:Name="Twenty">20</Button>
-			<Button x:Name="Nineteen">19</Button>
-			<Button x:Name="Eighteen">18</Button>
-			<Button x:Name="Seventeen">17</Button>
-			<Button x:Name="Sixteen">16</Button>
-			<Button x:Name="Fifteen">15</Button>
+					IsEnabled="{Binding !#Tripple.IsChecked}"
+					Command="{Binding OnDartNumberCommand}"
+					CommandParameter="{x:Static enums:DartNumbers.BullsEye}">25</Button>
+			<Button x:Name="Twenty"
+					Command="{Binding OnDartNumberCommand}"
+					CommandParameter="{x:Static enums:DartNumbers.Twenty}">20</Button>
+			<Button x:Name="Nineteen"
+					Command="{Binding OnDartNumberCommand}"
+					CommandParameter="{x:Static enums:DartNumbers.Nineteen}">19</Button>
+			<Button x:Name="Eighteen"
+					Command="{Binding OnDartNumberCommand}"
+					CommandParameter="{x:Static enums:DartNumbers.Eighteen}">18</Button>
+			<Button x:Name="Seventeen"
+					Command="{Binding OnDartNumberCommand}"
+					CommandParameter="{x:Static enums:DartNumbers.Seventeen}">17</Button>
+			<Button x:Name="Sixteen"
+					Command="{Binding OnDartNumberCommand}"
+					CommandParameter="{x:Static enums:DartNumbers.Sixteen}">16</Button>
+			<Button x:Name="Fifteen"
+					Command="{Binding OnDartNumberCommand}"
+					CommandParameter="{x:Static enums:DartNumbers.Fifteen}">15</Button>
 		</UniformGrid>
 
 		<controls:GroupControl HeaderText="Players"
@@ -205,5 +191,39 @@
 
 			
 		</controls:GroupControl>
+
+		<Border Background="{DynamicResource SemiGrey0}"
+				CornerRadius="5"
+				Grid.Row="3"
+				Grid.ColumnSpan="2"
+				HorizontalAlignment="Stretch">
+			<Grid>
+				<StackPanel Orientation="Horizontal">
+
+					<Button Classes="commandBarButton"
+							Command="{Binding CancelGame}">
+						<Svg Path="/Resources/Icons/close.svg"
+							 Classes="command"/>
+					</Button>
+					<Button Classes="commandBarButton"
+							Command="{Binding UndoCommand}">
+						<Svg Path="/Resources/Icons/undo.svg"
+							 Classes="command"/>
+					</Button>
+				</StackPanel>
+				<Button Content="Next player"
+						HorizontalAlignment="Right"
+						Command="{Binding NextPlayerCommand}"
+						Theme="{StaticResource SolidButton}"
+						Margin="5">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Next player"
+								   VerticalAlignment="Center"/>
+						<Svg Path="/Resources/Icons/next.svg"
+							 Classes="command"/>
+					</StackPanel>
+				</Button>
+			</Grid>
+		</Border>
 	</Grid>
 </UserControl>

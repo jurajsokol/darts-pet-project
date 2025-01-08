@@ -20,40 +20,10 @@
 		</Style>
 	</UserControl.Styles>
 	
-	<Grid RowDefinitions="auto,auto,auto,*">
-
-		<Border Background="{DynamicResource SemiGrey0}"
-				CornerRadius="5"
-				HorizontalAlignment="Stretch">
-			<StackPanel Orientation="Horizontal"
-						HorizontalAlignment="Right">
-				<Button Classes="commandBarButton"
-						Command="{Binding UndoCommand}">
-					<Svg Path="/Resources/Icons/undo.svg"
-						 Classes="command"/>
-				</Button>
-				<Button Content="Next player"
-						Command="{Binding NextPlayerCommand}"
-						Theme="{StaticResource OutlineButton}"
-						Margin="5">
-					<StackPanel Orientation="Horizontal">
-						<TextBlock Text="Next player"
-								   VerticalAlignment="Center"/>
-						<Svg Path="/Resources/Icons/next.svg"
-							 Classes="command"/>
-					</StackPanel>
-				</Button>
-				<Button Classes="commandBarButton"
-						Command="{Binding CancelGame}">
-					<Svg Path="/Resources/Icons/close.svg"
-						 Classes="command"/>
-				</Button>
-			</StackPanel>
-		</Border>
+	<Grid RowDefinitions="auto,auto,*,auto">
 		
 		<controls:GroupControl HeaderText="Players"
-                               HorizontalAlignment="Center"
-							   Grid.Row="1">
+                               HorizontalAlignment="Center">
 					
 			<ItemsControl ItemsSource="{Binding Players, Mode=OneWay}"
 						  HorizontalAlignment="Center"
@@ -89,7 +59,7 @@
 
 		<controls:GroupControl HorizontalAlignment="Center"
                                HeaderText="Score"
-							   Grid.Row="2">
+							   Grid.Row="1">
 			<ItemsControl ItemsSource="{Binding PlayerRound}">
 
 				<ItemsControl.ItemTemplate>
@@ -115,7 +85,40 @@
 			</ItemsControl>
 		</controls:GroupControl>
 		
-		<x01Views:X01KeyBoardView Grid.Row="3"
-							   Command="{Binding DartClickCommand}"/>
+		<x01Views:X01KeyBoardView Grid.Row="2"
+								  ViewModel="{Binding}"/>
+
+		<Border Background="{DynamicResource SemiGrey0}"
+				CornerRadius="5"
+				Grid.Row="3"
+				HorizontalAlignment="Stretch">
+			<Grid>
+				<StackPanel Orientation="Horizontal">
+					<Button Classes="commandBarButton"
+							Command="{Binding CancelGame}">
+						<Svg Path="/Resources/Icons/close.svg"
+							 Classes="command"/>
+					</Button>
+					<Button Classes="commandBarButton"
+							Command="{Binding UndoCommand}">
+						<Svg Path="/Resources/Icons/undo.svg"
+							 Classes="command"/>
+					</Button>
+				</StackPanel>
+
+				<Button Content="Next player"
+						HorizontalAlignment="Right"
+						Command="{Binding NextPlayerCommand}"
+						Theme="{StaticResource SolidButton}"
+						Margin="5">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Next player"
+								   VerticalAlignment="Center"/>
+						<Svg Path="/Resources/Icons/next.svg"
+							 Classes="command"/>
+					</StackPanel>
+				</Button>
+			</Grid>
+		</Border>
 	</Grid>
 </UserControl>

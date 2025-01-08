@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Darts.Avalonia.ViewModels;
 
-public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewModel
+public partial class DartGameX01ViewModel : KeyboardViewModel, IActivatableViewModel
 {
     private readonly X01 dartGame;
     private readonly X01GameScope gameScope;
@@ -54,16 +54,6 @@ public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewMode
     }
 
     [ReactiveCommand]
-    private void DartClick(DartScore score)
-    {
-        bool hasWon = dartGame.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType());
-        if (hasWon)
-        {
-
-        }
-    }
-
-    [ReactiveCommand]
     private void NextPlayer()
     {
         dartGame.NextPlayer();
@@ -84,5 +74,10 @@ public partial class DartGameX01ViewModel : ReactiveObject, IActivatableViewMode
         {
             gameScope.ExitGame();
         }
+    }
+
+    internal override void OnDartScore(DartScore score)
+    {
+        dartGame.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType());
     }
 }
