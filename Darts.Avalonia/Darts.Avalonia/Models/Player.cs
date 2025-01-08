@@ -14,6 +14,9 @@ public partial class Player : ReactiveObject
     [Reactive]
     private int orderNumber;
 
+    [Reactive]
+    private int score;
+
     public override bool Equals(object? obj)
     {
         if (obj is Player player)

@@ -26,8 +26,6 @@ public partial class CricketGameViewModel : KeyboardViewModel, IActivatableViewM
 
     public ObservableCollection<Darts.Games.Models.CricketPlayer> Players => players;
 
-    public ViewModelActivator Activator { get; } = new ViewModelActivator();
-
     private ObservableCollectionExtended<Darts.Games.Models.CricketPlayer> players = new();
 
     public ObservableCollection<Games.Models.PlayerMove> PlayerRound => playerRound;

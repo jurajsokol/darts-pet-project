@@ -9,41 +9,9 @@
              x:Class="Darts.Avalonia.Views.X01GameView.X01GameSetup"
 			 x:DataType="vm:X01SetupViewModel">
   
-	<Grid RowDefinitions="auto,auto,auto,auto">
-		<Border Background="{DynamicResource SemiGrey0}"
-				CornerRadius="5"
-				HorizontalAlignment="Stretch">
-			<Grid>
-				<Button Content="Back"
-						HorizontalAlignment="Left"
-						Classes="commandBarButton"
-						Command="{Binding GoBackCommand}">
-					<Svg Path="/Resources/Icons/back.svg"
-						 Classes="command"/>
-				</Button>
-				
-				<Button Content="Start game"
-						Margin="5"
-						HorizontalAlignment="Right"
-						VerticalAlignment="Top"
-						Classes="Primary"
-						Theme="{StaticResource SolidButton}"
-						Command="{Binding GoNextCommand}">
-					<StackPanel Orientation="Horizontal">
-						<Svg Path="/Resources/Icons/darthFlight.svg"
-							 Height="20"
-							 HorizontalAlignment="Center"/>
-						<TextBlock Text="Start game"
-								   Margin="5"
-								   VerticalAlignment="Center"
-								   HorizontalAlignment="Center"/>
-					</StackPanel>
-				</Button>
-			</Grid>
-		</Border>
+	<Grid RowDefinitions="auto,auto,auto,*,auto">
 		
 		<controls:GroupControl HeaderText="Points"
-							   Grid.Row="1"
 							   Padding="0"
 							   Theme="{StaticResource BasicGroupControl}">
 
@@ -68,7 +36,7 @@
 		</controls:GroupControl>
 
 		<controls:GroupControl HeaderText="Game in"
-							   Grid.Row="2"
+							   Grid.Row="1"
 							   Padding="0"
 							   Theme="{StaticResource BasicGroupControl}">
 
@@ -93,7 +61,7 @@
 		</controls:GroupControl>
 		
 		<controls:GroupControl HeaderText="Game out"
-							   Grid.Row="3"
+							   Grid.Row="2"
 							   Padding="0"
 							   Theme="{StaticResource BasicGroupControl}">
 
@@ -116,6 +84,38 @@
 
 			</ListBox>
 		</controls:GroupControl>
+		
+		<Border Background="{DynamicResource SemiGrey0}"
+				CornerRadius="5"
+				Grid.Row="4"
+				HorizontalAlignment="Stretch">
+			<Grid>
+				<Button Content="Back"
+						HorizontalAlignment="Left"
+						Classes="commandBarButton"
+						Command="{Binding GoBackCommand}">
+					<Svg Path="/Resources/Icons/back.svg"
+						 Classes="command"/>
+				</Button>
+				
+				<Button Content="Start game"
+						Margin="5"
+						HorizontalAlignment="Right"
+						Classes="Primary"
+						Theme="{StaticResource SolidButton}"
+						Command="{Binding GoNextCommand}">
+					<StackPanel Orientation="Horizontal">
+						<Svg Path="/Resources/Icons/darthFlight.svg"
+							 Height="20"
+							 HorizontalAlignment="Center"/>
+						<TextBlock Text="Start game"
+								   Margin="5"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Center"/>
+					</StackPanel>
+				</Button>
+			</Grid>
+		</Border>
 	</Grid>
 	
 </UserControl>

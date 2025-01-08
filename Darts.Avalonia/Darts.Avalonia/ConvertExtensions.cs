@@ -49,6 +49,8 @@ public static class ConvertExtensions
         return new Models.Player()
         {
             Name = data.PlayerName,
+            OrderNumber = data.PlayerOrder,
+            Score  = data.Score,
         };
     }
 

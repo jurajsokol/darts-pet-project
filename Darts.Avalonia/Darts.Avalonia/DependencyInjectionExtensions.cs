@@ -55,7 +55,8 @@ public static class DependencyInjectionExtensions
             .AddSingleton<ConfirmGameExitViewModel>()
             .AddTransient<SettingsViewModel>()
             .AddSingleton<MainMenuViewModel>()
-            .AddTransient<CricketGameViewModel>();
+            .AddTransient<CricketGameViewModel>()
+            .AddTransient<WinnerViewModel>();
     }
 
     public static IServiceCollection AddViews(this IServiceCollection services)
@@ -69,7 +70,8 @@ public static class DependencyInjectionExtensions
             .AddTransient<ConfirmGameClose>()
             .AddSingleton<MainMenuView>()
             .AddTransient<SettingsView>()
-            .AddTransient<CricketGameView>();
+            .AddTransient<CricketGameView>()
+            .AddTransient<GameWinnerView>();
     }
 
     public static IServiceCollection AddDartGames(this IServiceCollection services)

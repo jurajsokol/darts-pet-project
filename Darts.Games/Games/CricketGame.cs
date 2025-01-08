@@ -28,13 +28,13 @@ public class CricketGame
         this.gameStore = gameStore;
     }
 
-    public bool PlayerMove(TargetButtonNum number, TargetButtonType type)
+    public void PlayerMove(TargetButtonNum number, TargetButtonType type)
     {
         CricketPlayer actualPlayer = ActualPlayer;
 
         if (gameStore.MoveCount >= MAX_THROWS_PER_ROUND)
         {
-            return false;
+            return;
         }
 
         gameStore.MakeSnapshot();
@@ -45,7 +45,7 @@ public class CricketGame
 
         if (((int)number) < 15)
         {
-            return false;
+            return;
         }
 
         CricketDartButtonState buttonState = actualPlayer.CricketDartButtonStates.First(x => x.TargetButtonNum == number);
@@ -53,7 +53,7 @@ public class CricketGame
         // closed position
         if (buttonState.CricketTargetButtonState == CricketTargetButtonState.Closed)
         {
-            return false;
+            return;
         }
 
         // opened position
@@ -89,7 +89,7 @@ public class CricketGame
                         })
                         .ToArray());
 
-                    return HasPlayerWon();
+                    return;
                 }
                 else
                 { 
@@ -108,10 +108,10 @@ public class CricketGame
         }
 
         // winner
-        return HasPlayerWon();
+        return;
     }
 
-    public void NextPlayer()
+    public bool NextPlayer()
     {
         gameStore.MakeSnapshot();
 
@@ -122,6 +122,8 @@ public class CricketGame
 
         gameStore.ResetPlayerScore();
         gameStore.ResetMoveCount();
+
+        return HasPlayerWon();
     }
 
     public void Undo()
@@ -135,5 +137,13 @@ public class CricketGame
             .OrderByDescending(x => x.Score)
             .First().CricketDartButtonStates
             .All(x => x.CricketTargetButtonState == CricketTargetButtonState.Closed || x.CricketTargetButtonState == CricketTargetButtonState.Open);
+    }
+
+    public CricketPlayer[] GetPlayersResults()
+    {
+        return gameStore.Players.Items
+            .OrderByDescending(x => x.Score)
+            .Select((p, c) => p with { PlayerOrder = c })
+            .ToArray();
     }
 }

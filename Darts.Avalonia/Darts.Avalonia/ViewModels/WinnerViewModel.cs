@@ -1,36 +1,36 @@
-﻿using Darts.Avalonia.ViewRouting;
-using Darts.Games.Models;
+﻿using Darts.Avalonia.GameScope;
+using Darts.Avalonia.Models;
 using ReactiveUI;
 using ReactiveUI.SourceGenerators;
+using System.Collections.ObjectModel;
 
 namespace Darts.Avalonia.ViewModels;
 
 public partial class WinnerViewModel : ReactiveObject
 {
-    private readonly IPageNavigation pageNavigation;
+    public ObservableCollection<Player> Players { get; } = new ObservableCollection<Player>();
+    private IGameScope gameScope { get; }
 
-    public Player[] Players { get; }
-    public WinnerViewModel(IPageNavigation pageNavigation, Player[] players)
+    public WinnerViewModel(IGameScope gameScope)
     {
-        this.pageNavigation = pageNavigation;
-        Players = players;
+        this.gameScope = gameScope;
     }
 
     [ReactiveCommand]
-    private void GoBack()
-    { 
-        pageNavigation.GoBack();
+    public void Undo()
+    {
+        gameScope.ReturnToGame();
     }
 
     [ReactiveCommand]
-    private void NewGame()
-    { 
-        
+    public void CancelGame()
+    {
+        gameScope.ExitGame();
     }
 
     [ReactiveCommand]
-    private void GoToMainMenu()
-    { 
-        
+    public void NewGame()
+    {
+
     }
 }

@@ -7,9 +7,20 @@ namespace Darts.Avalonia.GameScope;
 
 public class X01GameScope : GameScopeBase
 {
+    private DartGameX01View? gameView;
+
     public X01GameScope(IServiceProvider serviceScope, TransitioningContentControl contentControl)
         : base(serviceScope, contentControl)
     {
+    }
+
+    public override void ReturnToGame()
+    {
+        if (gameView is not null)
+        {
+            contentControl.Content = gameView;
+            gameView.ViewModel?.Activator.Activate();
+        }
     }
 
     public override void StartGame()
