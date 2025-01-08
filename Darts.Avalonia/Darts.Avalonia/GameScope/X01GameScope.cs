@@ -24,7 +24,8 @@ public class X01GameScope : GameScopeBase
 
     public override void StartGame()
     {
-        contentControl.Content = service.GetRequiredService<DartGameX01View>();
+        gameView = service.GetRequiredService<DartGameX01View>();
+        contentControl.Content = gameView;
     }
 
     public override void StartSetup()

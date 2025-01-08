@@ -29,8 +29,6 @@ public partial class DartGameX01ViewModel : KeyboardViewModel, IActivatableViewM
 
     public ObservableCollection<Games.Models.PlayerMove> PlayerRound => playerRound;
 
-    public ViewModelActivator Activator { get; } = new ViewModelActivator();
-
     private ObservableCollectionExtended<Games.Models.PlayerMove> playerRound = new();
 
     public DartGameX01ViewModel(X01 dartGame, IScheduler guiScheduler, X01GameScope gameScope, IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>> dialogFactory)
@@ -51,6 +49,13 @@ public partial class DartGameX01ViewModel : KeyboardViewModel, IActivatableViewM
                .SortAndBind(playerRound, SortExpressionComparer<PlayerMove>.Ascending(p => p.OrderNum))
                .Subscribe()
                .DisposeWith(disposable);
+
+            Disposable.Create(() =>
+            {
+                players.Clear();
+                playerRound.Clear();
+            })
+            .DisposeWith(disposable);
         });
     }
 

@@ -46,6 +46,11 @@ public class X01 : IDartGame, IDisposable
 
     public bool NextPlayer()
     {
+        if (HasPlayerWon(ActualPlayer))
+        {
+            return true;
+        }
+     
         gameStore.MakeSnapshot();
 
         if (IsOverShot(ActualPlayer))
@@ -54,11 +59,6 @@ public class X01 : IDartGame, IDisposable
                 .Where(x => x.TargetButton != TargetButtonNum.None)
                 .Select(x => (int)x.TargetButton * (int)x.TargetButtonType).Sum();
             gameStore.UpdatePlayers(ActualPlayer with { Score = ActualPlayer.Score + playerScore });
-        }
-
-        if (HasPlayerWon(ActualPlayer))
-        {
-            return true;
         }
 
         Player actualPlayer = (gameStore.Players.Items.FirstOrDefault(x => x.PlayerOrder == ActualPlayer.PlayerOrder + 1) ?? gameStore.Players.Items.First())

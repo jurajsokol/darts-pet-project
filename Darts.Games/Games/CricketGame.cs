@@ -113,6 +113,11 @@ public class CricketGame
 
     public bool NextPlayer()
     {
+        if (HasPlayerWon())
+        {
+            return true;
+        }
+
         gameStore.MakeSnapshot();
 
         CricketPlayer actualPlayer = (gameStore.Players.Items.FirstOrDefault(x => x.PlayerOrder == ActualPlayer.PlayerOrder + 1) ?? gameStore.Players.Items.First())
@@ -122,8 +127,7 @@ public class CricketGame
 
         gameStore.ResetPlayerScore();
         gameStore.ResetMoveCount();
-
-        return HasPlayerWon();
+        return false;
     }
 
     public void Undo()

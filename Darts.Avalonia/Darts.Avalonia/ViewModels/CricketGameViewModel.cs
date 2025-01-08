@@ -50,6 +50,14 @@ public partial class CricketGameViewModel : KeyboardViewModel, IActivatableViewM
                .SortAndBind(playerRound, SortExpressionComparer<PlayerMove>.Ascending(p => p.OrderNum))
                .Subscribe()
                .DisposeWith(disposable);
+
+            Disposable
+                .Create(() =>
+                {
+                    players.Clear();
+                    playerRound.Clear();
+                })
+                .DisposeWith(disposable);
         });
     }
 
