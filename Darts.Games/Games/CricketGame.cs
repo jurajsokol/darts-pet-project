@@ -30,6 +30,11 @@ public class CricketGame
 
     public void PlayerMove(TargetButtonNum number, TargetButtonType type)
     {
+        if (((int)number) < 15)
+        {
+            return;
+        }
+
         CricketPlayer actualPlayer = ActualPlayer;
 
         if (gameStore.MoveCount >= MAX_THROWS_PER_ROUND)
@@ -42,11 +47,6 @@ public class CricketGame
             .First(x => x.OrderNum == gameStore.MoveCount) with { TargetButton = number, TargetButtonType = type };
 
         gameStore.UpdatePlayerScore(move);
-
-        if (((int)number) < 15)
-        {
-            return;
-        }
 
         CricketDartButtonState buttonState = actualPlayer.CricketDartButtonStates.First(x => x.TargetButtonNum == number);
 

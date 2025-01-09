@@ -64,7 +64,7 @@ public static class DependencyInjectionExtensions
         return services
             .AddSingleton<MainView>()
             .AddTransient<CreateGameView>()
-            .AddScoped<DartGameX01View>()
+            .AddTransient<DartGameX01View>()
             .AddScoped<X01GameSetup>()
             .AddTransient<PlayersView>()
             .AddTransient<ConfirmGameClose>()
@@ -76,11 +76,11 @@ public static class DependencyInjectionExtensions
 
     public static IServiceCollection AddDartGames(this IServiceCollection services)
     {
-        return services.AddScoped<X01>(s =>
+        return services.AddTransient<X01>(s =>
             {
-                CreateGameViewModel createGameParams = s.GetRequiredService<CreateGameViewModel>();
+                GameConfiguration createGameParams = s.GetRequiredService<GameConfiguration>();
                 X01SetupViewModel setupViewModel = s.GetRequiredService<X01SetupViewModel>();
-                Player[] players = createGameParams.SelectedPlayers.Select((x, i) => x.ToDartPlayer(i)).ToArray();
+                Player[] players = createGameParams.Players.Select((x, i) => x.ToDartPlayer(i)).ToArray();
 
                 IEnumerable<Player> gamePlayers = players
                     .Select((p, i) => p with { Score = (int)setupViewModel.X01GameType.GameType, IsPlayerActive = i == 0 });
@@ -91,10 +91,10 @@ public static class DependencyInjectionExtensions
                 Store<Player> store = new Store<Player>(gamePlayers.ToArray(), moves.ToArray(), new PlayerComparer());
                 return new X01(players, store);
             })
-            .AddScoped<CricketGame>(s =>
+            .AddTransient<CricketGame>(s =>
             {
-                CreateGameViewModel createGameParams = s.GetRequiredService<CreateGameViewModel>();
-                CricketPlayer[] players = createGameParams.SelectedPlayers.Select((x, i) => x.ToCricketPlayer(i)).ToArray();
+                GameConfiguration createGameParams = s.GetRequiredService<GameConfiguration>();
+                CricketPlayer[] players = createGameParams.Players.Select((x, i) => x.ToCricketPlayer(i)).ToArray();
 
                 IEnumerable<CricketPlayer> gamePlayers = players
                     .Select((p, i) => p with { IsPlayerActive = i == 0 });
@@ -109,15 +109,16 @@ public static class DependencyInjectionExtensions
             .AddTransient(services => new CricketGameScope(services, services.GetRequiredService<MainView>().NavigationPanel))
             .AddScoped<IGameScope>(services =>
             {
-                CreateGameViewModel createGameViewModel = services.GetRequiredService<CreateGameViewModel>();
+                GameConfiguration createGameViewModel = services.GetRequiredService<GameConfiguration>();
 
-                return createGameViewModel.SelectedGameType.GameType switch
+                return createGameViewModel.GameType switch
                 {
                     GameTypes.X01 => services.GetRequiredService<X01GameScope>(),
                     GameTypes.Cricket => services.GetRequiredService<CricketGameScope>(),
 
-                    _ => throw new NotImplementedException($"Game type {createGameViewModel.SelectedGameType.GameType} is not implemented")
+                    _ => throw new NotImplementedException($"Game type {createGameViewModel.GameType} is not implemented")
                 };
-            });
+            })
+            .AddScoped<GameConfiguration>();
     }
 }

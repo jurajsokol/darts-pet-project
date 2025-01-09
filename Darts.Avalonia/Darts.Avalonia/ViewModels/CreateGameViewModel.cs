@@ -11,9 +11,9 @@ using Darts.Avalonia.ViewRouting;
 using System.Reactive.Linq;
 using System.Collections.Specialized;
 using Darts.Games.Enums;
-using Darts.Avalonia.Factories;
 using Darts.Avalonia.GameScope;
 using Microsoft.Extensions.DependencyInjection;
+using Darts.Avalonia.Factories;
 
 namespace Darts.Avalonia.ViewModels;
 
@@ -80,6 +80,9 @@ public partial class CreateGameViewModel : ReactiveObject
     {
         IServiceScope scope = serviceProvider.CreateScope();
 
+        GameConfiguration configuration = scope.ServiceProvider.GetService<GameConfiguration>()!;
+        configuration.Players = SelectedPlayers.ToArray();
+        configuration.GameType = SelectedGameType.GameType;
         IGameScope gameScope = scope.ServiceProvider.GetRequiredService<IGameScope>();
         gameScope.StartSetup();
     }

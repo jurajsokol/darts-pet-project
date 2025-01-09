@@ -65,8 +65,7 @@
 					</Button>
 				</StackPanel>
 
-				<Button Content="Next player"
-						HorizontalAlignment="Right"
+				<Button HorizontalAlignment="Right"
 						Command="{Binding NewGameCommand}"
 						Theme="{StaticResource SolidButton}"
 						Margin="5">
