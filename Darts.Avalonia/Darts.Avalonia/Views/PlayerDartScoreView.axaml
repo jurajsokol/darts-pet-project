@@ -20,16 +20,13 @@
 
 			<ItemsControl.ItemTemplate>
 				<DataTemplate x:DataType="models:PlayerMove">
-					<Label Width="80"
-						   Classes="Blue Large" 
-						   Theme="{StaticResource TagLabel}"
-						   Padding="5"
-						   Margin="5">
+					<Border Margin="15"
+							Width="80">
 						<TextBlock Text="{Binding}"
+								   HorizontalAlignment="Center"
 								   Classes.isEmpty="{Binding IsEmpty}"
-								   FontSize="15"
-								   HorizontalAlignment="Center"/>
-					</Label>
+								   FontSize="15"/>
+					</Border>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 

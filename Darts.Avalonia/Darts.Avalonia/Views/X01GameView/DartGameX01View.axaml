@@ -24,66 +24,43 @@
 		
 		<controls:GroupControl HeaderText="Players"
                                HorizontalAlignment="Center">
-					
-			<ItemsControl ItemsSource="{Binding Players, Mode=OneWay}"
-						  HorizontalAlignment="Center"
-						  Margin="5">
+			<ScrollViewer HorizontalScrollBarVisibility="Auto"
+						 VerticalScrollBarVisibility="Hidden">
+				<ItemsControl ItemsSource="{Binding Players, Mode=OneWay}"
+							  HorizontalAlignment="Center"
+							  Margin="5">
 
-				<ItemsControl.ItemsPanel>
-					<ItemsPanelTemplate>
-						<StackPanel Orientation="Horizontal" />
-					</ItemsPanelTemplate>
-				</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
 
-				<ItemsControl.ItemTemplate>
-					<DataTemplate x:DataType="models:Player">
-						<Border Classes.isSelectedPlayer="{Binding IsPlayerActive}"
-								Theme="{StaticResource CardBorder}"
-								Classes="Card">
-							<StackPanel Orientation="Vertical">
-								<TextBlock Text="{Binding PlayerName, Mode=OneTime}"
-										   Margin="5"
-										   FontSize="20"
-										   HorizontalAlignment="Center"/>
-								<TextBlock Text="{Binding Score}"
-											FontSize="25"
-											HorizontalAlignment="Center"
-											Margin="5"/>
-							</StackPanel>
-						</Border>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate x:DataType="models:Player">
+							<Border Classes.isSelectedPlayer="{Binding IsPlayerActive}"
+									Theme="{StaticResource CardBorder}"
+									Classes="Card">
+								<StackPanel Orientation="Vertical">
+									<TextBlock Text="{Binding PlayerName, Mode=OneTime}"
+											   Margin="5"
+											   FontSize="20"
+											   HorizontalAlignment="Center"/>
+									<TextBlock Text="{Binding Score}"
+												FontSize="25"
+												HorizontalAlignment="Center"
+												Margin="5"/>
+								</StackPanel>
+							</Border>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
 
-			</ItemsControl>
+				</ItemsControl>
+		    </ScrollViewer>
 		</controls:GroupControl>
 
-		<controls:GroupControl HorizontalAlignment="Center"
-                               HeaderText="Score"
-							   Grid.Row="1">
-			<ItemsControl ItemsSource="{Binding PlayerRound}">
-
-				<ItemsControl.ItemTemplate>
-					<DataTemplate x:DataType="models:PlayerMove">
-						<StackPanel Orientation="Horizontal"
-									Margin="10">
-							<TextBlock Text="{Binding TargetButtonType}"
-									   HorizontalAlignment="Center"
-									   Margin="5"/>
-							<TextBlock Text="{Binding TargetButton, Mode=OneTime}"
-									   Margin="5"
-									   HorizontalAlignment="Center"/>
-						</StackPanel>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-
-				<ItemsControl.ItemsPanel>
-					<ItemsPanelTemplate>
-						<StackPanel Orientation="Horizontal" />
-					</ItemsPanelTemplate>
-				</ItemsControl.ItemsPanel>
-
-			</ItemsControl>
-		</controls:GroupControl>
+		<views:PlayerDartScoreView DataContext="{Binding}"
+								   Grid.Row="1"/>
 		
 		<x01Views:X01KeyBoardView Grid.Row="2"
 								  ViewModel="{Binding}"/>
