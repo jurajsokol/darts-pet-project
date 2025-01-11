@@ -97,7 +97,7 @@ public static class DependencyInjectionExtensions
                 Store<X01Player> store = new Store<X01Player>(gamePlayers.ToArray(), moves.ToArray(), new X01PlayerComparer());
                 return new X01(setupViewModel.GameIn.DartsNumberModifier.ToGameType(), setupViewModel.GameOut.DartsNumberModifier.ToGameType(), store);
             })
-            .AddTransient<CricketGame>(s =>
+            .AddTransient<CricketGameBase>(s =>
             {
                 GameConfiguration createGameParams = s.GetRequiredService<GameConfiguration>();
                 CricketPlayer[] players = createGameParams.Players.Select((x, i) => x.ToCricketPlayer(i)).ToArray();
@@ -109,7 +109,13 @@ public static class DependencyInjectionExtensions
                    .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x));
 
                 Store<CricketPlayer> store = new Store<CricketPlayer>(gamePlayers.ToArray(), moves.ToArray(), new CricketPlayerComparer());
-                return new CricketGame(store);
+
+                return createGameParams.GameType switch
+                {
+                    GameTypes.Cricket => new CricketGame(store),
+                    GameTypes.CutThroat => new CutThroatGame(store),
+                    _ => throw new NotImplementedException($"Game type {createGameParams.GameType} is not implemented as cricket variant")
+                };
             })
             .AddTransient(services => new X01GameScope(services, services.GetRequiredService<MainView>().NavigationPanel))
             .AddTransient(services => new CricketGameScope(services, services.GetRequiredService<MainView>().NavigationPanel))
@@ -121,6 +127,7 @@ public static class DependencyInjectionExtensions
                 {
                     GameTypes.X01 => services.GetRequiredService<X01GameScope>(),
                     GameTypes.Cricket => services.GetRequiredService<CricketGameScope>(),
+                    GameTypes.CutThroat => services.GetRequiredService<CricketGameScope>(),
 
                     _ => throw new NotImplementedException($"Game type {createGameViewModel.GameType} is not implemented")
                 };

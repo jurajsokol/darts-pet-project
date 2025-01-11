@@ -22,7 +22,7 @@ public partial class CricketGameViewModel : KeyboardViewModel, IActivatableViewM
 {
     private readonly IGameScope gameScope;
     private readonly IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>> dialogFactory;
-    private readonly CricketGame game;
+    private readonly CricketGameBase game;
 
     public ObservableCollection<Darts.Games.Models.CricketPlayer> Players => players;
 
@@ -31,7 +31,7 @@ public partial class CricketGameViewModel : KeyboardViewModel, IActivatableViewM
     public ObservableCollection<Games.Models.PlayerMove> PlayerRound => playerRound;
     private ObservableCollectionExtended<Games.Models.PlayerMove> playerRound = new();
 
-    public CricketGameViewModel(CricketGame game, IScheduler guiScheduler, IGameScope gameScope, IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>> dialogFactory)
+    public CricketGameViewModel(CricketGameBase game, IScheduler guiScheduler, IGameScope gameScope, IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>> dialogFactory)
     {
         this.game = game;
         this.gameScope = gameScope;
