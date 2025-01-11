@@ -18,6 +18,10 @@
 			<Setter Property="Background"
 					Value="{StaticResource SemiColorPrimary}"/>
 		</Style>
+		<Style Selector="Border.isOvershot">
+			<Setter Property="Background"
+					Value="{StaticResource SemiColorDanger}"/>
+		</Style>
 	</UserControl.Styles>
 	
 	<Grid RowDefinitions="auto,auto,*,auto">
@@ -37,8 +41,9 @@
 					</ItemsControl.ItemsPanel>
 
 					<ItemsControl.ItemTemplate>
-						<DataTemplate x:DataType="models:Player">
+						<DataTemplate x:DataType="models:X01Player">
 							<Border Classes.isSelectedPlayer="{Binding IsPlayerActive}"
+									Classes.isOvershot="{Binding HasOvershot}"
 									Theme="{StaticResource CardBorder}"
 									Classes="Card">
 								<StackPanel Orientation="Vertical">

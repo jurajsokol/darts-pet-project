@@ -64,10 +64,7 @@ public partial class CricketGameViewModel : KeyboardViewModel, IActivatableViewM
     [ReactiveCommand]
     private void NextPlayer()
     {
-        if (game.NextPlayer())
-        {
-            gameScope.ShowWinnersView(game.GetPlayersResults().Select(x => x.ToModel()).ToArray());
-        }
+        game.NextPlayer();
     }
 
     [ReactiveCommand]
@@ -78,7 +75,10 @@ public partial class CricketGameViewModel : KeyboardViewModel, IActivatableViewM
 
     internal override void OnDartScore(DartScore score)
     {
-        game.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType());
+        if (game.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType()))
+        {
+            gameScope.ShowWinnersView(game.GetPlayersResults().Select(x => x.ToModel()).ToArray());
+        }
     }
 
     public async Task CancelGame()

@@ -4,13 +4,14 @@ using DynamicData;
 
 namespace Darts.Games.Games;
 
-public interface IDartGame : IDisposable
+public interface IDartGame<T> : IDisposable
+    where T : Player
 {
-    IObservable<IChangeSet<Player, int>> Players { get; }
+    IObservable<IChangeSet<T, int>> Players { get; }
     IObservable<IChangeSet<PlayerMove, int>> PlayerRoundScore { get; }
     IObservable<bool> CanSetNextPlayer { get; }
 
-    void PlayerMove(TargetButtonNum number, TargetButtonType type);
-    bool NextPlayer();
+    bool PlayerMove(TargetButtonNum number, TargetButtonType type);
+    void NextPlayer();
     void Undo();
 }

@@ -30,6 +30,11 @@ public static class ConvertExtensions
         return new Player(data.Name, 0, count, false);
     }
 
+    public static X01Player ToX01Player(this Models.Player data, int score, int count)
+    {
+        return new X01Player(data.Name, score, count, false, false, false);
+    }
+
     public static CricketPlayer ToCricketPlayer(this Models.Player data, int count)
     {
         ImmutableArray<CricketDartButtonState> dartState = [

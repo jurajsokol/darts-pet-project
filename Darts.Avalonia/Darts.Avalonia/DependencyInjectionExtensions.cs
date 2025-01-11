@@ -80,16 +80,22 @@ public static class DependencyInjectionExtensions
             {
                 GameConfiguration createGameParams = s.GetRequiredService<GameConfiguration>();
                 X01SetupViewModel setupViewModel = s.GetRequiredService<X01SetupViewModel>();
-                Player[] players = createGameParams.Players.Select((x, i) => x.ToDartPlayer(i)).ToArray();
 
-                IEnumerable<Player> gamePlayers = players
-                    .Select((p, i) => p with { Score = (int)setupViewModel.X01GameType.GameType, IsPlayerActive = i == 0 });
+                IEnumerable<X01Player> gamePlayers = createGameParams.Players
+                    .Select((x, c) => x.ToX01Player((int)setupViewModel.X01GameType.GameType, c))
+                    .Select((p, i) => p with { IsPlayerActive = i == 0 });
+
+                if (setupViewModel.GameIn.DartsNumberModifier == Enums.DartsNumberModifier.Single)
+                {
+                    gamePlayers = gamePlayers.Select(x => x with { IsInGame = true });
+                }
+
                 IEnumerable<PlayerMove> moves = Enumerable
                    .Range(0, 3)
                    .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x));
 
-                Store<Player> store = new Store<Player>(gamePlayers.ToArray(), moves.ToArray(), new PlayerComparer());
-                return new X01(players, store);
+                Store<X01Player> store = new Store<X01Player>(gamePlayers.ToArray(), moves.ToArray(), new X01PlayerComparer());
+                return new X01(setupViewModel.GameIn.DartsNumberModifier.ToGameType(), setupViewModel.GameOut.DartsNumberModifier.ToGameType(), store);
             })
             .AddTransient<CricketGame>(s =>
             {
@@ -103,7 +109,7 @@ public static class DependencyInjectionExtensions
                    .Select(x => new PlayerMove(TargetButtonNum.None, TargetButtonType.None, x));
 
                 Store<CricketPlayer> store = new Store<CricketPlayer>(gamePlayers.ToArray(), moves.ToArray(), new CricketPlayerComparer());
-                return new CricketGame(players, store);
+                return new CricketGame(store);
             })
             .AddTransient(services => new X01GameScope(services, services.GetRequiredService<MainView>().NavigationPanel))
             .AddTransient(services => new CricketGameScope(services, services.GetRequiredService<MainView>().NavigationPanel))

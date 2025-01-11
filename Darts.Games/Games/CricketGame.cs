@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 
 namespace Darts.Games.Games;
 
-public class CricketGame
+public class CricketGame : IDartGame<CricketPlayer>
 {
     private const int MAX_THROWS_PER_ROUND = 3;
     private readonly Store<CricketPlayer> gameStore;
@@ -17,7 +17,7 @@ public class CricketGame
     public IObservable<IChangeSet<PlayerMove, int>> PlayerRoundScore { get; }
     public IObservable<bool> CanSetNextPlayer { get; }
 
-    public CricketGame(IList<CricketPlayer> players, Store<CricketPlayer> gameStore)
+    public CricketGame(Store<CricketPlayer> gameStore)
     {
         Players = gameStore.Players.Connect();
 
@@ -28,18 +28,18 @@ public class CricketGame
         this.gameStore = gameStore;
     }
 
-    public void PlayerMove(TargetButtonNum number, TargetButtonType type)
+    public bool PlayerMove(TargetButtonNum number, TargetButtonType type)
     {
         if (((int)number) < 15)
         {
-            return;
+            return false;
         }
 
         CricketPlayer actualPlayer = ActualPlayer;
 
         if (gameStore.MoveCount >= MAX_THROWS_PER_ROUND)
         {
-            return;
+            return false;
         }
 
         gameStore.MakeSnapshot();
@@ -53,7 +53,7 @@ public class CricketGame
         // closed position
         if (buttonState.CricketTargetButtonState == CricketTargetButtonState.Closed)
         {
-            return;
+            return false;
         }
 
         // opened position
@@ -88,8 +88,6 @@ public class CricketGame
                             return x with { CricketDartButtonStates = states };
                         })
                         .ToArray());
-
-                    return;
                 }
                 else
                 { 
@@ -108,16 +106,11 @@ public class CricketGame
         }
 
         // winner
-        return;
+        return HasPlayerWon();
     }
 
-    public bool NextPlayer()
+    public void NextPlayer()
     {
-        if (HasPlayerWon())
-        {
-            return true;
-        }
-
         gameStore.MakeSnapshot();
 
         CricketPlayer actualPlayer = (gameStore.Players.Items.FirstOrDefault(x => x.PlayerOrder == ActualPlayer.PlayerOrder + 1) ?? gameStore.Players.Items.First())
@@ -127,7 +120,6 @@ public class CricketGame
 
         gameStore.ResetPlayerScore();
         gameStore.ResetMoveCount();
-        return false;
     }
 
     public void Undo()
@@ -149,5 +141,10 @@ public class CricketGame
             .OrderByDescending(x => x.Score)
             .Select((p, c) => p with { PlayerOrder = c })
             .ToArray();
+    }
+
+    public void Dispose()
+    {
+        gameStore.Dispose();
     }
 }

@@ -24,8 +24,8 @@ public partial class DartGameX01ViewModel : KeyboardViewModel, IActivatableViewM
     private readonly X01GameScope gameScope;
     private readonly IAbstractFactory<IDialogScope<ConfirmGameExitViewModel>> dialogFactory;
 
-    public ObservableCollection<Darts.Games.Models.Player> Players => players;
-    private ObservableCollectionExtended<Darts.Games.Models.Player> players = new();
+    public ObservableCollection<Darts.Games.Models.X01Player> Players => players;
+    private ObservableCollectionExtended<Darts.Games.Models.X01Player> players = new();
 
     public ObservableCollection<Games.Models.PlayerMove> PlayerRound => playerRound;
 
@@ -40,6 +40,7 @@ public partial class DartGameX01ViewModel : KeyboardViewModel, IActivatableViewM
         {
             dartGame.Players
                 .ObserveOn(guiScheduler)
+
                 .SortAndBind(players, SortExpressionComparer<Games.Models.Player>.Ascending(p => p.PlayerOrder))
                 .Subscribe()
                 .DisposeWith(disposable);
@@ -62,10 +63,7 @@ public partial class DartGameX01ViewModel : KeyboardViewModel, IActivatableViewM
     [ReactiveCommand]
     private void NextPlayer()
     {
-        if (dartGame.NextPlayer())
-        {
-            gameScope.ShowWinnersView(dartGame.GetPlayerResults().Select(x => x.ToModel()).ToArray());
-        }
+        dartGame.NextPlayer();
     }
 
     [ReactiveCommand]
@@ -87,6 +85,9 @@ public partial class DartGameX01ViewModel : KeyboardViewModel, IActivatableViewM
 
     internal override void OnDartScore(DartScore score)
     {
-        dartGame.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType());
+        if (dartGame.PlayerMove(score.DartNumbers.ToGameType(), score.Modifier.ToGameType()))
+        {
+            gameScope.ShowWinnersView(dartGame.GetPlayerResults().Select(x => x.ToModel()).ToArray());
+        }
     }
 }
