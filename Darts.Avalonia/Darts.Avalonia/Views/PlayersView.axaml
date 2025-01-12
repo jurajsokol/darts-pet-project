@@ -39,21 +39,23 @@
 							   Padding="0"
 							   HorizontalAlignment="Stretch"
 							   Theme="{StaticResource BasicGroupControl}">
-			<ListBox SelectionMode="Multiple,Toggle"
-				     ItemsSource="{Binding Players, Mode=OneWay}"
-					 SelectedItems="{Binding SelectedPlayers}">
-				<ListBox.DataTemplates>
-					<DataTemplate x:DataType="vmModels:Player">
-						<StackPanel Orientation="Horizontal">
-							<Svg Path="/Assets/dart.svg"
-								 Stretch="Uniform"
-								 Height="30"/>
-							<TextBlock Text="{Binding Name, Mode=OneWay}"
-										Padding="10"/>
-						</StackPanel>
-					</DataTemplate>
-				</ListBox.DataTemplates>
-			</ListBox>
+			<ScrollViewer VerticalScrollBarVisibility="Auto">
+				<ListBox SelectionMode="Multiple,Toggle"
+						 ItemsSource="{Binding Players, Mode=OneWay}"
+						 SelectedItems="{Binding SelectedPlayers}">
+					<ListBox.DataTemplates>
+						<DataTemplate x:DataType="vmModels:Player">
+							<StackPanel Orientation="Horizontal">
+								<Svg Path="/Assets/dart.svg"
+									 Stretch="Uniform"
+									 Height="30"/>
+								<TextBlock Text="{Binding Name, Mode=OneWay}"
+											Padding="10"/>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.DataTemplates>
+				</ListBox>
+			</ScrollViewer>
 		</controls:GroupControl>
 		
 	</Grid>

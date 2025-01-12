@@ -23,25 +23,26 @@
 							   Grid.Row="0"
 							   Padding="0"
 							   Theme="{StaticResource BasicGroupControl}">
+			<ScrollViewer VerticalScrollBarVisibility="Auto">
+				<ListBox SelectionMode="Single,Toggle"
+						 ItemsSource="{Binding GameTypes, Mode=OneWay}"
+						 SelectedItem="{Binding SelectedGameType}"
+						 HorizontalAlignment="Center">
+					<ListBox.DataTemplates>
+						<DataTemplate x:DataType="vmModels:GameTypeModel">
+							<TextBlock Text="{Binding GameTypeName, Mode=OneTime}"
+									   Padding="10"/>
+						</DataTemplate>
+					</ListBox.DataTemplates>
 
-			<ListBox SelectionMode="Single,Toggle"
-					 ItemsSource="{Binding GameTypes, Mode=OneWay}"
-					 SelectedItem="{Binding SelectedGameType}"
-					 HorizontalAlignment="Center">
-				<ListBox.DataTemplates>
-					<DataTemplate x:DataType="vmModels:GameTypeModel">
-						<TextBlock Text="{Binding GameTypeName, Mode=OneTime}"
-									Padding="10"/>
-					</DataTemplate>
-				</ListBox.DataTemplates>
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
 
-				<ItemsControl.ItemsPanel>
-					<ItemsPanelTemplate>
-						<WrapPanel />
-					</ItemsPanelTemplate>
-				</ItemsControl.ItemsPanel>
-
-			</ListBox>
+				</ListBox>
+			</ScrollViewer>
 		</controls:GroupControl>
 
 		<controls:GroupControl HeaderText="Players"

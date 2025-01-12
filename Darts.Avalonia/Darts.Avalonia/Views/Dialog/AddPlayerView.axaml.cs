@@ -1,3 +1,5 @@
+using Avalonia;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Darts.Avalonia.ViewModels;
 
@@ -9,6 +11,7 @@ public partial class AddPlayerView : DialogBase<AddPlayerViewModel>
         :base(viewModel)
     {
         InitializeComponent();
+        PlayerNameTextBox.AttachedToVisualTree += (_, _) => PlayerNameTextBox.Focus();
     }    
 
     private void Button_Click(object? sender, RoutedEventArgs e)

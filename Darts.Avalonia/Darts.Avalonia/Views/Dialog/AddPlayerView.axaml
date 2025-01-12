@@ -26,7 +26,8 @@
 									   Padding="0 5">
 					<StackPanel>
 						<TextBox Text="{Binding Name}"
-								 Margin="0"/>
+								 Margin="0"
+								 x:Name="PlayerNameTextBox"/>
 						<StackPanel Orientation="Horizontal"
 									HorizontalAlignment="Right">
 							<Button Content="Cancel"
