@@ -40,6 +40,11 @@ namespace Darts.DAL.Repositories
             return await dbSet.ToListAsync();
         }
 
+        public IAsyncEnumerable<T> GetAsyncEnumerable()
+        {
+            return dbSet.AsAsyncEnumerable();
+        }
+
         public async Task<T> GetById(int id)
         {
             return await dbSet.FindAsync(id);

@@ -4,6 +4,7 @@
     {
         Task<T> GetById(int id);
         Task<IEnumerable<T>> GetAll();
+        public IAsyncEnumerable<T> GetAsyncEnumerable();
         Task<T> Add(T entity);
         void Update(T entity);
         Task Delete(int id);

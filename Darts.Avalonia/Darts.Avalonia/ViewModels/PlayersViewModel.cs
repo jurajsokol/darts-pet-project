@@ -85,8 +85,7 @@ public partial class PlayersViewModel : ReactiveObject
     public async Task LoadPlayers()
     {
         Players.Clear();
-        IEnumerable<Player> players = (await db.Players.GetAll()).Select(x => x.ToModel());
-        foreach (Player player in players)
+        await foreach (Player? player in db.Players.GetAsyncEnumerable().Select(x => x.ToModel()))
         {
             Players.Add(player);
         }
