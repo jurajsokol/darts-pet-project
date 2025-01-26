@@ -25,7 +25,7 @@ public class CutThroatGame : CricketGameBase
             .All(x => x.CricketTargetButtonState == CricketTargetButtonState.Closed || x.CricketTargetButtonState == CricketTargetButtonState.Open);
     }
 
-    protected override void UpdatePlayersScore(CricketPlayer actualPlayer, int score, TargetButtonNum buttonNum)
+    protected override CricketPlayer UpdatePlayersScore(CricketPlayer actualPlayer, int score, TargetButtonNum buttonNum)
     {
         IEnumerable<CricketPlayer> players = gameStore.Players.Items.Where(x =>
             {
@@ -35,5 +35,7 @@ public class CutThroatGame : CricketGameBase
             .Select(x => x with { Score = x.Score + score } );
 
         gameStore.UpdatePlayers(players.ToArray());
+
+        return actualPlayer;
     }
 }

@@ -25,8 +25,10 @@ public class CricketGame : CricketGameBase
             .All(x => x.CricketTargetButtonState == CricketTargetButtonState.Closed || x.CricketTargetButtonState == CricketTargetButtonState.Open);
     }
 
-    protected override void UpdatePlayersScore(CricketPlayer actualPlayer, int score, TargetButtonNum buttonNum)
+    protected override CricketPlayer UpdatePlayersScore(CricketPlayer actualPlayer, int score, TargetButtonNum buttonNum)
     {
-        gameStore.UpdatePlayers(actualPlayer with { Score = actualPlayer.Score + score });
+        CricketPlayer updatedPlayer = actualPlayer with { Score = actualPlayer.Score + score };
+        gameStore.UpdatePlayers(updatedPlayer);
+        return updatedPlayer;
     }
 }

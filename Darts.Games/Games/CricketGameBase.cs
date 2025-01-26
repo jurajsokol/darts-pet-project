@@ -30,11 +30,6 @@ public abstract class CricketGameBase : IDartGame<CricketPlayer>
 
     public bool PlayerMove(TargetButtonNum number, TargetButtonType type)
     {
-        if (((int)number) < 15)
-        {
-            return false;
-        }
-
         CricketPlayer actualPlayer = ActualPlayer;
 
         if (gameStore.MoveCount >= MAX_THROWS_PER_ROUND)
@@ -47,6 +42,11 @@ public abstract class CricketGameBase : IDartGame<CricketPlayer>
             .First(x => x.OrderNum == gameStore.MoveCount) with { TargetButton = number, TargetButtonType = type };
 
         gameStore.UpdatePlayerScore(move);
+
+        if (((int)number) < 15 || number == TargetButtonNum.Miss)
+        {
+            return false;
+        }
 
         CricketDartButtonState buttonState = actualPlayer.CricketDartButtonStates.First(x => x.TargetButtonNum == number);
 
@@ -67,7 +67,7 @@ public abstract class CricketGameBase : IDartGame<CricketPlayer>
             int hitCount = (int)buttonState.CricketTargetButtonState + (int)type;
             int newPlayerScore = actualPlayer.Score;
             CricketDartButtonState newButtonState = buttonState;
-            if (hitCount > (int)CricketTargetButtonState.Open)
+            if (hitCount >= (int)CricketTargetButtonState.Open)
             {
                 bool isLastPlayer = gameStore.Players.Items
                     .Count(x => x.CricketDartButtonStates
@@ -88,12 +88,14 @@ public abstract class CricketGameBase : IDartGame<CricketPlayer>
                             return x with { CricketDartButtonStates = states };
                         })
                         .ToArray());
+
+                    return HasPlayerWon();
                 }
                 else
                 { 
                     int playerPointsMultiplier = hitCount - (int)CricketTargetButtonState.Open;
                     newButtonState = buttonState with { CricketTargetButtonState = CricketTargetButtonState.Open };
-                    UpdatePlayersScore(actualPlayer, playerPointsMultiplier * (int)number, number);
+                    actualPlayer = UpdatePlayersScore(actualPlayer, playerPointsMultiplier * (int)number, number);
                 }
             }
             else
@@ -109,7 +111,7 @@ public abstract class CricketGameBase : IDartGame<CricketPlayer>
         return HasPlayerWon();
     }
 
-    protected abstract void UpdatePlayersScore(CricketPlayer actualPlayer, int score, TargetButtonNum buttonNum);
+    protected abstract CricketPlayer UpdatePlayersScore(CricketPlayer actualPlayer, int score, TargetButtonNum buttonNum);
 
     public void NextPlayer()
     {

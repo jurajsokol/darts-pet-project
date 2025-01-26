@@ -16,6 +16,10 @@
 			<Setter Property="Background"
 					Value="{StaticResource SemiColorPrimary}"/>
 		</Style>
+		<Style Selector="Border.isClosed">
+			<Setter Property="Opacity"
+					Value="0.5"/>
+		</Style>
 	</UserControl.Styles>
 	
 	<Grid RowDefinitions="auto,140,*,auto"
@@ -74,6 +78,7 @@
 									<ItemsControl.ItemTemplate>
 										<DataTemplate x:DataType="models:CricketDartButtonState">
 											<Border BorderThickness="2, 0"
+													Classes.isClosed="{Binding CricketTargetButtonState, Converter={x:Static local:Converters.IsPositionClosed}}"
 													BorderBrush="{DynamicResource SemiGrey0}">
 
 													<Svg Path="{Binding CricketTargetButtonState, Converter={x:Static local:Converters.CricketStateToImage} }"

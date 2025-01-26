@@ -1,6 +1,5 @@
 ﻿using Avalonia.Data.Converters;
 using Darts.Games.Enums;
-using Darts.Games.Models;
 
 namespace Darts.Avalonia.Views;
 
@@ -14,7 +13,14 @@ public static class Converters
             CricketTargetButtonState.OneHit => "/Resources/Icons/cricketOneHit.svg",
             CricketTargetButtonState.TwoHits => "/Resources/Icons/cricketTwoHits.svg",
             CricketTargetButtonState.Open => "/Resources/Icons/cricketOpenPosition.svg",
+            CricketTargetButtonState.Closed => "/Resources/Icons/cricketOpenPosition.svg",
 
             _ => string.Empty,
         });
+
+    public static FuncValueConverter<CricketTargetButtonState, bool> IsPositionClosed { get; } =
+       new FuncValueConverter<CricketTargetButtonState, bool>(state =>
+       {
+           return state == CricketTargetButtonState.Closed;
+       });
 }
