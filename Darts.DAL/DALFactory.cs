@@ -8,7 +8,7 @@ namespace Darts.DAL
         public static IServiceCollection AddDatabase(this IServiceCollection services, string dbPath)
         {
             services.AddDbContext<DartsDBContext>(options => options.UseSqlite(($"Data Source={dbPath}")));
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
     }

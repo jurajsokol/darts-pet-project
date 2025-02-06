@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darts.Avalonia.iOS", "Darts
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darts.Avalonia.Browser", "Darts.Avalonia\Darts.Avalonia.Browser\Darts.Avalonia.Browser.csproj", "{D95825CE-9B37-4839-A38D-969DC7B6298B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darts.WebAPI", "Darts.WebAPI\Darts.WebAPI.csproj", "{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -191,6 +193,26 @@ Global
 		{D95825CE-9B37-4839-A38D-969DC7B6298B}.Release|x64.Build.0 = Release|Any CPU
 		{D95825CE-9B37-4839-A38D-969DC7B6298B}.Release|x86.ActiveCfg = Release|Any CPU
 		{D95825CE-9B37-4839-A38D-969DC7B6298B}.Release|x86.Build.0 = Release|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Debug|ARM.Build.0 = Debug|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Debug|x64.Build.0 = Debug|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Debug|x86.Build.0 = Debug|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Release|ARM.Build.0 = Release|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Release|ARM64.Build.0 = Release|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Release|x64.ActiveCfg = Release|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Release|x64.Build.0 = Release|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Release|x86.ActiveCfg = Release|Any CPU
+		{5E36C5B7-410E-4DF8-BD18-CF9E9EA00D28}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
